@@ -3,13 +3,14 @@
         xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
         elementFormDefault="qualified">
+    
     <element name="cabinet" type="med:Cabinet"/>
     
     <!--                                                              commentaires/spécifications à ajouter                                                                           -->
     
     <complexType name="Cabinet">
         <sequence>
-            <element name="nom" type="string"/>
+            <element name="nom" type="string"/> <!-- différent du nom d'une personne, il pourrait contenir des caractères spéciaux -->
             <element name="adresse" type="med:Adresse"/>
             <element name="infirmiers" type="med:Infirmiers"/>
             <element name="patients" type="med:Patients"/>
@@ -18,14 +19,26 @@
     
     <complexType name="Adresse">
         <sequence>
-            <element name="etage" type="int" minOccurs="0"/> <!-- int >= 0 -->
-            <element name="numero" type="int"/> <!-- int > 0 -->
+            <element name="étage" type="med:Étage" minOccurs="0"/>
+            <element name="numéro" type="med:NuméroDeRue" minOccurs="0"/>
             <element name="rue" type="string"/>
             <element name="codePostal" type="med:CodePostal"/>
             <element name="ville" type="string"/>
         </sequence>
     </complexType>
     
+    <simpleType name="Étage">
+        <restriction base="int">
+            <minInclusive value="0"/>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="NuméroDeRue">
+        <restriction base="int">
+            <minExclusive value="0"/>
+        </restriction>
+    </simpleType>
+
     <simpleType name="CodePostal">
         <restriction base="string">
             <pattern value="[0-9]{5}"/>
@@ -40,9 +53,9 @@
     
     <complexType name="Infirmier">
         <sequence>
-            <element name="nom" type="string"/> <!-- pas de type spécial car trop d'exception (ex: "Émilie" commence pas par [A-Z], ou "Jean-Paul II" est inconvénient) -->
-            <element name="prenom" type="string"/> <!-- de même que nom -->
-            <element name="photo" type="string"/> <!-- une restriction "*.???" ne me semble ni nécéssaire ni prudent (selon les extensions et OS) -->
+            <element name="nom" type="med:Nom"/>
+            <element name="prénom" type="med:Nom"/>
+            <element name="photo" type="string"/> <!-- une restriction "*.???" serait possible ici mais ne me semble ni nécéssaire ni prudent (selon les extensions et OS) -->
         </sequence>
         <attribute name="id"/>
     </complexType>
@@ -55,15 +68,21 @@
     
     <complexType name="Patient">
         <sequence>
-            <element name="nom" type="string"/> <!-- pareil que plus haut -->
-            <element name="prenom" type="string"/> <!-- de même que nom -->
+            <element name="nom" type="med:Nom"/>
+            <element name="prénom" type="med:Nom"/>
             <element name="sexe" type="med:Sexe"/>
             <element name="naissance" type="date"/>
-            <element name="numeroSecu" type="med:NumeroSecu"/>
+            <element name="numéro" type="med:NuméroSecuritéSociale"/>
             <element name="adresse" type="med:Adresse"/>
             <element name="visite" type="med:Visite" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
+
+    <simpleType name="Nom">
+        <restriction base="string">
+            <!-- pas de type spécial car trop d'exception (ex: "Émilie" commence pas par [A-Z], ou "Jean-Paul II" est inconvénient) -->
+        </restriction>
+    </simpleType>
     
     <simpleType name="Sexe">
         <restriction base="string">
@@ -72,9 +91,10 @@
         </restriction>
     </simpleType>
     
-    <simpleType name="NumeroSecu">
+    <simpleType name="NuméroSecuritéSociale">
         <restriction base="string">
-            <pattern value="[123478][0-9]{5}[0-9AB][0-9]{8}"/> <!--                         pas sûr                            -->
+            <pattern value="[123478][0-9]{5}[0-9AB][0-9]{8}"/>
+            <!-- ici on ne peut pas mettre "[0-9]{15}" car un numéro de sécurité sociale ne peut pas commencer par 0, 5, 6 ni 9, et car le code département pour la corse peut être 2A ou 2B -->
         </restriction>
     </simpleType>
     

@@ -16,11 +16,19 @@ package URICabinet{
   }
   
   class Adresse{
-    {optional} etage : int
-    numero : int
+    {optional} étage : Étage
+    numéro : NuméroDeRue
     rue : string
     codePostal : CodePostal
     ville : string
+  }
+
+  class Étage <<min-max>>{
+     >= 0
+  }
+
+  class NuméroDeRue <<min-max>>{
+    > 0
   }
 
   class CodePostal <<pattern>>{
@@ -33,8 +41,8 @@ package URICabinet{
 
   class Infirmier{
     {attribut} id
-    nom : string
-    prenom : string
+    nom : Nom
+    prénom : Nom
     photo : string
   }
   
@@ -43,22 +51,22 @@ package URICabinet{
   }
   
   class Patient{
-    nom : string
-    prenom : string
+    nom : Nom
+    prénom : Nom
     sexe : Sexe
     naissance : date
-    numeroSecu : NumeroSecu
+    numéro : NuméroSecuritéSociale
     adresse : Adresse
     visites : Visite[]
   }
 
   class Sexe <<enum>>{
     M
-
+   
     F
   }
 
-  class NumeroSecu <<pattern>>{
+  class NuméroSecuritéSociale <<pattern>>{
     [123478][0-9]{5}[0-9AB][0-9]{8}
   }
   
@@ -71,21 +79,24 @@ package URICabinet{
   class Acte{
     {attribut} id
   }
-  note bottom of NumeroSecu : De ce que j'ai compris du\nwiki (pas sûr) (sinon [0-9]{15}\nmais pas corse ducoup)
-}
+  
+  note bottom of NuméroSecuritéSociale : Ici on ne peut pas mettre "[0-9]{15}"\ncar un numéro de sécurité sociale\nne peut pas commencer par 0, 5, 6 ni 9,\net car le code département pour la corse\npeut être 2A ou 2B
+ }
 
 Cabinet *-- Adresse
 Cabinet *-- Infirmiers
 Cabinet *-- Patients
 
 Adresse *-- CodePostal
+Adresse *-- Étage
+Adresse *-- NuméroDeRue
 
 Infirmiers "1" *-- "many" Infirmier : list
 
 Patients "1" *-- "many" Patient : list
 
 Patient *-- Sexe
-Patient *-- NumeroSecu
+Patient *-- NuméroSecuritéSociale
 Patient *-- Adresse
 Patient "1" *-- "many" Visite : list
 
