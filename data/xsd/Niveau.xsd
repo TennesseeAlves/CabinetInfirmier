@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<schema xmlns:niv="http://www.univ-grenoble-alpes.fr/niveau"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.univ-grenoble-alpes.fr/niveau"
+        elementFormDefault="qualified">
+
+    <!-- Element racine -->
+    <element name="niveau" type="niv:Niveau"/>
+
+    <complexType name="Niveau">
+        <sequence>
+            <element name="tempsDeJeu" type="int"/>
+            <element name="rangée" type="niv:LigneDeTables" minOccurs="2" maxOccurs="20"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="LigneDeTables">
+        <sequence>
+            <element name="table" type="niv:Trinaire" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="Trinaire">
+        <restriction base="int">
+            <enumeration value="0"/>
+            <enumeration value="1"/>
+            <enumeration value="2"/>
+        </restriction>
+    </simpleType>
+</schema>

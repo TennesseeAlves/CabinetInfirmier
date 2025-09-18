@@ -1,0 +1,93 @@
+@startuml
+package XMLSchema{
+  class int{}
+  class string{}
+  class date{}
+}
+
+
+package URICabinet{
+
+  class Cabinet{
+    nom : string
+    adresse : Adresse
+    infirmiers : Infirmiers
+    patients : Patients
+  }
+  
+  class Adresse{
+    {optional} etage : int
+    numero : int
+    rue : string
+    codePostal : CodePostal
+    ville : string
+  }
+
+  class CodePostal <<pattern>>{
+    [0..9]{5}
+  }
+  
+  class Infirmiers{
+    liste : Infirmier[]
+  }
+
+  class Infirmier{
+    {attribut} id
+    nom : string
+    prenom : string
+    photo : string
+  }
+  
+  class Patients{
+    liste : Patient[]
+  }
+  
+  class Patient{
+    nom : string
+    prenom : string
+    sexe : Sexe
+    naissance : date
+    numeroSecu : NumeroSecu
+    adresse : Adresse
+    visites : Visite[]
+  }
+
+  class Sexe <<enum>>{
+    M
+
+    F
+  }
+
+  class NumeroSecu <<pattern>>{
+    [123478][0-9]{5}[0-9AB][0-9]{8}
+  }
+  
+  class Visite{
+    {attribut} date
+    {attribut} intervenant
+    acte : Acte[]
+  }
+  
+  class Acte{
+    {attribut} id
+  }
+  note bottom of NumeroSecu : De ce que j'ai compris du\nwiki (pas sûr) (sinon [0-9]{15}\nmais pas corse ducoup)
+}
+
+Cabinet *-- Adresse
+Cabinet *-- Infirmiers
+Cabinet *-- Patients
+
+Adresse *-- CodePostal
+
+Infirmiers "1" *-- "many" Infirmier : list
+
+Patients "1" *-- "many" Patient : list
+
+Patient *-- Sexe
+Patient *-- NumeroSecu
+Patient *-- Adresse
+Patient "1" *-- "many" Visite : list
+
+Visite "1" *-- "many" Acte : list
+@enduml
