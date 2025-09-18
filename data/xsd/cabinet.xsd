@@ -3,11 +3,17 @@
         xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
         elementFormDefault="qualified">
-    
+
+    <!-- élément racine instanciable-->
     <element name="cabinet" type="med:Cabinet"/>
     
-    <!--                                                              commentaires/spécifications à ajouter                                                                           -->
-        
+    <!-- 
+        type Cabinet
+        contenant : un nom de type string,
+                    une adresse de type Adresse,
+                    une liste d'infirmiers de type Infirmiers,
+                    une liste de patient de type Patients.
+     -->
     <complexType name="Cabinet">
         <sequence>
             <element name="nom" type="string"/> <!-- différent du nom d'une personne, il pourrait contenir des caractères spéciaux -->
@@ -16,7 +22,15 @@
             <element name="patients" type="med:Patients"/>
         </sequence>
     </complexType>
-    
+
+    <!-- 
+        type Adresse
+        contenant : un numéro optionnel d'étage de type Étage,
+                    un numéro optionnel de rue de type NuméroDeRue,
+                    un nom de rue de type string,
+                    un code postal de type CodePostal,
+                    un nom de ville de type string,
+     -->
     <complexType name="Adresse">
         <sequence>
             <element name="étage" type="med:Étage" minOccurs="0"/>
@@ -26,31 +40,54 @@
             <element name="ville" type="string"/>
         </sequence>
     </complexType>
-    
+
+    <!-- 
+        type Étage
+        restreignant les int au valeurs positives
+     -->
     <simpleType name="Étage">
         <restriction base="int">
             <minInclusive value="0"/>
         </restriction>
     </simpleType>
-    
+
+    <!-- 
+        type NuméroDeRue
+        restreignant les int au valeurs strictement positives
+     -->
     <simpleType name="NuméroDeRue">
         <restriction base="int">
             <minExclusive value="0"/>
         </restriction>
     </simpleType>
 
+    <!-- 
+        type CodePostal
+        n'acceptant que les string composé uniquement de 5 chiffres
+     -->
     <simpleType name="CodePostal">
         <restriction base="string">
             <pattern value="[0-9]{5}"/>
         </restriction>
     </simpleType>
-
+    
+    <!-- 
+        type Infirmiers
+        contenant : au moins un infirmier de type Infirmier
+     -->
     <complexType name="Infirmiers">
         <sequence>
             <element name="infirmier" type="med:Infirmier" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
-    
+
+    <!-- 
+    type Infirmier
+    contenant : un nom de type Nom,
+                un prénom de type Nom,
+                une photo de type string (le nom de la photo),
+    pouvant contenir en attribut un id
+    -->
     <complexType name="Infirmier">
         <sequence>
             <element name="nom" type="med:Nom"/>
@@ -60,12 +97,28 @@
         <attribute name="id"/>
     </complexType>
 
+
+    <!-- 
+        type Patients
+        contenant : au moins un patient de type Patient
+     -->
     <complexType name="Patients">
         <sequence>
             <element name="patient" type="med:Patient" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
-    
+
+
+    <!-- 
+    type Patient
+    contenant : un nom de type Nom,
+                un prénom de type Nom,
+                un sexe de type Sexe,
+                une date de naissance de type date,
+                un numéro de securité sociale de type NuméroSecuritéSociale,
+                une adresse de type Adresse,
+                au moins une visite de type Visite,
+    -->
     <complexType name="Patient">
         <sequence>
             <element name="nom" type="med:Nom"/>
@@ -77,20 +130,34 @@
             <element name="visite" type="med:Visite" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
-
+    
+    <!-- 
+        type Nom
+        acceptant toutes les string puisqu'il y aurait un trop grand nombre de cas particuliers à prendre en compte
+     -->
     <simpleType name="Nom">
         <restriction base="string">
             <!-- pas de type spécial car trop d'exception (ex: "Émilie" commence pas par [A-Z], ou "Jean-Paul II" est inconvénient) -->
         </restriction>
     </simpleType>
-    
+
+
+    <!-- 
+        type Sexe
+        n'acceptant que M et F
+     -->
     <simpleType name="Sexe">
         <restriction base="string">
             <enumeration value="M"/>
             <enumeration value="F"/>
         </restriction>
     </simpleType>
-    
+
+
+    <!-- 
+        type CodePostal
+        n'acceptant que les string composé exactement comme un numéro securité sociale
+     -->
     <simpleType name="NuméroSecuritéSociale">
         <restriction base="string">
             <pattern value="[123478][0-9]{5}[0-9AB][0-9]{8}"/>
@@ -98,6 +165,12 @@
         </restriction>
     </simpleType>
     
+    <!-- 
+    type Visite
+    contenant : un acte de type Acte,
+    pouvant contenir en attribut : une date de visite de type date,
+                                   l'id de l'infirmier intervenant,
+    -->
     <complexType name="Visite">
         <sequence>
             <element name="acte" type="med:Acte" maxOccurs="unbounded"/>
@@ -105,7 +178,11 @@
         <attribute name="date" type="date"/>
         <attribute name="intervenant"/>
     </complexType>
-    
+
+    <!-- 
+    type Acte
+    pouvant contenir en attribut : l'id NGAP de l'acte,
+    -->
     <complexType name="Acte">
         <attribute name="id"/>
     </complexType>
