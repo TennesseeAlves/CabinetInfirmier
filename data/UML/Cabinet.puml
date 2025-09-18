@@ -1,4 +1,6 @@
 @startuml
+skinparam linetype ortho
+ 
 package XMLSchema{
   class int{}
   class string{}
@@ -23,12 +25,12 @@ package URICabinet{
     ville : string
   }
 
-  class Étage <<min-max>>{
-     >= 0
+  class Étage <<min>>{
+     [0,+∞[
   }
 
-  class NuméroDeRue <<min-max>>{
-    > 0
+  class NuméroDeRue <<min>>{
+     ]0,+∞[
   }
 
   class CodePostal <<pattern>>{
@@ -101,4 +103,10 @@ Patient *-- Adresse
 Patient "1" *-- "many" Visite : list
 
 Visite "1" *-- "many" Acte : list
+
+int <|-- Étage
+int <|-left- NuméroDeRue
+string <|-- CodePostal 
+string <|-- NuméroSecuritéSociale
+string <|-- Sexe
 @enduml

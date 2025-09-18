@@ -7,7 +7,7 @@
     <element name="cabinet" type="med:Cabinet"/>
     
     <!--                                                              commentaires/spécifications à ajouter                                                                           -->
-    
+        
     <complexType name="Cabinet">
         <sequence>
             <element name="nom" type="string"/> <!-- différent du nom d'une personne, il pourrait contenir des caractères spéciaux -->

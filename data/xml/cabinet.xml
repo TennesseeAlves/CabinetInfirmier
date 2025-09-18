@@ -4,7 +4,7 @@
              xsi:schemaLocation="http://www.univ-grenoble-alpes.fr/medical ../xsd/cabinet.xsd">
   <nom>Soins à Grenoble</nom>
   <adresse>
-    <numero>60</numero>
+    <numéro>60</numéro>
     <rue>rue de la Chimie</rue>
     <codePostal>38401</codePostal>
     <ville>Grenoble</ville>
@@ -12,30 +12,30 @@
   <infirmiers>
       <infirmier id="001">
           <nom>Fréchie</nom>
-          <prenom>Sarah</prenom>
+          <prénom>Sarah</prénom>
           <photo>sarah.png</photo>
       </infirmier>
       <infirmier id="002">
           <nom>Stické</nom>
-          <prenom>Sophie</prenom>
+          <prénom>Sophie</prénom>
           <photo>sophie.jpg</photo>
       </infirmier>
       <infirmier id="003">
           <nom>Ochon</nom>
-          <prenom>Paul</prenom>
+          <prénom>Paul</prénom>
           <photo>paul.png</photo>
       </infirmier>
   </infirmiers>
   <patients>
       <patient>
           <nom>Alécole</nom>
-          <prenom>Yvon</prenom>
+          <prénom>Yvon</prénom>
           <sexe>M</sexe>
           <naissance>1998-08-22</naissance>
-          <numeroSecu>198082205545852</numeroSecu>
+          <numéro>198082205545852</numéro>
           <adresse>
-              <etage>6</etage>
-              <numero>50</numero>
+              <étage>6</étage>
+              <numéro>50</numéro>
               <rue>avenue Félix Viallet</rue>
               <codePostal>38031</codePostal>
               <ville>Grenoble</ville>
@@ -46,10 +46,10 @@
       </patient>
       <patient>
           <nom>Orouge</nom>
-          <prenom>Elvire</prenom>
+          <prénom>Elvire</prénom>
           <sexe>F</sexe>
           <naissance>1982-03-08</naissance>
-          <numeroSecu>282036902305218</numeroSecu>
+          <numéro>282036902305218</numéro>
           <adresse>
               <rue>Rond-Point de la Croix de Vie</rue>
               <codePostal>38700</codePostal>
@@ -61,10 +61,10 @@
       </patient>
       <patient>
           <nom>Pien</nom>
-          <prenom>Oscare</prenom>
+          <prénom>Oscare</prénom>
           <sexe>F</sexe>
           <naissance>1975-03-25</naissance>
-          <numeroSecu>275037306569202</numeroSecu>
+          <numéro>275037306569202</numéro>
           <adresse>
               <rue>rue Casimir Brenier </rue>
               <codePostal>38000</codePostal>
@@ -77,12 +77,12 @@
       </patient>
       <patient>
           <nom>Kapoëtla</nom>
-          <prenom>Xavier</prenom>
+          <prénom>Xavier</prénom>
           <sexe>M</sexe>
           <naissance>2011-08-02</naissance>
-          <numeroSecu>111083306303521</numeroSecu>
+          <numéro>111083306303521</numéro>
           <adresse>
-              <numero>25</numero>
+              <numéro>25</numéro>
               <rue>rue des Martyrs</rue>
               <codePostal>38042</codePostal>
               <ville>Grenoble</ville>
