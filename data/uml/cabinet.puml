@@ -1,0 +1,21 @@
+@startuml
+
+package XMLSchema {
+    class string
+    class date
+    class int
+}
+
+package cabinet {
+    class cabinet {
+        nom : string
+        adress : adress
+        infirmiers[] : infirmiers
+    }
+    class adress {}
+    class infirmiers {}
+    class patients {}
+}
+
+
+@enduml
