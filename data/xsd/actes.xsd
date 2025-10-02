@@ -45,14 +45,14 @@
             <extension base="string">
                 <attribute name="id" type="int"/>
                 <attribute name="type" type="string"/>
-                <attribute name="clé" type="act:typeCle"/>
+                <attribute name="clé" type="act:Clé"/>
                 <attribute name="coef" type="float"/>
             </extension>
         </simpleContent>
     </complexType>
 
     <!-- Enumeration des types de cles -->
-    <simpleType name="typeCle">
+    <simpleType name="Clé">
         <restriction base="string">
             <enumeration value="AMI"/>
             <enumeration value="AIS"/>
