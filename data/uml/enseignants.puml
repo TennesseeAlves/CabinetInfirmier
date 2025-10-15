@@ -1,0 +1,35 @@
+@startuml
+package Enseignants{
+  class Enseignants{
+    filiere : str
+    annee : gYear
+    enseignants : Enseignant[]
+  }
+
+  class Enseignant{
+    nom : Denomination
+    prenom : Denomination
+    specialite : Specialite
+  }
+
+  protocol Denomination{
+    pattern = [A-Z][a-z]*
+  }
+
+  enum Specialite{
+    APO = APO
+    FDD-XML = FDD-XML
+    IHM = IHM
+    RO = RO
+  }
+
+  Enseignants "1" *-- "many" Enseignant
+  Enseignant "1" *-- "2" Denomination
+  Enseignant *-- Specialite
+}
+
+package XMLSchema{
+  class string
+  class gYear
+}
+@enduml
