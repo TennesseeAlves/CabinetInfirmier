@@ -1,0 +1,83 @@
+@startuml
+
+skinparam linetype ortho
+'l'instruction au dessus est pour avoir des lignes orthogonales...
+
+package XMLSchema #DDDDDD {
+    class string
+    class date
+    class int
+}
+package URICabinet {
+    class Cabinet {
+        nom : string
+        adresse : AdresseCabinet
+        infirmiers : Infirmiers
+        patients : Patients
+    }
+    class Infirmier {
+        id : int 
+        nom : string
+        prénom : string
+        photo : string
+    }
+    class Infirmiers {
+        listeInfirmiers : Infirmier[]
+    }
+    class Patient {
+        nom : string
+        prénom : string
+        sexe : Sexe
+        naissance : date
+        numéro : NuméroSecuritéSociale
+        adresse : AdressePatient
+    }
+    class Patients {
+        listePatients : Patient[]
+    }
+    class AdresseCabinet {
+        numéro : int
+        rue : string
+        codePostal : int
+        ville : string
+    }
+    class AdressePatient {
+        étage : int
+        numéro : int
+        rue : string
+        codePostal : int
+        ville : string
+    }
+    class Sexe <<enumération>> {
+        M
+        F
+    }
+    class NuméroSecuritéSociale <<restriction>> {
+        TODO 
+    }
+    class Visite {
+        date : date
+        inervenant : int 
+        acte : Acte
+    }
+    class Acte {
+        id : int
+    }
+    
+    Cabinet "1"*-- Infirmiers
+    Cabinet "1"*-- Patients
+    Cabinet "1"*-- AdresseCabinet
+    
+    Infirmier --*"*" Infirmiers
+    
+    Patient "1"*-- Visite
+    Patient --*"*" Patients
+    Patient "1"*-- AdressePatient
+    
+    Visite "1"*-- Acte
+    
+    Sexe --|> string
+    
+    NuméroSecuritéSociale --|> int
+}
+@enduml

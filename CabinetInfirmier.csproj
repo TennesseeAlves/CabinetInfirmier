@@ -12,7 +12,6 @@
       <Folder Include="data\html\" />
       <Folder Include="data\js\" />
       <Folder Include="data\UML\" />
-      <Folder Include="data\xml\" />
       <Folder Include="data\xsd\" />
       <Folder Include="data\xslt\" />
     </ItemGroup>
