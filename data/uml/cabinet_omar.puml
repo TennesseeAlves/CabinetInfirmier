@@ -21,9 +21,6 @@ package URICabinet {
         prénom : string
         photo : string
     }
-    class Infirmiers {
-        listeInfirmiers : Infirmier[]
-    }
     class Patient {
         nom : string
         prénom : string
@@ -34,6 +31,9 @@ package URICabinet {
     }
     class Patients {
         listePatients : Patient[]
+    }
+    class Infirmiers {
+        listeInfirmiers : Infirmier[]
     }
     class AdresseCabinet {
         numéro : int
@@ -60,15 +60,17 @@ package URICabinet {
         inervenant : int 
         acte : Acte
     }
-    class Acte {
+    class Acte <<restriction>> {
         id : int
     }
     
-    Cabinet "1"*-- Infirmiers
-    Cabinet "1"*-- Patients
-    Cabinet "1"*-- AdresseCabinet
+    Sexe --|> string
     
     Infirmier --*"*" Infirmiers
+    
+    Infirmiers --*"1" Cabinet
+    Cabinet "1"*-- Patients
+    Cabinet "1"*-- AdresseCabinet
     
     Patient "1"*-- Visite
     Patient --*"*" Patients
@@ -76,7 +78,7 @@ package URICabinet {
     
     Visite "1"*-- Acte
     
-    Sexe --|> string
+    Acte --|> int
     
     NuméroSecuritéSociale --|> int
 }
