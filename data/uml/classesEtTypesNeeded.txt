@@ -1,7 +1,0 @@
-classes:
-- cabinet
-- infirmier
-- patient
-- adresse
-
-types :

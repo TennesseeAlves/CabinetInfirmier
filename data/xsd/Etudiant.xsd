@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns:ta3na="http://www.uga.fr/etudiant"
+        targetNamespace="http://www.uga.fr/etudiant"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+>
+   <element name="étudiant" type="ta3na:Étudiant"/>
+       
+    <complexType name="Étudiant">
+        <sequence>
+            <element name="nom"/>
+            <element name="prénom"/>
+            <element name="sex" type="ta3na:Sex"/>
+            <element name="adresse" type="ta3na:Adresse"/>
+            <element name="ue" type="ta3na:Ue"/>
+        </sequence>
+    </complexType>
+    
+    <!-- TODO -->
+    <simpleType name="Sex"> 
+        <restriction base="string">
+            <enumeration value="H"/>
+            <enumeration value="F"/>
+        </restriction>
+    </simpleType>
+
+    <!-- TODO -->
+    <complexType name="Adresse">
+        <sequence>
+        </sequence>
+    </complexType>
+
+    <!-- TODO -->
+    <complexType name="Ue">
+        <sequence>
+            <element name="note" type="double"/>
+            <element name="validée" type="boolean"/>
+        </sequence>
+        <attribute name="nom" type="string"/>
+        <attribute name="coeff" type="int"/>
+    </complexType>
+    
+</schema>

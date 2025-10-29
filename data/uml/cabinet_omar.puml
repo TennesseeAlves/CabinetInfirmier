@@ -1,6 +1,6 @@
 @startuml
 
-skinparam linetype ortho
+'skinparam linetype ortho
 'l'instruction au dessus est pour avoir des lignes orthogonales...
 
 package XMLSchema #DDDDDD {
@@ -8,78 +8,145 @@ package XMLSchema #DDDDDD {
     class date
     class int
 }
+package URIActes {
+    class Ngap {
+        types : Types
+        actes : Actes
+    }
+    note right of Ngap
+        «racine» ngap
+    end note
+    class Acte {
+        {unique} {attribute} id : string
+        {attribute} type : string
+        {attribute} clé : CléActe
+        {attribute} coef : double {>0}
+    }
+    note right of Acte::type
+        ∈ Type.id
+    end note
+    
+    class Actes {
+        actes : Acte[]
+    }
+    
+    class Type {
+        {unique} {attribute} id : string
+    }
+    class Types {
+        types : Type[]
+    }
+    
+    enum CléActe {
+        AMI
+        AIS
+        DI
+    }
+    
+    Ngap *--"1" Types
+    Ngap *--"1" Actes
+    
+    Actes *--"*" Acte : liste
+    Acte "*"*--"1" CléActe
+    
+    Types *--"*" Type : liste
+    
+    CléActe --|> string
+}
 package URICabinet {
+    note as noteHeritagePersonne
+        note : on pourrait rajouter une classe «Personne»
+        on aura donc un Patient et Infirmier qui hériteront
+        de la classe Personne
+    end note
+    
     class Cabinet {
         nom : string
-        adresse : AdresseCabinet
-        infirmiers : Infirmiers
-        patients : Patients
+        adresse : Adresse
+        infirmiers : Infirmier[]
+        patients : Patient[]
     }
+    note left of Cabinet
+        <<racine>> cabinet
+    end note
+    
     class Infirmier {
-        id : int 
+        {unique} id : int { > 0 } 
         nom : string
         prénom : string
         photo : string
     }
+    
     class Patient {
         nom : string
         prénom : string
         sexe : Sexe
         naissance : date
         numéro : NuméroSecuritéSociale
-        adresse : AdressePatient
+        adresse : Adresse
     }
-    class Patients {
-        listePatients : Patient[]
-    }
-    class Infirmiers {
-        listeInfirmiers : Infirmier[]
-    }
-    class AdresseCabinet {
-        numéro : int
+    
+    class Adresse {
+        {optional} étage : int {>0}
+        {optional} numéro : int {>0}
         rue : string
-        codePostal : int
+        codePostal : CodePostal
         ville : string
     }
-    class AdressePatient {
-        étage : int
-        numéro : int
-        rue : string
-        codePostal : int
-        ville : string
-    }
-    class Sexe <<enumération>> {
+    
+    Enum Sexe <<enum>> {
         M
         F
     }
-    class NuméroSecuritéSociale <<restriction>> {
-        TODO 
+    
+    class NuméroSecuritéSociale <<pattern>> {
+        [12] \d{2} ([1][0-2]|[0][1-9]) \d{5} \d{3} \d[1-7]
     }
+    note top of NuméroSecuritéSociale
+        1er chiffre : Sexe (1 pour homme, 2 pour femme).
+        2e et 3e chiffres : Année de naissance.
+        4e et 5e chiffres : Mois de naissance.
+        6e à 10e chiffres : Code INSEE de lieu de naissance.
+        11e à 13e chiffres : Numéro d'ordre.
+        14e et 15e chiffres : Clé de contrôle.
+    end note
+    
+    class CodePostal <<pattern>> {
+        \d{5}
+    }
+    note left of CodePostal
+        un nombre à 5 chiffres
+    end note
+    
     class Visite {
         date : date
-        inervenant : int 
-        acte : Acte
+        intervenant : string
+        acte : string
     }
-    class Acte <<restriction>> {
-        id : int
-    }
+    note right of Visite::intervenant
+        ∈ Infirmier.id
+        'intervenant ∈ Infirmier.id
+    end note
+    note right of Visite::acte
+        ∈ Acte.id
+        'acte ∈ Acte.id
+    end note
+    
+    Cabinet *--"1..*" Infirmier : liste
+    Cabinet *--"1..*" Patient : liste
+    Cabinet *--"1" Adresse
+    
+    Patient *--"1" Sexe
+    Patient "1"*--"1..*" Visite
+    Patient "1"*--"1" NuméroSecuritéSociale
+    Patient *--"1" Adresse
+    
+    Visite "0..*"*--"1..*" Acte
+    
+    Adresse *--"1" CodePostal
     
     Sexe --|> string
-    
-    Infirmier --*"*" Infirmiers
-    
-    Infirmiers --*"1" Cabinet
-    Cabinet "1"*-- Patients
-    Cabinet "1"*-- AdresseCabinet
-    
-    Patient "1"*-- Visite
-    Patient --*"*" Patients
-    Patient "1"*-- AdressePatient
-    
-    Visite "1"*-- Acte
-    
-    Acte --|> int
-    
-    NuméroSecuritéSociale --|> int
+    NuméroSecuritéSociale --|> string
+    CodePostal --|> string
 }
 @enduml
