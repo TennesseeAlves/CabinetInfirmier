@@ -65,10 +65,11 @@
     <!-- Visite -->
     <complexType name="Visite">
         <sequence>
-            <element name="acte" type="cab:Acte"/>
+            <!-- une visite peut avoir plusieurs actes -->
+            <element name="acte" type="cab:Acte" maxOccurs="unbounded"/>
         </sequence>
         <attribute name="intervenant" type="string"/> <!-- TODO: contrainte d'appartenance à Infirmier.id -->
-        <attribute name="date" type="date"/>
+        <attribute name="date" type="date" use="required"/>
     </complexType>
 
     <!-- Acte -->
