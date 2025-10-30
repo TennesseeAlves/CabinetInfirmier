@@ -8,51 +8,6 @@ package XMLSchema #DDDDDD {
     class date
     class int
 }
-package URIActes {
-    class Ngap {
-        types : Types
-        actes : Actes
-    }
-    note right of Ngap
-        «racine» ngap
-    end note
-    class Acte {
-        {unique} {attribute} id : string
-        {attribute} type : string
-        {attribute} clé : CléActe
-        {attribute} coef : double {>0}
-    }
-    note right of Acte::type
-        ∈ Type.id
-    end note
-    
-    class Actes {
-        actes : Acte[]
-    }
-    
-    class Type {
-        {unique} {attribute} id : string
-    }
-    class Types {
-        types : Type[]
-    }
-    
-    enum CléActe {
-        AMI
-        AIS
-        DI
-    }
-    
-    Ngap *--"1" Types
-    Ngap *--"1" Actes
-    
-    Actes *--"*" Acte : liste
-    Acte "*"*--"1" CléActe
-    
-    Types *--"*" Type : liste
-    
-    CléActe --|> string
-}
 package URICabinet {
     note as noteHeritagePersonne
         note : on pourrait rajouter une classe «Personne»
@@ -71,11 +26,17 @@ package URICabinet {
     end note
     
     class Infirmier {
-        {unique} id : int { > 0 } 
+        {unique}{attribute} id : int {>0} 
         nom : string
         prénom : string
-        photo : string
+        photo : Photo
     }
+    class Photo <<pattern>> {
+        [A-Za-z]*
+    }
+    note right of Photo
+        À changer éventuellement
+    end note
     
     class Patient {
         nom : string
@@ -94,7 +55,7 @@ package URICabinet {
         ville : string
     }
     
-    Enum Sexe <<enum>> {
+    Enum Sexe  {
         M
         F
     }
@@ -114,27 +75,33 @@ package URICabinet {
     class CodePostal <<pattern>> {
         \d{5}
     }
-    note left of CodePostal
+    note right of CodePostal
         un nombre à 5 chiffres
     end note
     
     class Visite {
-        date : date
-        intervenant : string
-        acte : string
+        {attribute} date : date
+        {attribute} intervenant : string
+        acte : Acte
     }
-    note right of Visite::intervenant
+    note left of Visite::intervenant
         ∈ Infirmier.id
         'intervenant ∈ Infirmier.id
     end note
-    note right of Visite::acte
-        ∈ Acte.id
-        'acte ∈ Acte.id
+    
+    class Acte {
+        {attribute} id : string
+    }
+    note right of Acte::id
+        ∈ Actes.Acte.id
+        'id ∈ Acte.id
     end note
     
     Cabinet *--"1..*" Infirmier : liste
     Cabinet *--"1..*" Patient : liste
     Cabinet *--"1" Adresse
+    
+    Infirmier *-- "1" Photo
     
     Patient *--"1" Sexe
     Patient "1"*--"1..*" Visite
@@ -143,10 +110,11 @@ package URICabinet {
     
     Visite "0..*"*--"1..*" Acte
     
-    Adresse *--"1" CodePostal
+    Adresse "*" *--"1" CodePostal
     
     Sexe --|> string
     NuméroSecuritéSociale --|> string
     CodePostal --|> string
+    Photo --|> string
 }
 @enduml

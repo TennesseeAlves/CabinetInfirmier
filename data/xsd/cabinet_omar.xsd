@@ -10,11 +10,11 @@
     <!-- Type de la racine  -->
     <complexType name="Cabinet">
         <sequence>
+            <element name="nom" type="string"/>
             <element name="adresse" type="cab:Adresse"/>
             <element name="infirmiers" type="cab:Infirmiers"/>
             <element name="patients" type="cab:Patients"/>
         </sequence>
-        <attribute name="nom" type="string"/>
     </complexType>
     
     <!-- Adresse -->
@@ -36,11 +36,12 @@
     </complexType>
     <complexType name="Infirmier">
         <sequence>
-            <element name="id" type="positiveInteger"/> <!-- TODO: faudra vérifier l'uniciter (bien sur ça sera en dehors de ce type..) -->
             <element name="nom" type="string"/>
             <element name="prénom" type="string"/>
             <element name="photo" type="cab:Photo"/>
         </sequence>
+        <!-- TODO: faudra vérifier l'uniciter de l'id (bien sur ça sera en dehors de ce type..) -->
+        <attribute name="id" type="positiveInteger"/>
     </complexType>
 
     <!-- Patients -->
@@ -57,20 +58,23 @@
             <element name="naissance" type="date"/>
             <element name="numéro" type="cab:NuméroSecuritéSociale"/>
             <element name="adresse" type="cab:Adresse"/>
-            <element name="visite" type="cab:Visite" maxOccurs="unbounded"/>
+            <element name="visite" type="cab:Visite" maxOccurs="unbounded"/> <!-- TODO: Unicité des visites -->
         </sequence>
     </complexType>
 
     <!-- Visite -->
     <complexType name="Visite">
         <sequence>
-            <element name="date" type="date"/>
-            <element name="intervenant" type="string"/> <!-- contrainte d'appartenance à Infirmier.id -->
-            <element name="acte" type="string"/> <!-- contrainte d'appartenance à Acte.id -->
+            <element name="acte" type="cab:Acte"/>
         </sequence>
+        <attribute name="intervenant" type="string"/> <!-- TODO: contrainte d'appartenance à Infirmier.id -->
+        <attribute name="date" type="date"/>
     </complexType>
-    
-    
+
+    <!-- Acte -->
+    <complexType name="Acte">
+        <attribute name="id" type="string"/> <!-- TODO: contrainte d'appartenance à Acte.id -->
+    </complexType>
     
     <!-- SIMPLE TYPES -->
 
@@ -100,5 +104,6 @@
             <pattern value="[12]\d{2}([1][0-2]|[0][1-9])\d{5}\d{3}\d[1-7]"/>
         </restriction>
     </simpleType>
+    
     
 </schema>
