@@ -13,10 +13,16 @@
     </adresse>
     
     <infirmiers>
-        <infirmier>
-            <nom>TENESSEE</nom>
+        <infirmier id="101">
+            <nom>TENNESSEE</nom>
             <prénom>Alves</prénom>
             <photo>alves.png</photo>
+        </infirmier>
+        
+        <infirmier id="102">
+            <nom>GATOR</nom>
+            <prénom>Ali</prénom>
+            <photo>aligator.png</photo>
         </infirmier>
     </infirmiers>
     
@@ -83,13 +89,13 @@
             <numéro>111083306303521</numéro>
             <adresse>
                 <numéro>25</numéro>
-                <rue>rue des Martys</rue>
+                <rue>rue des Martyrs</rue>
                 <codePostal>38042</codePostal>
                 <ville>Grenoble</ville>
             </adresse>
             <visite date="2015-12-08">
-                <acte id="101"/> <!-- ponction veineuse directe -->
-                <acte id="105"/> <!-- injection intraveineuse directe isolée d’anthalgiques -->
+                <acte id="101"/> <!-- injection de plusieurs allergènes
+ afin d’être désensibilisé -->
             </visite>
         </patient>
     </patients>

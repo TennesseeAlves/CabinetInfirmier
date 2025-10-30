@@ -32,6 +32,7 @@
     <complexType name="Infirmiers">
         <sequence>
             <element name="infirmier" type="cab:Infirmier" maxOccurs="unbounded"/>
+            <!-- TODO: Unicité patient -->
         </sequence>
     </complexType>
     <complexType name="Infirmier">
@@ -40,14 +41,14 @@
             <element name="prénom" type="string"/>
             <element name="photo" type="cab:Photo"/>
         </sequence>
-        <!-- TODO: faudra vérifier l'uniciter de l'id (bien sur ça sera en dehors de ce type..) -->
-        <attribute name="id" type="positiveInteger"/>
+        <attribute name="id" type="positiveInteger" use="required"/>
     </complexType>
 
     <!-- Patients -->
     <complexType name="Patients">
         <sequence>
-            <element name="patient" type="cab:Patient" maxOccurs="unbounded"/>
+            <element name="patient" type="cab:Patient" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- TODO: Unicité patient : éviter les redondances -->
         </sequence>
     </complexType>
     <complexType name="Patient">
@@ -58,8 +59,9 @@
             <element name="naissance" type="date"/>
             <element name="numéro" type="cab:NuméroSecuritéSociale"/>
             <element name="adresse" type="cab:Adresse"/>
-            <element name="visite" type="cab:Visite" maxOccurs="unbounded"/> <!-- TODO: Unicité des visites -->
+            <element name="visite" type="cab:Visite" maxOccurs="unbounded"/> 
         </sequence>
+        <!-- TODO: Unicité visites (2 patients ne peuvent pas avoir une même visite) -->
     </complexType>
 
     <!-- Visite -->
