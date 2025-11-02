@@ -71,6 +71,10 @@ package URICabinet {
         11e à 13e chiffres : Numéro d'ordre de naissance.
         14e et 15e chiffres : Clé de contrôle.
     end note
+    note bottom of NuméroSecuritéSociale
+        On considère uniquement les codes postaux
+        standards, composés de cinq chiffres.
+    end note
     
     class CodePostal <<pattern>> {
         \d{5}
