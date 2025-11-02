@@ -8,11 +8,11 @@ package XMLSchema #DDDDDD {
     class date
     class int
 }
+
 package URICabinet {
     note as noteHeritagePersonne
-        note : on pourrait rajouter une classe «Personne»
-        on aura donc un Patient et Infirmier qui hériteront
-        de la classe Personne
+        note : on pourrait rajouter une classe «Personne».
+        Donc, Patient et Infirmier hériteront de cette classe.
     end note
     
     class Cabinet {
@@ -32,7 +32,7 @@ package URICabinet {
         photo : Photo
     }
     class Photo <<pattern>> {
-        [A-Za-z]*
+        string
     }
     note right of Photo
         À changer éventuellement
@@ -68,7 +68,7 @@ package URICabinet {
         2e et 3e chiffres : Année de naissance.
         4e et 5e chiffres : Mois de naissance.
         6e à 10e chiffres : Code INSEE de lieu de naissance.
-        11e à 13e chiffres : Numéro d'ordre.
+        11e à 13e chiffres : Numéro d'ordre de naissance.
         14e et 15e chiffres : Clé de contrôle.
     end note
     
@@ -85,16 +85,14 @@ package URICabinet {
         acte : Acte
     }
     note left of Visite::intervenant
-        ∈ Infirmier.id
-        'intervenant ∈ Infirmier.id
+        ∈ //Infirmier/@id
     end note
     
     class Acte {
         {attribute} id : int {>0}
     }
     note right of Acte::id
-        ∈ Actes.Acte.id
-        'id ∈ Acte.id
+        ∈ URIActes://Acte/@id
     end note
     
     Cabinet *--"1..*" Infirmier : liste
@@ -117,4 +115,53 @@ package URICabinet {
     CodePostal --|> string
     Photo --|> string
 }
+
+
+
+package URIActes {
+    class Ngap {
+        types : Types
+        actes : Actes
+    }
+    note right of Ngap
+        «racine» ngap
+    end note
+    class Acte {
+        {unique} {attribute} id : int {>0}
+        {attribute} type : int {>0}
+        {attribute} clé : CléActe
+        {attribute} coef : double {>0}
+    }
+    note right of Acte::type
+        ∈ //Type/@id
+    end note
+    
+    class Actes {
+        actes : Acte[]
+    }
+    
+    class Type {
+        {unique} {attribute} id : int {>0}
+    }
+    class Types {
+        types : Type[]
+    }
+    
+    enum CléActe {
+        AMI
+        AIS
+        DI
+    }
+    
+    Ngap *--"1" Types
+    Ngap *--"1" Actes
+    
+    Actes *--"*" Acte : liste
+    Acte "*"*--"1" CléActe
+    
+    Types *--"*" Type : liste
+    
+    CléActe --|> string
+}
+
 @enduml

@@ -15,13 +15,13 @@ package URIActes {
         «racine» ngap
     end note
     class Acte {
-        {unique} {attribute} id : string
-        {attribute} type : string
+        {unique} {attribute} id : int {>0}
+        {attribute} type : int {>0}
         {attribute} clé : CléActe
         {attribute} coef : double {>0}
     }
     note right of Acte::type
-        ∈ Type.id
+        ∈ //Type/@id
     end note
     
     class Actes {
@@ -29,7 +29,7 @@ package URIActes {
     }
     
     class Type {
-        {unique} {attribute} id : string
+        {unique} {attribute} id : int {>0}
     }
     class Types {
         types : Type[]
