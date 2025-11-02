@@ -8,11 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="data\css\" />
-      <Folder Include="data\html\" />
-      <Folder Include="data\js\" />
       <Folder Include="data\UML\" />
-      <Folder Include="data\xslt\" />
     </ItemGroup>
 
 </Project>
