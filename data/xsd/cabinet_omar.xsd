@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
         xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+        xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+        
         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
-        elementFormDefault="qualified"
+        elementFormDefault="qualified" 
 >
-    <!-- Element racine -->
-    <element name="cabinet" type="cab:Cabinet"/>
+    <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+            schemaLocation="./actes.xsd"/>
+    
+    <!-- ······ Element racine ······ -->
+    <element name="cabinet" type="cab:Cabinet">
+        
+        <!-- Clef unicité id infirmier -->
+        <key name="clefIdInfirmier">
+            <selector xpath="cab:infirmiers/cab:infirmier"/>
+            <field xpath="@id"/>
+        </key>
+        
+        <!-- Clef unicité numéroSecuritéSociale d'un patient -->
+        <key name="clefNuméroSecuritéSociale">
+            <selector xpath="cab:patients/cab:patient/cab:numéro"/>
+            <field xpath="."/>
+        </key>
+        
+        <!-- L'intervenant dans une visite doit être un id d'infirmier existant -->
+        <keyref name="foreignKeyIdInfirmier" refer="cab:clefIdInfirmier">
+            <selector xpath="cab:patients/cab:patient/cab:visite"/>
+            <field xpath="@intervenant"/>
+        </keyref>
+        
+    </element>
+    
     
     <!-- Type de la racine  -->
     <complexType name="Cabinet">
@@ -32,7 +58,6 @@
     <complexType name="Infirmiers">
         <sequence>
             <element name="infirmier" type="cab:Infirmier" maxOccurs="unbounded"/>
-            <!-- TODO: Unicité patient -->
         </sequence>
     </complexType>
     <complexType name="Infirmier">
@@ -41,16 +66,16 @@
             <element name="prénom" type="string"/>
             <element name="photo" type="cab:Photo"/>
         </sequence>
-        <attribute name="id" type="positiveInteger" use="required"/>
+        <attribute name="id" type="unsignedInt" use="required"/>
     </complexType>
 
     <!-- Patients -->
     <complexType name="Patients">
         <sequence>
             <element name="patient" type="cab:Patient" minOccurs="0" maxOccurs="unbounded"/>
-            <!-- TODO: Unicité patient : éviter les redondances -->
         </sequence>
     </complexType>
+    
     <complexType name="Patient">
         <sequence>
             <element name="nom" type="string"/>
@@ -61,7 +86,6 @@
             <element name="adresse" type="cab:Adresse"/>
             <element name="visite" type="cab:Visite" maxOccurs="unbounded"/> 
         </sequence>
-        <!-- TODO: Unicité visites (2 patients ne peuvent pas avoir une même visite) -->
     </complexType>
 
     <!-- Visite -->
@@ -70,13 +94,13 @@
             <!-- une visite peut avoir plusieurs actes -->
             <element name="acte" type="cab:Acte" maxOccurs="unbounded"/>
         </sequence>
-        <attribute name="intervenant" type="string"/> <!-- TODO: contrainte d'appartenance à Infirmier.id -->
+        <attribute name="intervenant" type="unsignedInt"/>
         <attribute name="date" type="date" use="required"/>
     </complexType>
 
     <!-- Acte -->
     <complexType name="Acte">
-        <attribute name="id" type="string"/> <!-- TODO: contrainte d'appartenance à Acte.id -->
+        <attribute name="id" type="act:IdActes"/>
     </complexType>
     
     <!-- SIMPLE TYPES -->

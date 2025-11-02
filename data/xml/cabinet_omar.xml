@@ -7,12 +7,13 @@
     
     <adresse>
         <numéro>999</numéro>
-        <rue>Rue de mon cabinet fantastique</rue>
+        <rue>Rue du cabinet fantastique</rue>
         <codePostal>38400</codePostal>
         <ville>Saint Martin d'Hères</ville>
     </adresse>
     
     <infirmiers>
+        
         <infirmier id="101">
             <nom>TENNESSEE</nom>
             <prénom>Alves</prénom>
@@ -24,9 +25,11 @@
             <prénom>Ali</prénom>
             <photo>aligator.png</photo>
         </infirmier>
+        
     </infirmiers>
     
     <patients>
+        
         <patient>
             <nom>BARKOK</nom>
             <prénom>Omar</prénom>
@@ -43,11 +46,10 @@
             <visite date="2025-03-23" intervenant="101">
                 <acte id="101"/>
             </visite>
-            <visite date="2025-03-24" intervenant="101">
-                <acte id="102"/>
-            </visite>
         </patient>
+        
         <!-- Ajout des patients de l'énoncé -->
+        
         <patient>
             <nom>Orouge</nom>
             <prénom>Elvire</prénom>
@@ -76,8 +78,10 @@
                 <ville>Grenoble</ville>
             </adresse>
             <visite date="2015-12-08">
-                <acte id="101"/> <!-- ponction veineuse directe -->
-                <acte id="105"/> <!-- injection intraveineuse directe isolée d’anthalgiques -->
+                <!-- ponction veineuse directe -->
+                <acte id="101"/>
+                <!-- injection intraveineuse directe isolée d’anthalgiques -->
+                <acte id="105"/> 
             </visite>
         </patient>
         
@@ -94,8 +98,8 @@
                 <ville>Grenoble</ville>
             </adresse>
             <visite date="2015-12-08">
-                <acte id="101"/> <!-- injection de plusieurs allergènes
- afin d’être désensibilisé -->
+                <!-- injection de plusieurs allergènes afin d’être désensibilisé -->
+                <acte id="106"/> 
             </visite>
         </patient>
     </patients>

@@ -16,6 +16,7 @@
             soit son âge, en situation de dépendance temporaire ou permanante.
         </type>
     </types>
+    
     <actes>
         <acte id="101" type="pi" clé="AMI" coef="1.5">
             Prélèvement par ponction veineuse directe
@@ -29,6 +30,19 @@
             de selles ou d’urine pour examens sytologiques, bactériologiques,
             mycologiques.
         </acte>
-        <!-- ... et plein d’autres actes-->
+        
+        <!-- Actes correspondant aux soins des nouveaux patients rajoutés -->
+        
+        <acte id="104" type="pl" clé="AMI" coef="3.15">
+            Pensement de brulûre étendue
+        </acte>
+        <acte id="105" type="pi" clé="AMI" coef="3.15">
+            injection intraveineuse directe isolée d’anthalgiques
+        </acte>
+        <acte id="106" type="pi" clé="AMI" coef="3.15">
+            injection de plusieurs allergènes afin d’être désensibilisé
+        </acte>
+        
+        
     </actes>
 </ngap>

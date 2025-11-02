@@ -90,7 +90,7 @@ package URICabinet {
     end note
     
     class Acte {
-        {attribute} id : string
+        {attribute} id : int {>0}
     }
     note right of Acte::id
         ∈ Actes.Acte.id
