@@ -1,7 +1,7 @@
 <html xmlns:met="http://www.univ-grenoble-alpes.fr/l3miage/medical" xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes">
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="../factures.js"></script>
+        <script src="facture.js"></script>
         <title>Page infirmiere</title>
     </head>
     <body>
@@ -23,7 +23,11 @@
             Injection sous-cutan&eacute;e.
         </li>
             </ol>
-            <button>Factures</button>
+            <button onclick="
+                    afficherFacture('Yvon',
+                    'Al&eacute;cole',
+                    '109')
+                ">Factures</button>
         </ul>
     </body>
 </html>

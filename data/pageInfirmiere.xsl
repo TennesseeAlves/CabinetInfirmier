@@ -12,7 +12,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                <script src="../factures.js"> </script>
+                <script src="facture.js"></script>
                 <title>Page infirmiere</title>
             </head>
             <body>
@@ -36,17 +36,17 @@
             <ol>
 
                 <!-- ici on renvoie le traitement de chaque acte(soins) des patients dans un template dédié -->
-                <xsl:apply-templates select="./met:acte"/>
+                <xsl:templates select="./met:acte"/>
 
             </ol>
             <!-- implémentation du bouton factures -->
             <xsl:element name="button">
-                <xsl:text>Factures</xsl:text>
                 <xsl:attribute name="onclick">
                     afficherFacture('<xsl:value-of select="../met:prénom"/>',
                     '<xsl:value-of select="../met:nom"/>',
-                    '<xsl:value-of select="./met:acte"/>')
+                    '<xsl:value-of select="met:acte/@id"/>')
                 </xsl:attribute>
+                <xsl:text>Factures</xsl:text>
             </xsl:element>
             <!-- <button type="button"/> -->
 
