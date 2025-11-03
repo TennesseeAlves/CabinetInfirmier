@@ -21,20 +21,8 @@
         <html>
             <head>
                 <title>page infirmiere</title>
-                <style>
-                    <!-- exemple de bout de css trouvé en ligne -->
-                    .patient { 
-                        width: 50%;                  /* Half the page width */
-                        background-color: #f0f8ff;   /* Light blue background */
-                        border: 2px solid #4682b4;   /* Steel blue border */
-                        color: #333;                 /* Text color */
-                        padding: 15px;
-                        border-radius: 8px;
-                        margin: 20px auto;           /* Center the box horizontally */
-                        box-sizing: border-box;     /* Includes padding in the width */
-                        font-family: Arial, sans-serif;
-                    }
-                </style>
+                <link rel="stylesheet" href="../css/pageInfirmiere.css"/>
+                <script src="../js/facture.js"></script>
             </head>
             
             <body>
@@ -55,18 +43,30 @@
     <!-- Template patient -->
     <xsl:template match="cab:patient">
         <xsl:variable name="patient" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
+        <xsl:variable name="nom" select="cab:nom/text()"/>
+        <xsl:variable name="prenom" select="cab:prénom/text()"/>
         <div class="patient">
-            <p><b>Nom : </b><xsl:value-of select="cab:nom/text()"/></p>
-            <p><b>Prénom : </b><xsl:value-of select="cab:prénom/text()"/></p>
+            <p><b>Nom : </b><xsl:value-of select="$nom"/></p>
+            <p><b>Prénom : </b><xsl:value-of select="$prenom"/></p>
             <p><b>Sexe : </b><xsl:value-of select="cab:sexe/text()"/></p>
             <p><b>Date de naissace : </b><xsl:value-of select="cab:naissance/text()"/></p>
             <p><b>NIR : </b><xsl:value-of select="cab:numéro/text()"/></p>
             <p><b>Adresse : </b><xsl:apply-templates select="cab:adresse"/></p>
             
-            <h4><u>Liste des soins à effectuer pour ce patient :</u></h4>
+            <h4><u>Liste des soins à effectuer pour ce patient</u> :</h4>
             <xsl:apply-templates select="cab:visite">
                 <xsl:sort select="@date" order="ascending"/>
             </xsl:apply-templates>
+            
+            <h4><u>Facture</u> :</h4>
+            <button type="button">Facture</button>
+            
+            <xsl:element name="buttonFacture">
+                Facture
+                <xsl:attribute name="onclick">
+                    openFacture('<xsl:value-of select="$prenom"/>', '<xsl:value-of select="$nom"/>', '<xsl:value-of select="cab:visite/cab:acte"/>')
+                </xsl:attribute>
+            </xsl:element>
         </div>
     </xsl:template>
     
