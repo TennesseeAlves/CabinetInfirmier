@@ -52,6 +52,11 @@
             <visite date="2025-03-23" intervenant="001">
                 <acte id="101"/>
             </visite>
+            <visite date="2025-03-20" intervenant="001">
+                <acte id="104"/>
+                <acte id="103"/>
+            </visite>
+            
         </patient>
 
         <!-- Ajout des patients de l'énoncé -->
