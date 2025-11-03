@@ -22,6 +22,20 @@
         <html>
             <head>
                 <title>page infirmiere</title>
+                <style>
+                    <!-- exemple tiré par des IA -->
+                    .patient { 
+                        width: 50%;                  /* Half the page width */
+                        background-color: #f0f8ff;   /* Light blue background */
+                        border: 2px solid #4682b4;   /* Steel blue border */
+                        color: #333;                 /* Text color */
+                        padding: 15px;
+                        border-radius: 8px;
+                        margin: 20px auto;           /* Center the box horizontally */
+                        box-sizing: border-box;     /* Includes padding in the width */
+                        font-family: Arial, sans-serif;
+                    }
+                </style>
             </head>
             
             <body>
@@ -42,19 +56,19 @@
     <!-- Template patient -->
     <xsl:template match="cab:patient">
         <xsl:variable name="patient" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
-        <ul>
-            <li>Nom : <xsl:value-of select="cab:nom/text()"/></li>
-            <li>Prénom : <xsl:value-of select="cab:prénom/text()"/></li>
-            <li>Sexe : <xsl:value-of select="cab:sexe/text()"/></li>
-            <li>Date de naissace : <xsl:value-of select="cab:naissance/text()"/></li>
-            <li>NIR : <xsl:value-of select="cab:numéro/text()"/></li>
-            <li>Adresse : <xsl:apply-templates select="cab:adresse"/></li>
-        </ul>
-        <h3>Liste des soins à effectuer pour ce patient :</h3>
-        <xsl:apply-templates select="cab:visite">
-            <xsl:sort select="@date" order="ascending"/>
-        </xsl:apply-templates>
-        <hr/>
+        <div class="patient">
+            <p><b>Nom : </b><xsl:value-of select="cab:nom/text()"/></p>
+            <p><b>Prénom : </b><xsl:value-of select="cab:prénom/text()"/></p>
+            <p><b>Sexe : </b><xsl:value-of select="cab:sexe/text()"/></p>
+            <p><b>Date de naissace : </b><xsl:value-of select="cab:naissance/text()"/></p>
+            <p><b>NIR : </b><xsl:value-of select="cab:numéro/text()"/></p>
+            <p><b>Adresse : </b><xsl:apply-templates select="cab:adresse"/></p>
+            
+            <h4><u>Liste des soins à effectuer pour ce patient :</u></h4>
+            <xsl:apply-templates select="cab:visite">
+                <xsl:sort select="@date" order="ascending"/>
+            </xsl:apply-templates>
+        </div>
     </xsl:template>
     
     <!-- Template visites d'un patient -->

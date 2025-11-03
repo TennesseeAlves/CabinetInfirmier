@@ -88,7 +88,7 @@
                 <codePostal>38000</codePostal>
                 <ville>Grenoble</ville>
             </adresse>
-            <visite date="2015-12-08">
+            <visite date="2015-12-08" intervenant="001">
                 <!-- ponction veineuse directe -->
                 <acte id="101"/>
                 <!-- injection intraveineuse directe isolée d’anthalgiques -->
@@ -108,7 +108,7 @@
                 <codePostal>38042</codePostal>
                 <ville>Grenoble</ville>
             </adresse>
-            <visite date="2015-12-08">
+            <visite date="2015-12-08" intervenant="001">
                 <!-- injection de plusieurs allergènes afin d’être désensibilisé -->
                 <acte id="106"/>
             </visite>

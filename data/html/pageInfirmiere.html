@@ -2,44 +2,130 @@
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>page infirmiere</title>
+        <style>
+                    
+                    .patient { 
+                        width: 50%;                  /* Half the page width */
+                        background-color: #f0f8ff;   /* Light blue background */
+                        border: 2px solid #4682b4;   /* Steel blue border */
+                        color: #333;                 /* Text color */
+                        padding: 15px;
+                        border-radius: 8px;
+                        margin: 20px auto;           /* Center the box horizontally */
+                        box-sizing: border-box;     /* Includes padding in the width */
+                        font-family: Arial, sans-serif;
+                    }
+                </style>
     </head>
     <body>
         <div>
             <p>Bonjour Alves,</p>
-            <p>Aujourd'hui, vous avez 1 patients</p>
+            <p>Aujourd'hui, vous avez 3 patients</p>
         </div>
         <div>
             <h1>Voici la liste des patients &agrave; visiter :</h1>
-            <ul>
-                <li>Nom : BARKOK</li>
-                <li>Pr&eacute;nom : Omar</li>
-                <li>Sexe : M</li>
-                <li>Date de naissace : 2002-03-23</li>
-                <li>NIR : 102039999988877</li>
-                <li>
-                    Adresse : <span>1&egrave; &eacute;tage, 125 all&eacute;e Condillac, 38400 Saint Martin d'H&egrave;res</span>
-                </li>
-            </ul>
-            <h3>Liste des soins &agrave; effectuer pour ce patient :</h3>
-            <h4>2025-03-20</h4>
-            <ul>
-                <li>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>BARKOK
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Omar
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>2002-03-23
+                </p>
+                <p>
+                    <b>NIR : </b>102039999988877
+                </p>
+                <p>
+                    <b>Adresse : </b><span>1&egrave; &eacute;tage, 125 all&eacute;e Condillac, 38400 Saint Martin d'H&egrave;res</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient :</u>
+                </h4>
+                <h4>2025-03-20</h4>
+                <ul>
+                    <li>
             Pensement de brul&ucirc;re &eacute;tendue
         </li>
-                <li>
+                    <li>
             Pr&eacute;l&egrave;vement aseptique cutan&eacute; ou de s&eacute;cr&eacute;tions muqueuses, pr&eacute;l&egrave;
             vement
             de selles ou d&rsquo;urine pour examens sytologiques, bact&eacute;riologiques,
             mycologiques.
         </li>
-            </ul>
-            <h4>2025-03-23</h4>
-            <ul>
-                <li>
+                </ul>
+                <h4>2025-03-23</h4>
+                <ul>
+                    <li>
             Pr&eacute;l&egrave;vement par ponction veineuse directe
         </li>
-            </ul>
-            <hr>
+                </ul>
+            </div>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>Pien
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Oscare
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>1975-03-25
+                </p>
+                <p>
+                    <b>NIR : </b>175037306569252
+                </p>
+                <p>
+                    <b>Adresse : </b><span>rue Casimir Bernier, 38000 Grenoble</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient :</u>
+                </h4>
+                <h4>2015-12-08</h4>
+                <ul>
+                    <li>
+            Pr&eacute;l&egrave;vement par ponction veineuse directe
+        </li>
+                    <li>
+            injection intraveineuse directe isol&eacute;e d&rsquo;anthalgiques
+        </li>
+                </ul>
+            </div>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>Kapo&euml;tla
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Xavier
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>2011-08-02
+                </p>
+                <p>
+                    <b>NIR : </b>111083306303521
+                </p>
+                <p>
+                    <b>Adresse : </b><span>25 rue des Martyrs, 38042 Grenoble</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient :</u>
+                </h4>
+                <h4>2015-12-08</h4>
+                <ul>
+                    <li>
+            injection de plusieurs allerg&egrave;nes afin d&rsquo;&ecirc;tre d&eacute;sensibilis&eacute;
+        </li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
