@@ -4,38 +4,38 @@
          xsi:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/medical ../xsd/cabinet.xsd"
 >
     <nom>Cabinet Fantastique</nom>
-    
+
     <adresse>
         <numéro>999</numéro>
         <rue>Rue du cabinet fantastique</rue>
         <codePostal>38400</codePostal>
         <ville>Saint Martin d'Hères</ville>
     </adresse>
-    
+
     <infirmiers>
-        
-        <infirmier id="101">
+
+        <infirmier id="001">
             <nom>TENNESSEE</nom>
             <prénom>Alves</prénom>
             <photo>alves.png</photo>
         </infirmier>
-        
-        <infirmier id="102">
+
+        <infirmier id="002">
             <nom>GATOR</nom>
             <prénom>Ali</prénom>
             <photo>aligator.png</photo>
         </infirmier>
-        
+
         <infirmier id="003">
             <nom>Ochon</nom>
             <prénom>Paul</prénom>
             <photo>paul.png</photo>
         </infirmier>
-        
+
     </infirmiers>
-    
+
     <patients>
-        
+
         <patient>
             <nom>BARKOK</nom>
             <prénom>Omar</prénom>
@@ -49,13 +49,13 @@
                 <codePostal>38400</codePostal>
                 <ville>Saint Martin d'Hères</ville>
             </adresse>
-            <visite date="2025-03-23" intervenant="101">
+            <visite date="2025-03-23" intervenant="001">
                 <acte id="101"/>
             </visite>
         </patient>
-        
+
         <!-- Ajout des patients de l'énoncé -->
-        
+
         <patient>
             <nom>Orouge</nom>
             <prénom>Elvire</prénom>
@@ -71,7 +71,7 @@
                 <acte id="104"/> <!-- Pensement de brulûre étendue -->
             </visite>
         </patient>
-        
+
         <patient>
             <nom>Pien</nom>
             <prénom>Oscare</prénom>
@@ -87,10 +87,10 @@
                 <!-- ponction veineuse directe -->
                 <acte id="101"/>
                 <!-- injection intraveineuse directe isolée d’anthalgiques -->
-                <acte id="105"/> 
+                <acte id="105"/>
             </visite>
         </patient>
-        
+
         <patient>
             <nom>Kapoëtla</nom>
             <prénom>Xavier</prénom>
@@ -105,9 +105,9 @@
             </adresse>
             <visite date="2015-12-08">
                 <!-- injection de plusieurs allergènes afin d’être désensibilisé -->
-                <acte id="106"/> 
+                <acte id="106"/>
             </visite>
         </patient>
     </patients>
-    
+
 </cabinet>
