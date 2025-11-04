@@ -39,7 +39,8 @@
         <div class="visite-box">
             <h3>Visite du <xsl:value-of select="@date"/></h3>
             <div class="intervenant">
-                <strong>Intervenant : </strong><xsl:value-of select="pat:intervenant/pat:nom"/>
+                <strong>Intervenant : </strong>
+                <xsl:value-of select="pat:intervenant/pat:nom"/>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="pat:intervenant/pat:prénom"/>
             </div>
