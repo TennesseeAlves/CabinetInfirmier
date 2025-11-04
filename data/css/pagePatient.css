@@ -1,0 +1,55 @@
+/* cette feuille de style à été généré par une IA */
+.visite-box {
+    background-color: #f9f9f9;
+    border: 2px solid #4682b4;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px auto;
+    width: 60%;
+    font-family: Arial, sans-serif;
+}
+.visite-box h3 {
+    margin-top: 0;
+    color: #2a4d6f;
+}
+.intervenant {
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+.actes {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+.actes li {
+    margin-bottom: 5px;
+}
+
+.infos {
+    background-color: #f0f8ff; /* Bleu très clair */
+    border: 2px solid #4682b4; /* Bleu acier */
+    border-radius: 10px;
+    padding: 20px;
+    width: 50%;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+.infos p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #333;
+}
+.infos strong {
+    color: #2a4d6f;
+    font-weight: bold;
+}
+.infos span {
+    color: #444;
+    font-style: italic;
+}
+@media screen and (max-width: 768px) {
+    .infos {
+        width: 90%;
+        padding: 15px;
+    }
+}
