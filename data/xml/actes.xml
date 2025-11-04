@@ -34,7 +34,7 @@
             Injection intraveineuse directe en série.
         </acte>
         <acte id="106" type="pi" clé="AMI" coef="2">
-            Inection intraveineuse directe chez un enfant de moins de 5 ans.
+            Injection intraveineuse directe chez un enfant de moins de 5 ans.
         </acte>
         <acte id="107" type="pi" clé="AMI" coef="1">
             Injection intramusculaire.
