@@ -21,18 +21,23 @@
         <html>
             <head>
                 <title>page infirmiere</title>
-                <link rel="stylesheet" href="../css/pageInfirmiere.css"/>
+                <link rel="stylesheet" href="../css/stylePage.css"/>
                 <script type="text/javascript" src="../js/facture.js"></script>
             </head>
             
             <body>
-                <div>
-                    <p>Bonjour <xsl:value-of select="$prenomInf"/>,</p>
-                    <p>Aujourd'hui, vous avez <xsl:value-of select="count($patients)"/> patients</p>
-                </div>
+                <div class="classPatient">
+                    <h1>Bonjour</h1>
+                    <h3><xsl:value-of select="$prenomInf"/></h3>
+                    <h1>,aujourd'hui, vous avez</h1>
+                    <h3><xsl:value-of select="count($patients)"/></h3>
+                    <h1>patients.</h1>
                 <!-- Liste des patients et des soins -->
+                
+                    
+                    <h1>Voici la liste des patients à visiter</h1>
+                </div>
                 <div>
-                    <h1>Voici la liste des patients à visiter :</h1>
                     <xsl:apply-templates select="$patients"/>
                 </div>
             </body>
@@ -44,22 +49,31 @@
     <xsl:template match="cab:patient">
         <xsl:variable name="nom" select="cab:nom/text()"/>
         <xsl:variable name="prenom" select="cab:prénom/text()"/>
-        <div class="patient">
-            <p><b>Nom : </b><xsl:value-of select="$nom"/></p>
-            <p><b>Prénom : </b><xsl:value-of select="$prenom"/></p>
-            <p><b>Sexe : </b><xsl:value-of select="cab:sexe/text()"/></p>
-            <p><b>Date de naissace : </b><xsl:value-of select="cab:naissance/text()"/></p>
-            <p><b>NIR : </b><xsl:value-of select="cab:numéro/text()"/></p>
-            <p><b>Adresse : </b><xsl:apply-templates select="cab:adresse"/></p>
+        <div class="classPatient">
+            <h2>Infos générales</h2>
+            <table>
+                <tr><th>Nom</th><td><xsl:value-of select="cab:nom"/></td></tr>
+                <tr><th>Prenom</th><td><xsl:value-of select="cab:prénom"/></td></tr>
+                <tr><th>sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
+                <tr><th>naissance</th><td><xsl:value-of select="cab:naissance"/></td></tr>
+                <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="cab:numéro"/></td></tr>
+                <tr><th>adresse</th><td><xsl:value-of select="cab:adresse"/></td></tr>
+
+            </table>
             
             <!-- Liste des soins -->
-            <h4><u>Liste des soins à effectuer pour ce patient</u> :</h4>
-            <xsl:apply-templates select="cab:visite">
-                <xsl:sort select="@date" order="ascending"/>
-            </xsl:apply-templates>
+            <h2>Liste des soins à effectuer pour ce patient</h2>
+
+            <table>
+                <tr><th>Date</th><th>Actes</th></tr>
+
+                <xsl:apply-templates select="cab:visite">
+                    <xsl:sort select="@date" order="ascending"/>
+                </xsl:apply-templates>
+            </table>
+            
             
             <!-- Bouton facture -->
-            <h4><u>Facture</u> :</h4>
             <script type="text/javascript">
                 function openFacture(prenom, nom, actes) {
                     var width = 500;
@@ -76,26 +90,29 @@
                     factureWindow.document.write(factureText)
                 }
             </script>
-            <xsl:element name="button">
-                <xsl:attribute name="onclick">
-                    openFacture('<xsl:value-of select="$prenom"/>',
-                    '<xsl:value-of select="$nom"/>',
-                    '<xsl:value-of select="cab:visite/cab:acte"/>')
-                </xsl:attribute>
-                Facture
-            </xsl:element>
+            <div class="bouton">
+                <xsl:element name="button">
+                    <xsl:attribute name="onclick">
+                        openFacture('<xsl:value-of select="$prenom"/>',
+                        '<xsl:value-of select="$nom"/>',
+                        '<xsl:value-of select="cab:visite/cab:acte"/>')
+                    </xsl:attribute>
+                    Facture
+                </xsl:element>
+            
             <!-- test si facture.js est bien chargé -->
             <button onclick="testFacture()">Tester le script</button>
+            </div>
             <!-- TODO: [à ne faire qu'à la fin du projet] compléter facture.js -->
         </div>
     </xsl:template>
-    
-    <!-- Template visites -->
-    <xsl:template match="//cab:patient/cab:visite">
-        <h4><xsl:value-of select="@date"/></h4>
-        <ul>
-            <xsl:apply-templates select="cab:acte"/>
-        </ul>
+
+    <!-- Templage visite -->
+    <xsl:template match="cab:visite">
+        <tr>
+            <td><xsl:value-of select="@date"/></td>
+            <td><xsl:apply-templates select="cab:acte"/></td>
+        </tr>
     </xsl:template>
     
     <!-- Template acte -->
