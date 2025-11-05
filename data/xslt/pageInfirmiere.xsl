@@ -22,7 +22,6 @@
             <head>
                 <title>page infirmiere</title>
                 <link rel="stylesheet" href="../css/pageInfirmiere.css"/>
-                <script src="../js/facture.js"></script>
             </head>
             
             <body>
@@ -42,7 +41,6 @@
     
     <!-- Template patient -->
     <xsl:template match="cab:patient">
-        <xsl:variable name="patient" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
         <xsl:variable name="nom" select="cab:nom/text()"/>
         <xsl:variable name="prenom" select="cab:prénom/text()"/>
         <div class="patient">
@@ -53,20 +51,39 @@
             <p><b>NIR : </b><xsl:value-of select="cab:numéro/text()"/></p>
             <p><b>Adresse : </b><xsl:apply-templates select="cab:adresse"/></p>
             
+            <!-- Liste des soins -->
             <h4><u>Liste des soins à effectuer pour ce patient</u> :</h4>
             <xsl:apply-templates select="cab:visite">
                 <xsl:sort select="@date" order="ascending"/>
             </xsl:apply-templates>
             
+            <!-- Bouton facture -->
             <h4><u>Facture</u> :</h4>
-            <button type="button">Facture</button>
-            
-            <xsl:element name="buttonFacture">
-                Facture
+            <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script>
+            <xsl:element name="button">
                 <xsl:attribute name="onclick">
-                    openFacture('<xsl:value-of select="$prenom"/>', '<xsl:value-of select="$nom"/>', '<xsl:value-of select="cab:visite/cab:acte"/>')
+                    openFacture('<xsl:value-of select="$prenom"/>',
+                    '<xsl:value-of select="$nom"/>',
+                    '<xsl:value-of select="cab:visite/cab:acte"/>')
                 </xsl:attribute>
+                Facture
             </xsl:element>
+            
         </div>
     </xsl:template>
     

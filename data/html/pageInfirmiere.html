@@ -3,7 +3,7 @@
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>page infirmiere</title>
         <link rel="stylesheet" href="../css/pageInfirmiere.css">
-        <script src="../js/facture.js"></script>
+        <script type="text/javascript" src="../js/facture.js"></script>
     </head>
     <body>
         <div>
@@ -63,11 +63,28 @@
                 <h4>
                     <u>Facture</u> :
                 </h4>
-                <button type="button">Facture</button>
-                <buttonFacture onclick="
-                    Facture
-                    openFacture('Omar', 'BARKOK', '')
-                "></buttonFacture>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Omar',
+                    'BARKOK',
+                    '')
+                ">
+                Facture
+            </button>
             </div>
             <div class="patient">
                 <p>
@@ -103,11 +120,28 @@
                 <h4>
                     <u>Facture</u> :
                 </h4>
-                <button type="button">Facture</button>
-                <buttonFacture onclick="
-                    Facture
-                    openFacture('Oscare', 'Pien', '')
-                "></buttonFacture>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Oscare',
+                    'Pien',
+                    '')
+                ">
+                Facture
+            </button>
             </div>
             <div class="patient">
                 <p>
@@ -143,11 +177,28 @@
                 <h4>
                     <u>Facture</u> :
                 </h4>
-                <button type="button">Facture</button>
-                <buttonFacture onclick="
-                    Facture
-                    openFacture('Xavier', 'Kapo&euml;tla', '')
-                "></buttonFacture>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Xavier',
+                    'Kapo&euml;tla',
+                    '')
+                ">
+                Facture
+            </button>
             </div>
         </div>
     </body>
