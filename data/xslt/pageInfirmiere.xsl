@@ -22,6 +22,7 @@
             <head>
                 <title>page infirmiere</title>
                 <link rel="stylesheet" href="../css/pageInfirmiere.css"/>
+                <script type="text/javascript" src="../js/facture.js"></script>
             </head>
             
             <body>
@@ -83,7 +84,8 @@
                 </xsl:attribute>
                 Facture
             </xsl:element>
-            
+            <!-- test si facture.js est bien chargé -->
+            <button onclick="testFacture()">Tester le script</button> 
         </div>
     </xsl:template>
     

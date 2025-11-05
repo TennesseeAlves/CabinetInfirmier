@@ -4,6 +4,10 @@ var DIVAL = 10.0;
 
 var totalFacture = 0.0;
 
+function testFacture() {
+    alert("Le script facture.js fonctionne !");
+}
+
 function afficherFacture(prenom, nom, actes)
 {
     totalFacture = 0.0;
