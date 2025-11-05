@@ -85,7 +85,8 @@
                 Facture
             </xsl:element>
             <!-- test si facture.js est bien chargé -->
-            <button onclick="testFacture()">Tester le script</button> 
+            <button onclick="testFacture()">Tester le script</button>
+            <!-- TODO: [à ne faire qu'à la fin du projet] compléter facture.js -->
         </div>
     </xsl:template>
     
