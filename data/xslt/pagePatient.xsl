@@ -33,7 +33,7 @@
                     <tr><th>sexe</th><td><xsl:value-of select="pat:sexe"/></td></tr>
                     <tr><th>naissance</th><td><xsl:value-of select="pat:naissance"/></td></tr>
                     <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="pat:numéroSS"/></td></tr>
-                    <tr><th>adresse</th><td><xsl:value-of select="pat:adresse"/></td></tr>
+                    <tr><th>adresse</th><td><xsl:apply-templates select="pat:adresse"/></td></tr>
                     
                 </table>
                 <h2>Visites</h2>
@@ -70,7 +70,7 @@
     <xsl:template match="pat:adresse">
         <span>
             <xsl:if test="pat:étage">
-                <xsl:value-of select="pat:étage"/><xsl:text>e étage,</xsl:text>
+                <xsl:value-of select="pat:étage"/><xsl:text>e étage, </xsl:text>
             </xsl:if>
             <xsl:if test="pat:numéro">
                 <xsl:value-of select="pat:numéro"/><xsl:text> </xsl:text>
