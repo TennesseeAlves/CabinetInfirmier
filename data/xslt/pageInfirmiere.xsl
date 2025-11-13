@@ -57,7 +57,7 @@
                 <tr><th>sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
                 <tr><th>naissance</th><td><xsl:value-of select="cab:naissance"/></td></tr>
                 <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="cab:numéro"/></td></tr>
-                <tr><th>adresse</th><td><xsl:value-of select="cab:adresse"/></td></tr>
+                <tr><th>adresse</th><td><xsl:apply-templates select="cab:adresse"/></td></tr>
 
             </table>
             
