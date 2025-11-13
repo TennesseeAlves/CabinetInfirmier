@@ -18,12 +18,19 @@ package URICabinet {
     class Cabinet {
         nom : string
         adresse : Adresse
-        infirmiers : Infirmier[]
-        patients : Patient[]
+        infirmiers : Infirmiers
+        patients : Patients
     }
     note left of Cabinet
         <<racine>> cabinet
     end note
+    
+    class Patients {
+        patients : Patient[]
+    }
+    class Infirmiers {
+        infirmiers : Infirmier[]
+    }
     
     class Infirmier {
         {unique}{attribute} id : int {>0} 
@@ -99,16 +106,20 @@ package URICabinet {
         ∈ URIActes://Acte/@id
     end note
     
-    Cabinet *--"1..*" Infirmier : liste
-    Cabinet *--"1..*" Patient : liste
+    Cabinet *--"1" Infirmiers
+    Cabinet *--"1" Patients
     Cabinet *--"1" Adresse
     
     Infirmier *-- "1" Photo
+    
+    Infirmiers *-- "*" Infirmier : liste
     
     Patient *--"1" Sexe
     Patient "1"*--"1..*" Visite
     Patient "1"*--"1" NuméroSecuritéSociale
     Patient *--"1" Adresse
+    
+    Patients *-- "*" Patient : liste
     
     Visite "0..*"*--"1..*" Acte
     
