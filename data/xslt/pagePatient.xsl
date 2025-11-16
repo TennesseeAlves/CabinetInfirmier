@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:pat="http://www.univ-grenoble-alpes.fr/l3miage/patient"
                 version="1.0"
+                exclude-result-prefixes="pat"
 >
     <xsl:output method="html" indent="yes"/>
     
@@ -9,50 +10,59 @@
         <html>
             <head>
                 <title>page patient</title>
-                <link href="../css/pagePatient2.css" rel="stylesheet"/>
+                <link href="../css/stylePage.css" rel="stylesheet"/>
             </head>
             <body>
-                <xsl:apply-templates select="pat:patient"/>
+                <div class="classPatient">
+                    <h1>Bonjour</h1>
+                    <h3><xsl:value-of select="pat:patient/pat:prénom"/></h3>
+                    <h1> :)</h1>
+                </div>
+                <div class="classPatient">
+                    <xsl:apply-templates select="pat:patient"/>
+                </div>
             </body>
         </html>
     </xsl:template>
     
-    <!-- Il devrait y avoir un seul match pour cette template (la racine patient) -->
+    <!-- Il devrait y avoir, noremalement, un seul match pour cette template (la racine patient) -->
     <xsl:template match="pat:patient">
-                <div class="infos">
-                    <p><strong>Nom : </strong><xsl:value-of select="pat:nom"/></p>
-                    <p><strong>prénom : </strong><xsl:value-of select="pat:prénom"/></p>
-                    <p><strong>Sexe : </strong><xsl:value-of select="pat:sexe"/></p>
-                    <p><strong>Date de naissance : </strong><xsl:value-of select="pat:naissance"/></p>
-                    <p><strong>Numéro de sécurité sociale : </strong><xsl:value-of select="pat:numéroSS"/></p>
-                    <p><strong>Adresse : </strong><xsl:apply-templates select="pat:adresse"/></p>
-                </div>
-                <div class="visites">
-                    <xsl:apply-templates select="pat:visite">
-                        <xsl:sort select="@date" order="ascending"/>
-                    </xsl:apply-templates>
-                </div>
+        <h2>Infos générales</h2>
+        <table>
+            <tr><th>Nom</th><td><xsl:value-of select="pat:nom"/></td></tr>
+            <tr><th>Prenom</th><td><xsl:value-of select="pat:prénom"/></td></tr>
+            <tr><th>sexe</th><td><xsl:value-of select="pat:sexe"/></td></tr>
+            <tr><th>naissance</th><td><xsl:value-of select="pat:naissance"/></td></tr>
+            <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="pat:numéroSS"/></td></tr>
+            <tr><th>adresse</th><td><xsl:apply-templates select="pat:adresse"/></td></tr>
+        </table>
+        <h2>Visites</h2>
+        <table>
+            <tr><th>Date</th><th>Intervenant</th><th>Actes</th></tr>
+            <xsl:apply-templates select="pat:visite">
+                <xsl:sort select="@date" order="ascending"/>
+            </xsl:apply-templates>
+        </table>
     </xsl:template>
     
     <!-- Templage visite -->
     <xsl:template match="pat:visite">
-        <div class="visite-box">
-            <h3>Visite du <xsl:value-of select="@date"/></h3>
-            <div class="intervenant">
-                <strong>Intervenant : </strong>
+        <tr>
+            <td><xsl:value-of select="@date"/></td>
+            <td>
                 <xsl:value-of select="pat:intervenant/pat:nom"/>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="pat:intervenant/pat:prénom"/>
-            </div>
-            <ul class="actes">
+            </td>
+            <td>
                 <xsl:apply-templates select="pat:acte"/>
-            </ul>
-        </div>
+            </td>
+        </tr>
     </xsl:template>
     
     <!-- Template acte -->
     <xsl:template match="pat:acte">
-        <li><xsl:value-of select="./text()"/></li>
+        <li><xsl:value-of select="text()"/></li>
     </xsl:template>
     
     <!-- Template adresse -->
