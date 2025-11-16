@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
-            xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-            xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
-            xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+                xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+                exclude-result-prefixes="cab act"
 >
-    <xsl:output method="html"/>
+    <xsl:output method="html" indent="yes"/>
     
-    <!-- Modules de transformation -->
-
     <!-- param globale avec l'id de l'infirmierer -->
     <xsl:param name="destinedId">001</xsl:param>
     
@@ -16,23 +15,26 @@
     
     
     <xsl:template match="/">
-        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom/text()"/>
+        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom/text()"/> <!-- TODO : supprimer /text() -->
         <xsl:variable name="patients" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
         <html>
             <head>
                 <title>page infirmiere</title>
-                <link rel="stylesheet" href="../css/pageInfirmiere.css"/>
+                <link rel="stylesheet" href="../css/stylePage.css"/>
                 <script type="text/javascript" src="../js/facture.js"></script>
             </head>
             
             <body>
-                <div>
-                    <p>Bonjour <xsl:value-of select="$prenomInf"/>,</p>
-                    <p>Aujourd'hui, vous avez <xsl:value-of select="count($patients)"/> patients</p>
+                <div class="classPatient">
+                    <h1>Bonjour</h1>
+                    <h3><xsl:value-of select="$prenomInf"/></h3>
+                    <h1>,aujourd'hui, vous avez</h1>
+                    <h3><xsl:value-of select="count($patients)"/></h3>
+                    <h1>patients.</h1>
+                    <h1>Voici la liste des patients à visiter</h1>
                 </div>
                 <!-- Liste des patients et des soins -->
                 <div>
-                    <h1>Voici la liste des patients à visiter :</h1>
                     <xsl:apply-templates select="$patients"/>
                 </div>
             </body>
@@ -42,21 +44,24 @@
     
     <!-- Template patient -->
     <xsl:template match="cab:patient">
-        <xsl:variable name="nom" select="cab:nom/text()"/>
-        <xsl:variable name="prenom" select="cab:prénom/text()"/>
-        <div class="patient">
-            <p><b>Nom : </b><xsl:value-of select="$nom"/></p>
-            <p><b>Prénom : </b><xsl:value-of select="$prenom"/></p>
-            <p><b>Sexe : </b><xsl:value-of select="cab:sexe/text()"/></p>
-            <p><b>Date de naissace : </b><xsl:value-of select="cab:naissance/text()"/></p>
-            <p><b>NIR : </b><xsl:value-of select="cab:numéro/text()"/></p>
-            <p><b>Adresse : </b><xsl:apply-templates select="cab:adresse"/></p>
+        <div class="classPatient">
+            <table>
+                <tr><th>Nom</th><td><xsl:value-of select="cab:nom"/></td></tr>
+                <tr><th>Prénom</th><td><xsl:value-of select="cab:prénom"/></td></tr>
+                <tr><th>Sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
+                <tr><th>Date de naissace</th><td><xsl:value-of select="cab:naissance"/></td></tr>
+                <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="cab:numéro"/></td></tr>
+                <tr><th>Adresse</th><td><xsl:apply-templates select="cab:adresse"/></td></tr>
+            </table>
             
             <!-- Liste des soins -->
-            <h4><u>Liste des soins à effectuer pour ce patient</u> :</h4>
-            <xsl:apply-templates select="cab:visite">
-                <xsl:sort select="@date" order="ascending"/>
-            </xsl:apply-templates>
+            <h2>Liste des soins à effectuer pour ce patient</h2>
+            <table>
+                <tr><th>Date</th><th>Actes</th></tr>
+                <xsl:apply-templates select="cab:visite">
+                    <xsl:sort select="@date" order="ascending"/>
+                </xsl:apply-templates>
+            </table>
             
             <!-- Bouton facture -->
             <h4><u>Facture</u> :</h4>
@@ -78,8 +83,8 @@
             </script>
             <xsl:element name="button">
                 <xsl:attribute name="onclick">
-                    openFacture('<xsl:value-of select="$prenom"/>',
-                    '<xsl:value-of select="$nom"/>',
+                    openFacture('<xsl:value-of select="cab:prénom"/>',
+                    '<xsl:value-of select="cab:nom"/>',
                     '<xsl:value-of select="cab:visite/cab:acte"/>')
                 </xsl:attribute>
                 Facture
@@ -92,10 +97,10 @@
     
     <!-- Template visites -->
     <xsl:template match="//cab:patient/cab:visite">
-        <h4><xsl:value-of select="@date"/></h4>
-        <ul>
-            <xsl:apply-templates select="cab:acte"/>
-        </ul>
+        <tr>
+            <td><xsl:value-of select="@date"/></td>
+            <td><xsl:apply-templates select="cab:acte"/></td>
+        </tr>
     </xsl:template>
     
     <!-- Template acte -->
@@ -109,19 +114,19 @@
         <span>
             <!-- on vérifire si l'adresse à un étage -->
             <xsl:if test="cab:étage">
-                <xsl:value-of select="cab:étage/text()"/>
+                <xsl:value-of select="cab:étage"/>
                 <xsl:text>è étage, </xsl:text>
             </xsl:if>
             <!-- on vérifire si l'adresse à un numéro de rue -->
             <xsl:if test="cab:numéro">
-                <xsl:value-of select="cab:numéro/text()"/>
+                <xsl:value-of select="cab:numéro"/>
                 <xsl:text> </xsl:text>
             </xsl:if>
-            <xsl:value-of select="cab:rue/text()"/>
+            <xsl:value-of select="cab:rue"/>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="cab:codePostal/text()"/>
+            <xsl:value-of select="cab:codePostal"/>
             <xsl:text> </xsl:text>
-            <xsl:value-of select="cab:ville/text()"/>
+            <xsl:value-of select="cab:ville"/>
         </span>
     </xsl:template>
     
