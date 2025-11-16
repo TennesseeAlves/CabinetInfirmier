@@ -1,0 +1,87 @@
+<html xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes" xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical">
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>page infirmiere</title>
+        <link rel="stylesheet" href="../css/stylePage.css">
+        <script type="text/javascript" src="../js/facture.js"></script>
+    </head>
+    <body>
+        <div class="classPatient">
+            <h1>Bonjour</h1>
+            <h3>Sarah</h3>
+            <h1>,aujourd'hui, vous avez</h1>
+            <h3>1</h3>
+            <h1>patients.</h1>
+            <h1>Voici la liste des patients &agrave; visiter</h1>
+        </div>
+        <div>
+            <div class="classPatient">
+                <h2>Infos g&eacute;n&eacute;rales</h2>
+                <table>
+                    <tr>
+                        <th>Nom</th><td>Al&eacute;cole</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th><td>Yvon</td>
+                    </tr>
+                    <tr>
+                        <th>sexe</th><td>M</td>
+                    </tr>
+                    <tr>
+                        <th>naissance</th><td>1998-08-22</td>
+                    </tr>
+                    <tr>
+                        <th>Num&eacute;ro de s&eacute;curit&eacute; sociale</th><td>198082205545852</td>
+                    </tr>
+                    <tr>
+                        <th>adresse</th><td>
+              6
+              50
+              avenue F&eacute;lix Viallet
+              38031
+              Grenoble
+          </td>
+                    </tr>
+                </table>
+                <h2>Liste des soins &agrave; effectuer pour ce patient</h2>
+                <table>
+                    <tr>
+                        <th>Date</th><th>Actes</th>
+                    </tr>
+                    <tr>
+                        <td>2015-12-08</td><td>
+                            <li>
+            Injection sous-cutan&eacute;e.
+        </li>
+                        </td>
+                    </tr>
+                </table>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script>
+                <div class="bouton">
+                    <button onclick="
+                        openFacture('Yvon',
+                        'Al&eacute;cole',
+                        '')
+                    ">
+                    Facture
+                </button><button onclick="testFacture()">Tester le script</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

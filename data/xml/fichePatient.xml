@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patient xsi:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/patient ../xsd/patient.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.univ-grenoble-alpes.fr/l3miage/patient">
+    <nom/>
+    <prénom>Omar</prénom>
+    <sexe/>
+    <naissance/>
+    <numéroSS/>
+    <adresse>
+        <rue/>
+        <codePostal/>
+        <ville/>
+    </adresse>
+</patient>
