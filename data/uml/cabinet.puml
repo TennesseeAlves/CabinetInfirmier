@@ -25,11 +25,11 @@ package URICabinet {
         <<racine>> cabinet
     end note
     
-    class Infirmiers {
-        Infirmier[]
-    }
     class Patients {
-        Patient[]
+        patients : Patient[]
+    }
+    class Infirmiers {
+        infirmiers : Infirmier[]
     }
     
     class Infirmier {
@@ -52,7 +52,6 @@ package URICabinet {
         naissance : date
         numéro : NuméroSecuritéSociale
         adresse : Adresse
-        visite : Visite
     }
     
     class Adresse {
@@ -111,15 +110,16 @@ package URICabinet {
     Cabinet *--"1" Patients
     Cabinet *--"1" Adresse
     
-    Infirmiers *-- "*" Infirmier : liste
-    Patients *-- "*" Patient : liste
-    
     Infirmier *-- "1" Photo
+    
+    Infirmiers *-- "*" Infirmier : liste
     
     Patient *--"1" Sexe
     Patient "1"*--"1..*" Visite
     Patient "1"*--"1" NuméroSecuritéSociale
     Patient *--"1" Adresse
+    
+    Patients *-- "*" Patient : liste
     
     Visite "0..*"*--"1..*" Acte
     
