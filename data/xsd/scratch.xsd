@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsd="http://www.univ-grenoble-alpes.fr/l3miage/etudiant"
+        targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/etudiant"
+        elementFormDefault="qualified"
+>
+    <!-- Element racine Etudiant -->
+    <!-- 
+    <element name="etudiant" type="xsd:Etudiant"/>
+    
+    <complexType name="Etudiant">
+        <sequence>
+            <element name="nom" type="string"/>
+        </sequence>
+    </complexType>
+    -->
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Contraintes du fichier Actes.xsd -->
+
+    <!-- Clef unicité id d'un acte -->
+    <key name="clefIdActe">
+        <selector xpath="act:ngap/act:actes/act:acte"/>
+        <field xpath="@id"/>
+    </key>
+    <!-- Clef unicité id d'un type -->
+    <key name="clefIdType">
+        <selector xpath="act:ngap/act:types/act:type"/>
+        <field xpath="@id"/>
+    </key>
+    <!-- Le type d'un acte doit être un id d'un type existant -->
+    <keyref name="foreignKeyActeTypeToTypeId" refer="act:clefIdType">
+        <selector xpath="act:ngap/act:actes/act:acte"/>
+        <field xpath="@type"/>
+    </keyref>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <element name="shiporder" type="xsd:ShipOrder"/>
+
+    
+    <complexType name="ShipOrder">
+        <sequence>
+            <element name="orderperson" type="string"/>
+            <element name="shipto" type="xsd:Shipto"/>
+            <element name="item" type="xsd:Item" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="orderid" type="xsd:idType" use="required"/>
+    </complexType>
+
+    <complexType name="Shipto">
+        <sequence>
+            <element name="name"/>
+            <element name="address"/>
+            <element name="city"/>
+            <element name="country"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Item">
+        <sequence>
+            <element name="title"/>
+            <element name="note" minOccurs="0"/>
+            <element name="quantity" type="int"/>
+            <element name="price" type="double"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="idType">
+        <restriction base="int">
+            <pattern value="[0-9]{6}"/>
+        </restriction>
+    </simpleType>
+    
+</schema>

@@ -1,0 +1,205 @@
+<html xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes" xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical">
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>page infirmiere</title>
+        <link rel="stylesheet" href="../css/pageInfirmiere.css">
+        <script type="text/javascript" src="../js/facture.js"></script>
+    </head>
+    <body>
+        <div>
+            <p>Bonjour Alves,</p>
+            <p>Aujourd'hui, vous avez 3 patients</p>
+        </div>
+        <div>
+            <h1>Voici la liste des patients &agrave; visiter :</h1>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>BARKOK
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Omar
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>2002-03-23
+                </p>
+                <p>
+                    <b>NIR : </b>102039999988877
+                </p>
+                <p>
+                    <b>Adresse : </b><span>1&egrave; &eacute;tage, 125 all&eacute;e Condillac, 38400 Saint Martin d'H&egrave;res</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient</u> :
+                </h4>
+                <h4>2025-01-23</h4>
+                <ul>
+                    <li>
+            Inection intraveineuse directe isol&eacute;e.
+        </li>
+                    <li>
+            Pr&eacute;l&egrave;vement aseptique cutan&eacute; ou de s&eacute;cr&eacute;tions muqueuses, pr&eacute;l&egrave;vement
+            de selles ou d'urine pour examens sytologiques, bact&eacute;riologiques, mycologiques.
+        </li>
+                </ul>
+                <h4>2025-02-23</h4>
+                <ul>
+                    <li>
+            Injection en goutte &agrave; goutte par voie rectale.
+        </li>
+                    <li>
+            Elaboration de la d&eacute;mache de soins infirmiers &agrave; domicile, planification
+            des soins et r&eacute;daction du r&eacute;sum&eacute; de la d&eacute;marche de soins infirimiers.
+        </li>
+                </ul>
+                <h4>2025-03-23</h4>
+                <ul>
+                    <li>
+            Pr&eacute;l&egrave;vement par ponction veineuse directe
+        </li>
+                </ul>
+                <h4>
+                    <u>Facture</u> :
+                </h4>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Omar',
+                    'BARKOK',
+                    '')
+                ">
+                Facture
+            </button><button onclick="testFacture()">Tester le script</button>
+            </div>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>Pien
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Oscare
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>1975-03-25
+                </p>
+                <p>
+                    <b>NIR : </b>175037306569252
+                </p>
+                <p>
+                    <b>Adresse : </b><span>rue Casimir Bernier, 38000 Grenoble</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient</u> :
+                </h4>
+                <h4>2015-12-08</h4>
+                <ul>
+                    <li>
+            Pr&eacute;l&egrave;vement par ponction veineuse directe
+        </li>
+                    <li>
+            Inection intraveineuse directe isol&eacute;e.
+        </li>
+                </ul>
+                <h4>
+                    <u>Facture</u> :
+                </h4>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Oscare',
+                    'Pien',
+                    '')
+                ">
+                Facture
+            </button><button onclick="testFacture()">Tester le script</button>
+            </div>
+            <div class="patient">
+                <p>
+                    <b>Nom : </b>Kapo&euml;tla
+                </p>
+                <p>
+                    <b>Pr&eacute;nom : </b>Xavier
+                </p>
+                <p>
+                    <b>Sexe : </b>M
+                </p>
+                <p>
+                    <b>Date de naissace : </b>2011-08-02
+                </p>
+                <p>
+                    <b>NIR : </b>111083306303521
+                </p>
+                <p>
+                    <b>Adresse : </b><span>25 rue des Martyrs, 38042 Grenoble</span>
+                </p>
+                <h4>
+                    <u>Liste des soins &agrave; effectuer pour ce patient</u> :
+                </h4>
+                <h4>2015-12-08</h4>
+                <ul>
+                    <li>
+            Injection d'un ou plusieurs allerg&egrave;nes, poursuivant un traitement
+            d'hyposensibilisation sp&eacute;cifique, selon le protocole &eacute;crit, y compris la
+            surveillance, la tenue du dossier de soins, la transmission des informations
+            au m&eacute;decin prescripteur.
+        </li>
+                </ul>
+                <h4>
+                    <u>Facture</u> :
+                </h4>
+                <script type="text/javascript">
+                function openFacture(prenom, nom, actes) {
+                    var width = 500;
+                    var height = 300;
+                    if (window.innerWidth) {
+                        var left = (window.innerWidth-width)/2;
+                        var top = (window.innerHeight-height)/2;
+                    } else {
+                        var left = (document.body.clientWidth-width)/2;
+                        var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText)
+                }
+            </script><button onclick="
+                    openFacture('Xavier',
+                    'Kapo&euml;tla',
+                    '')
+                ">
+                Facture
+            </button><button onclick="testFacture()">Tester le script</button>
+            </div>
+        </div>
+    </body>
+</html>
