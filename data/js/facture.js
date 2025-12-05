@@ -4,6 +4,10 @@ var DIVAL = 10.0;
 
 var totalFacture = 0.0;
 
+function testFacture() {
+    alert("Le script facture.js fonctionne !");
+}
+
 function afficherFacture(prenom, nom, actes)
 {
     totalFacture = 0.0;
@@ -20,7 +24,7 @@ function afficherFacture(prenom, nom, actes)
 
 
     // Trouver l'adresse du patient
-    var xmlDoc = loadXMLDoc("../data/ProjetCabinet/Cabinet.xml");
+    var xmlDoc = loadXMLDoc("data/cabinetInfirmier.xml");
     var patients = xmlDoc.getElementsByTagName("patient");
     var i = 0;
     var found = false;
@@ -41,15 +45,14 @@ function afficherFacture(prenom, nom, actes)
     if (found) {
         text += "Adresse: ";
         // On récupère l'adresse du patient
-        var adresse = patients[i].getElementsByTagName("adresse").nodeValue;
-
+        var adresse;
         // adresse = ... à compléter par une expression DOM
         text += adresseToText(adresse);
         text += "<br/>";
 
         var nSS = "0";
         // nss = récupérer le numéro de sécurité sociale grâce à une expression DOM
-        nSS = patient.getElementsByTagName("numéro").nodeValue;
+
         text += "Numéro de sécurité sociale: " + nSS + "\n";
     }
     text += "<br/>";
@@ -85,7 +88,7 @@ function afficherFacture(prenom, nom, actes)
 // Mise en forme d'un noeud adresse pour affichage en html
 function adresseToText(adresse)
 {
-    var str = adresse;
+    var str = "A completer...";
     // Mise en forme de l'adresse du patient
     // A compléter
 
@@ -97,8 +100,8 @@ function acteTable(acteId)
 {
     var str = "";
 
-    var xmlDoc = loadXMLDoc("data/xslt/actes.xml");
-    var actes = xmlDoc.getElementsByTagName("actes");
+    var xmlDoc = loadXMLDoc("data/actes.xml");
+    var actes;
     // actes = récupérer les actes de xmlDoc
 
     // Clé de l'acte (3 lettres)
@@ -107,16 +110,15 @@ function acteTable(acteId)
     var coef;
     // Type id pour pouvoir récupérer la chaîne de caractères du type 
     //  dans les sous-éléments de types
-    var typeId;    // Chaîne de caractère du type
+    var typeId;
+    // Chaîne de caractère du type
     var type = "";
     // ...
     // Intitulé de l'acte
     var intitule;
 
     // Tarif = (lettre-clé)xcoefficient (utiliser les constantes 
-    var AMIVAL = 3.15;
-    var AISVAL = 2.65;
-    var DIVAL = 10.0;
+    // var AMIVAL = 3.15; var AISVAL = 2.65; et var DIVAL = 10.0;)
     // (cf  http://www.infirmiers.com/votre-carriere/ide-liberale/la-cotation-des-actes-ou-comment-utiliser-la-nomenclature.html)      
     var tarif = 0.0;
 
@@ -125,48 +127,19 @@ function acteTable(acteId)
     var found = false;
 
 // A dé-commenter dès que actes aura le bon type...
-    while ((i < actes.length) && (!found)) {
-//         A compléter (cf méthode plus haut)
-        var acte = actes[i];
-        var localId = acte.getAttribute("id");
-        if ((acteId === localId)) {
-            found = true;
-        } else {
-            i++;
-        }
-    }
+//    while ((i < actes.length) && (!found)) {
+    // A compléter (cf méthode plus haut)
+//        i++;
+//    }
 
     if (found) {
         // A compléter
-        cle = acte.getAttribute("clé");
-        coef = acte.getAttribute("coef");
-        typeId = acte.getAttribute("type");
-        // cherche le type correpondant a lacte
-        var types = xmlDoc.getElementsByTagName("types");
-        var i = 0;
-        var found = false;
-        while ((i < types.length) && (!found)) {
-            var type = types[i];
-            var localId = type.getAttribute("id");
-            if ((typeId == localId)) {
-                found = true;
-            } else {
-                i++;
-            }
-        }
-        type = types[i].textContent
-        intitule = acte.textContent;
-        switch (cle) {
-            case AMI :
-                tarif = coef * AMIVAL;
-                break;
-            case  AIS :
-                tarif = coef * AISVAL;
-                break;
-            case DI :
-                tarif = coef * DIVAL;
-                break;
-        }
+//        cle = ;
+//        coef = ;
+//        typeId = ;
+//        type = ;
+//        intitule = ;
+//        tarif = ;
     }
 
     // A modifier

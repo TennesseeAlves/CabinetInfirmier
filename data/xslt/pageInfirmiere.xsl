@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
-            xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-            xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
-            xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+                xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+                exclude-result-prefixes="cab act"
 >
-    <xsl:output method="html"/>
+    <xsl:output method="html" indent="yes"/>
     
-    <!-- Modules de transformation -->
-
     <!-- param globale avec l'id de l'infirmierer -->
     <xsl:param name="destinedId">001</xsl:param>
     
@@ -16,7 +15,7 @@
     
     
     <xsl:template match="/">
-        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom/text()"/>
+        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom/text()"/> <!-- TODO : supprimer /text() -->
         <xsl:variable name="patients" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
         <html>
             <head>
@@ -32,11 +31,9 @@
                     <h1>,aujourd'hui, vous avez</h1>
                     <h3><xsl:value-of select="count($patients)"/></h3>
                     <h1>patients.</h1>
-                <!-- Liste des patients et des soins -->
-                
-                    
                     <h1>Voici la liste des patients à visiter</h1>
                 </div>
+                <!-- Liste des patients et des soins -->
                 <div>
                     <xsl:apply-templates select="$patients"/>
                 </div>
@@ -47,33 +44,27 @@
     
     <!-- Template patient -->
     <xsl:template match="cab:patient">
-        <xsl:variable name="nom" select="cab:nom/text()"/>
-        <xsl:variable name="prenom" select="cab:prénom/text()"/>
         <div class="classPatient">
-            <h2>Infos générales</h2>
             <table>
                 <tr><th>Nom</th><td><xsl:value-of select="cab:nom"/></td></tr>
-                <tr><th>Prenom</th><td><xsl:value-of select="cab:prénom"/></td></tr>
-                <tr><th>sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
-                <tr><th>naissance</th><td><xsl:value-of select="cab:naissance"/></td></tr>
+                <tr><th>Prénom</th><td><xsl:value-of select="cab:prénom"/></td></tr>
+                <tr><th>Sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
+                <tr><th>Date de naissace</th><td><xsl:value-of select="cab:naissance"/></td></tr>
                 <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="cab:numéro"/></td></tr>
-                <tr><th>adresse</th><td><xsl:value-of select="cab:adresse"/></td></tr>
-
+                <tr><th>Adresse</th><td><xsl:apply-templates select="cab:adresse"/></td></tr>
             </table>
             
             <!-- Liste des soins -->
             <h2>Liste des soins à effectuer pour ce patient</h2>
-
             <table>
                 <tr><th>Date</th><th>Actes</th></tr>
-
                 <xsl:apply-templates select="cab:visite">
                     <xsl:sort select="@date" order="ascending"/>
                 </xsl:apply-templates>
             </table>
             
-            
             <!-- Bouton facture -->
+            <h4><u>Facture</u> :</h4>
             <script type="text/javascript">
                 function openFacture(prenom, nom, actes) {
                     var width = 500;
@@ -90,25 +81,22 @@
                     factureWindow.document.write(factureText)
                 }
             </script>
-            <div class="bouton">
-                <xsl:element name="button">
-                    <xsl:attribute name="onclick">
-                        openFacture('<xsl:value-of select="$prenom"/>',
-                        '<xsl:value-of select="$nom"/>',
-                        '<xsl:value-of select="cab:visite/cab:acte"/>')
-                    </xsl:attribute>
-                    Facture
-                </xsl:element>
-            
+            <xsl:element name="button">
+                <xsl:attribute name="onclick">
+                    openFacture('<xsl:value-of select="cab:prénom"/>',
+                    '<xsl:value-of select="cab:nom"/>',
+                    '<xsl:value-of select="cab:visite/cab:acte"/>')
+                </xsl:attribute>
+                Facture
+            </xsl:element>
             <!-- test si facture.js est bien chargé -->
             <button onclick="testFacture()">Tester le script</button>
-            </div>
             <!-- TODO: [à ne faire qu'à la fin du projet] compléter facture.js -->
         </div>
     </xsl:template>
-
-    <!-- Templage visite -->
-    <xsl:template match="cab:visite">
+    
+    <!-- Template visites -->
+    <xsl:template match="//cab:patient/cab:visite">
         <tr>
             <td><xsl:value-of select="@date"/></td>
             <td><xsl:apply-templates select="cab:acte"/></td>
@@ -126,19 +114,19 @@
         <span>
             <!-- on vérifire si l'adresse à un étage -->
             <xsl:if test="cab:étage">
-                <xsl:value-of select="cab:étage/text()"/>
+                <xsl:value-of select="cab:étage"/>
                 <xsl:text>è étage, </xsl:text>
             </xsl:if>
             <!-- on vérifire si l'adresse à un numéro de rue -->
             <xsl:if test="cab:numéro">
-                <xsl:value-of select="cab:numéro/text()"/>
+                <xsl:value-of select="cab:numéro"/>
                 <xsl:text> </xsl:text>
             </xsl:if>
-            <xsl:value-of select="cab:rue/text()"/>
+            <xsl:value-of select="cab:rue"/>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="cab:codePostal/text()"/>
+            <xsl:value-of select="cab:codePostal"/>
             <xsl:text> </xsl:text>
-            <xsl:value-of select="cab:ville/text()"/>
+            <xsl:value-of select="cab:ville"/>
         </span>
     </xsl:template>
     

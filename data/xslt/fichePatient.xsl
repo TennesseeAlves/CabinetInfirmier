@@ -7,15 +7,15 @@
                 exclude-result-prefixes="cab act"
 >
     <!-- Remarque: Le namespace par défaut va être rajouter au xml résultat comme un default namespace -->
-
+    
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
-
+    
     <xsl:param name="destinedName">Omar</xsl:param>
     <xsl:variable name="actes" select="document('../xml/actes.xml', /)/act:ngap"/>
-
+    
     <xsl:template match="/">
         <xsl:variable name="lePatient" select="//cab:patient[cab:prénom = $destinedName]"/>
-
+        
         <xsl:text>&#10;</xsl:text> <!-- insérer un retour à la ligne -->
         <patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/patient ../xsd/patient.xsd"
@@ -41,7 +41,7 @@
             </xsl:apply-templates>
         </patient>
     </xsl:template>
-
+    
     <!-- Template visite -->
     <xsl:template match="cab:visite">
         <xsl:variable name="idIntervenant" select="@intervenant"/>
@@ -63,5 +63,5 @@
         <xsl:variable name="idActe" select="@id"/>
         <acte><xsl:value-of select="$actes/*/act:acte[@id=$idActe]/text()"/></acte>
     </xsl:template>
-
+        
 </xsl:stylesheet>
