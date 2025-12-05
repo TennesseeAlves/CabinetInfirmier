@@ -11,4 +11,13 @@
       <Folder Include="data\UML\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="data\xsd\cabinet.xsd">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data\xsd\actes.xsd">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
