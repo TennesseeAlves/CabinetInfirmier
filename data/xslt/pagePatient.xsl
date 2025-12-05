@@ -10,7 +10,7 @@
         <html>
             <head>
                 <title>page patient</title>
-                <link href="../css/stylePage.css" rel="stylesheet"/>
+                <link href="../css/pagePatient.css" rel="stylesheet"/>
             </head>
             <body>
                 <div class="classPatient">
@@ -69,7 +69,7 @@
     <xsl:template match="pat:adresse">
         <span>
             <xsl:if test="pat:étage">
-                <xsl:value-of select="pat:étage"/><xsl:text>e étage,</xsl:text>
+                <xsl:value-of select="pat:étage"/><xsl:text>e étage, </xsl:text>
             </xsl:if>
             <xsl:if test="pat:numéro">
                 <xsl:value-of select="pat:numéro"/><xsl:text> </xsl:text>
