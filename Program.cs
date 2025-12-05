@@ -6,9 +6,11 @@ class Program
     static void Main(string[] args)
     {
         //Validation des fichier XML Cabinet
+        
         Console.WriteLine("Validation fichiers Cabinet");
-        XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../xsd/cabinet.xsd",
-                "../xml/cabinet.xml");
+        
+        XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "./data/xsd/cabinet.xsd",
+                "./data/xml/cabinet.xml");
         
         //Xslt transformation : 
         //Console.Write("Transformation Page Infirmere");

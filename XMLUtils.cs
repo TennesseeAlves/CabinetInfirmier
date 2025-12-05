@@ -5,7 +5,7 @@ using System.Xml.Xsl;
 
 namespace CabinetInfirmier.data.Csharp;
 
-public class XMLUtils
+public static class XMLUtils
 {
     
     public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath) 
@@ -13,10 +13,9 @@ public class XMLUtils
         
         var settings = new XmlReaderSettings();
         
-        settings.Schemas.Add(schemaNamespace, xsdFilePath);
+        settings.Schemas.Add(xsdFilePath, schemaNamespace);
         Console.WriteLine("coucou");
         settings.ValidationType = ValidationType.Schema;
-        
         
         Console.WriteLine("Nombre de schemas utilisés dans la validation : " + settings.Schemas.Count);
 
