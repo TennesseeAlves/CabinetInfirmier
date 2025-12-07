@@ -6,7 +6,7 @@ namespace CabinetInfirmier.Csharp;
 
 public class Cabinet
 {
-
+    //Partie XmlReader
     public static void AnalyseGlobale(string filepath)
     {
         XmlReader reader = XmlReader.Create(filepath);
@@ -141,7 +141,5 @@ public class Cabinet
         Console.WriteLine(actes);
         return actes;
     }
-    
-    
     
 }
