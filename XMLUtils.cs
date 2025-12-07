@@ -3,7 +3,7 @@ using System.Xml.Schema;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
-namespace CabinetInfirmier.data.Csharp;
+namespace CabinetInfirmier.Csharp;
 
 public static class XMLUtils
 {
@@ -12,22 +12,12 @@ public static class XMLUtils
     {
         
         var settings = new XmlReaderSettings();
-        
-        settings.Schemas.Add(xsdFilePath, schemaNamespace);
-        Console.WriteLine("coucou");
+        settings.Schemas.Add(schemaNamespace, xsdFilePath);
         settings.ValidationType = ValidationType.Schema;
-        
         Console.WriteLine("Nombre de schemas utilisés dans la validation : " + settings.Schemas.Count);
-
         settings.ValidationEventHandler += ValidationCallback;
-    
-        using (var readItems = XmlReader.Create(xmlFilePath, settings)) 
-        {
-            while (readItems.Read()) 
-            {
-                // Lecture complète du fichier pour déclencher la validation
-            }
-        }
+        var readItems = XmlReader.Create(xmlFilePath, settings);
+        while (readItems.Read()) { }
     }
 
     private static void ValidationCallback(object? sender, ValidationEventArgs e) 
@@ -45,13 +35,28 @@ public static class XMLUtils
     }
     
     
-    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    /*public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
     {
         XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
         XslCompiledTransform xslt = new XslCompiledTransform();
         xslt.Load(xsltFilePath);
         XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
         xslt.Transform(xpathDoc, null, htmlWriter);
+    }*/
+    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    {
+        XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
+        XslCompiledTransform xslt = new XslCompiledTransform();
+        
+        XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
+       
+        // Configuration avec XmlResolver
+        XsltSettings settings = new XsltSettings(true, true); // EnableScript, EnableDocumentFunction
+        XmlUrlResolver resolver = new XmlUrlResolver();
+        
+        xslt.Load(xsltFilePath, settings, resolver);
+        xslt.Transform(xpathDoc, null, htmlWriter);
+        
     }
     
 }
