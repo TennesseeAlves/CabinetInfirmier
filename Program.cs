@@ -48,21 +48,24 @@ class Program
         bool res = cab.cabinetHasAdresse(adr);
         Console.WriteLine("-> 3 patients ?? : {0}", res);
 
+        
         //test Partie modification de l'arbre
 
-        cab.addInfirmier("Némard", "Jean");
-        //cab.sauvegarde(filename);
+        //cab.addInfirmier("Némard", "Jean");
+        Console.WriteLine("Nouveau infirmier ajouté");
 
 
-        Console.WriteLine("Infirmier apres ajout : {0}", cab.count("infirmier"));
-        XmlNodeList InfirmiersList =
-            cab.getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", "//cab:infirmier");
-        foreach (XmlNode n in InfirmiersList)
-        {
-            XmlNode nom = n.SelectSingleNode("nom");
-            Console.WriteLine("nom");
+        Adresse newAdresse = new Adresse("KIKS", 0, 0, "rue de la paix", 38100, "Chicagre");
+        cab.addPatient("KIKS", "Burhan", "2000-03-03", "102039999988876", newAdresse);
+        Console.WriteLine("Nouveau patient ajouté");
 
-        }
+        cab.addVisite("2026-01-03", 003, 101, "KIKS");
+        Console.WriteLine("Ajout de visite de KIKS");
+        
+        // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
+
+        bool resultNSS = cab.nssValide("BARKOK");
+        Console.WriteLine("Test Omar: {0}", resultNSS);
 
     }
 }    

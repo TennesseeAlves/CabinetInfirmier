@@ -25,6 +25,36 @@ public class Adresse
         this.codePostal = codePostal;
         this.ville = ville;
     }
+
+    public string getNom()
+    {
+        return this.nom;
+    }
+
+    public int getEtage()
+    {
+        return this.etage;
+    }
+
+    public int getNumero()
+    {
+        return this.numero;
+    }
+
+    public string getRue()
+    {
+        return this.rue;
+    }
+
+    public int getCodePostal()
+    {
+        return this.codePostal;
+    }
+
+    public string getVille()
+    {
+        return this.ville;
+    }
     
     
 }
