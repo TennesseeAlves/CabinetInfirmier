@@ -55,8 +55,9 @@ public class CabinetDOM
     {
         XmlElement infirmierElt = doc.CreateElement(root.Prefix, "infirmier", root.NamespaceURI);
         int coundId = count("infirmier") + 1;
-        Console.WriteLine(coundId);
+        
         string id = "00" + coundId.ToString();
+        Console.WriteLine(coundId);
         string photo = prenom + ".png"; 
         infirmierElt.SetAttribute("id", id);
         
@@ -83,7 +84,52 @@ public class CabinetDOM
     {
         XmlElement newInfirmierElt = MakeInfirmier(nom, prenom);
         root.AppendChild(newInfirmierElt);
+        string chemin = "../../data/newCabinet.xml";
+        //doc.Save(chemin);
+        //Console.WriteLine($"Écrit à : {Path.GetFullPath(chemin)}");
         
     }
+
+    private XmlElement MakePatient(string nom, string prenom, int jour, string nss, Adresse adresse)
+    {
+        XmlElement patientElt = doc.CreateElement(root.Prefix, "patient", root.NamespaceURI);
+        
+        XmlElement nomElt = doc.CreateElement(root.Prefix, "nom", root.NamespaceURI);
+        XmlText nomTxt = doc.CreateTextNode(nom);
+        nomElt.AppendChild(nomTxt);
+        
+        XmlElement prenomElt = doc.CreateElement(root.Prefix, "prenom", root.NamespaceURI);
+        XmlText prenomTxt = doc.CreateTextNode(prenom);
+        prenomElt.AppendChild(prenomTxt);
+
+        string sexe = "";
+        if (nss[0] == '1')
+        {
+            sexe = "M";
+        }
+        else if (nss[0] == '2')
+        {
+            sexe = "F";
+        }
+        XmlElement sexeElt =  doc.CreateElement(root.Prefix, "sexe", root.NamespaceURI);
+        XmlText sexeTxt = doc.CreateTextNode(sexe);
+        sexeElt.AppendChild(sexeTxt);
+
+        string date = "";
+        string annee =  "" + nss[1] + nss[2];
+        int anneeInt = int.Parse(annee);
+        if (anneeInt > 25)
+        {
+            annee = "19" + annee;
+        }
+        else
+        {
+            annee = "20" + annee;
+        }
+        
+        
+        return patientElt;
+    }
+    
 
 }

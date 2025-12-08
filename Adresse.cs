@@ -2,12 +2,29 @@ namespace CabinetInfirmier.Csharp;
 
 public class Adresse
 {
-    private string adresse;
     private string nom;
+    private int etage;
+    private int numero;
+    private string rue;
+    private int codePostal;
+    private string ville;
+    
 
-    public Adresse(string adresse, string nom)
+    public Adresse(string nom, int etage, int numero, string rue, int codePostal, string ville)
     {
-        this.adresse = adresse;
         this.nom = nom;
+        if (etage != 0)
+        {
+            this.etage = etage;
+        }
+        if (numero != 0)
+        {
+            this.numero = numero;
+        }
+        this.rue = rue;
+        this.codePostal = codePostal;
+        this.ville = ville;
     }
+    
+    
 }

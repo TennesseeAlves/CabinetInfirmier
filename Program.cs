@@ -28,6 +28,8 @@ class Program
 
 
         //Parseur DOM :
+        string filename = "./data/xml/cabinet.xml";
+            
         CabinetDOM cab = new CabinetDOM("./data/xml/cabinet.xml");
 
         String xpathExpression = "//cab:infirmier";
@@ -49,6 +51,7 @@ class Program
         //test Partie modification de l'arbre
 
         cab.addInfirmier("Némard", "Jean");
+        //cab.sauvegarde(filename);
 
 
         Console.WriteLine("Infirmier apres ajout : {0}", cab.count("infirmier"));
