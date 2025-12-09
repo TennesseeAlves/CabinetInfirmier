@@ -59,4 +59,23 @@ public static class XMLUtils
         
     }
     
+    
+    public static void XslTransform2(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    {
+        XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
+        XslCompiledTransform xslt = new XslCompiledTransform();
+    
+        // Résolveur essentiel pour document()
+        XmlUrlResolver resolver = new XmlUrlResolver();
+        XsltSettings settings = new XsltSettings(true, true);
+    
+        xslt.Load(xsltFilePath, settings, resolver);
+    
+        using (XmlWriter htmlWriter = XmlWriter.Create(htmlFilePath))
+        {
+            xslt.Transform(xpathDoc, null, htmlWriter);
+        }
+    }
+
+    
 }

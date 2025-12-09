@@ -244,7 +244,7 @@ public class CabinetDOM
         cabLocation.AppendChild(newPatientElt);
         
         string chemin = "../../../data/xml/newCabinet.xml";
-        //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+        doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
 
         /*XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8); // TODO: modif de l'indentation
         writer.Formatting = Formatting.Indented;
@@ -278,7 +278,12 @@ public class CabinetDOM
             Console.WriteLine("Entre condition");
             patientNode[0].AppendChild(newVisiteElt);
             string chemin = "../../../data/xml/newCabinet.xml"; 
-            doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+            //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+            
+            XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8); // TODO: modif de l'indentation
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 4;
+            doc.Save(writer);
         }
         
         

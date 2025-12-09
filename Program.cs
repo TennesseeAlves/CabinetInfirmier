@@ -10,12 +10,12 @@ class Program
     {
         //Validation du fichier XML Cabinet
         //Console.WriteLine("Validation fichiers Cabinet");
-        //XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "./data/xsd/cabinet.xsd", "./data/xml/cabinet.xml");
+        //XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../../../data/xsd/cabinet.xsd", "../../../data/xml/cabinet.xml" );
 
 
         //Xslt transformation : 
-        //Console.Write("Transformation Page Infirmere");
-        //XMLUtils.XslTransform("./data/xml/cabinet.xml", "./data/xslt/pageInfirmiere.xsl", "./data/html/pageInfirmiere.html");
+        Console.Write("Transformation Page Infirmere");
+        XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/pageInfirmiere.xsl", "../../../data/html/pageInfirmiere.html");
 
         //Essaie XmlReader :
         //Cabinet.AnalyseGlobale("./data/xml/cabinet.xml");
@@ -28,7 +28,8 @@ class Program
 
 
         //Parseur DOM :
-        string filename = "./data/xml/cabinet.xml";
+
+        /*string filename = "./data/xml/cabinet.xml";
             
         CabinetDOM cab = new CabinetDOM("./data/xml/cabinet.xml");
 
@@ -65,7 +66,21 @@ class Program
         // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
 
         bool resultNSS = cab.nssValide("BARKOK");
-        Console.WriteLine("Test Omar: {0}", resultNSS);
+        Console.WriteLine("Test Omar: {0}", resultNSS);*/
+        
+        
+        // Partie serealisation 
+        
+        Console.WriteLine("Debut serealisation de Adresse");
+
+        var adrManager = new XMLManager<AdresseSerealisation>();
+        
+        var  TestAdresse = new AdresseSerealisation(10, 10, "rue de la paix", "69000", "Lyon");
+
+        string path = "../../../data/perso/adresse.xml";
+        adrManager.Save(path, TestAdresse);
+        Console.WriteLine("Serealisation de Adresse effectué");
+        
 
     }
 }    
