@@ -20,7 +20,7 @@
         <html>
             <head>
                 <title>page infirmiere</title>
-                <link rel="stylesheet" href="../css/stylePage.css"/>
+                <link rel="stylesheet" href="../css/pageInfirmier.css"/>
                 <script type="text/javascript" src="../js/facture.js"></script>
             </head>
             
@@ -28,7 +28,7 @@
                 <div class="classPatient">
                     <h1>Bonjour</h1>
                     <h3><xsl:value-of select="$prenomInf"/></h3>
-                    <h1>,aujourd'hui, vous avez</h1>
+                    <h1>, aujourd'hui, vous avez</h1>
                     <h3><xsl:value-of select="count($patients)"/></h3>
                     <h1>patients.</h1>
                     <h1>Voici la liste des patients à visiter</h1>
