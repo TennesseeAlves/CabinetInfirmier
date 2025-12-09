@@ -1,7 +1,7 @@
+namespace CabinetInfirmier;
+
 using System.Xml;
 using System.Xml.Schema;
-
-namespace CabinetInfirmier;
 
 public static class XMLUtils
 {
