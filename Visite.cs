@@ -1,0 +1,33 @@
+using System.Xml.Serialization;
+
+namespace CabinetInfirmier;
+
+
+[XmlRoot("visite", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
+[Serializable]
+public class Visite
+{
+    [XmlAttribute("intervenant")] public uint Intervenant { get; set; }
+    
+    [XmlAttribute("date")] public string Date { get; set; }
+    
+    [XmlElement("acte")] public List<Acte> Acte{ get; set; }
+    
+    public Visite(){}
+
+    public Visite(uint intervenant, string date, List<Acte> acte)
+    {
+        Intervenant = intervenant;
+        Date = date;
+        Acte = acte;
+        
+    }
+
+    public string toString()
+    {
+        string res = "Visite : \nIntervenant : " + Intervenant + "\nDate : " + Date + "\nActe : \n" + Acte;
+        return res;;
+        
+
+    }
+}

@@ -1,4 +1,6 @@
-namespace CabinetInfirmier.Csharp;
+using CabinetInfirmier.Csharp;
+
+namespace CabinetInfirmier;
 
 using System.Xml.Serialization;
 
@@ -15,5 +17,16 @@ public class InfirmiersSerealisation
         this.Infirmier = infirmier;   
     }
     
+    
+    public string toString()
+    {
+        string res = "Liste d'infirmiers du cabinet : \n";
+        for (int i = 0; i < Infirmier.Count; i++)
+        {
+            res += Infirmier[i].toString() + "\n";
+        }
+
+        return res;
+    }
     
 }

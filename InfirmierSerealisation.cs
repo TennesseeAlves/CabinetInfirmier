@@ -27,4 +27,11 @@ public class InfirmierSerealisation
         this.Prenom = prenom;
         this.Photo = photo;
     }
+
+    public string toString()
+    {
+        String res = "=> Infirmier : \nNom: " + Nom + "\nPrenom : " + Prenom + "\nPhoto : " + Photo + "\nId : " + Id;
+        return res;
+        
+    }
 }

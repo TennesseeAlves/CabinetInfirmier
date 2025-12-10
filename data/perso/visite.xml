@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" intervenant="105" date="2025-01-23" xmlns="http://www.univ-grenoble-alpes.fr/l3miage/medical">
+  <acte id="503" />
+</visite>

@@ -108,8 +108,41 @@ class Program
         Console.WriteLine("Serealisation de Infirmier effectué");
         
         
+        //Test de déseralisation
+        //XMLManager<InfirmiersSerealisation> InfirmiersManager = new XMLManager<InfirmiersSerealisation>();
+        var deseralieurInfirmier = InfirmiersManager.Load("../../../data/perso/infirmiers.xml");
+        Console.WriteLine("Test");
+        Console.WriteLine(deseralieurInfirmier.toString());
         
+        //Acte
+        XMLManager<Acte> acteManager = new XMLManager<Acte>();
+        Acte acteSerealisation = new Acte("503");
+        acteManager.Save("../../../data/perso/acte.xml",  acteSerealisation);
         
+        //Visite 
+        List<Acte> listActes = new List<Acte>();
+        listActes.Add(acteSerealisation);
+        XMLManager<Visite>  visiteManager = new XMLManager<Visite>();
+        Visite visiteSereal = new Visite(105, "2025-01-23", listActes);
+        visiteManager.Save("../../../data/perso/visite.xml", visiteSereal);
+        
+        //Patient
+        XMLManager<Patient>  patientManager = new XMLManager<Patient>();
+        Patient patientSereal = new Patient("Orouge", "Elvire", "F", "1982-03-08", "282036912305243", TestAdresse, visiteSereal);
+        patientManager.Save("../../../data/perso/patient.xml", patientSereal);
+        
+        //Patients
+        XMLManager<Patients> patientsManager = new XMLManager<Patients>();
+        List<Patient> patientsList = new List<Patient>();
+        patientsList.Add(patientSereal);
+        Patients patientsSeral = new Patients(patientsList);
+        patientsManager.Save("../../../data/perso/patients.xml", patientsSeral);
+
+
+
+
+
+
 
 
 
