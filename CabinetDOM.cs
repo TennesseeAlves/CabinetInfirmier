@@ -1,7 +1,8 @@
+namespace CabinetInfirmier;
+
 using System.Text;
 using System.Xml;
 
-namespace CabinetInfirmier.Csharp;
 //Parseur DOM
 public class CabinetDOM
 {

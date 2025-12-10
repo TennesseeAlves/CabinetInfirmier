@@ -1,4 +1,4 @@
-namespace CabinetInfirmier.Csharp;
+namespace CabinetInfirmier;
 
 using System.Xml.Serialization;
 

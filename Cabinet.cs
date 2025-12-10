@@ -1,8 +1,9 @@
+namespace CabinetInfirmier;
+
 using System.Collections.Generic;
 
 using System.Xml;
 
-namespace CabinetInfirmier.Csharp;
 
 public class Cabinet
 {

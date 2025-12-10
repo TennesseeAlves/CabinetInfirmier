@@ -1,8 +1,10 @@
-﻿using System.Xml;
+﻿using CabinetInfirmier;
+
+
+using System.Xml;
 using System.Xml.Serialization;
 using CabinetInfirmier;
 
-using CabinetInfirmier.Csharp;
 
 class Program
 {
@@ -74,9 +76,9 @@ class Program
         
         Console.WriteLine("Debut serealisation de Adresse");
 
-        var adrManager = new XMLManager<AdresseSerealisation>();
+        var adrManager = new XMLManager<AdresseSerialisation>();
         
-        var  TestAdresse = new AdresseSerealisation(null, 1, "rue de la paix", "69000", "Lyon");
+        var  TestAdresse = new AdresseSerialisation(null, 1, "rue de la paix", "69000", "Lyon");
 
         string pathAdr = "../../../data/perso/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);
@@ -85,9 +87,9 @@ class Program
         
        
 
-        var infirManager = new XMLManager<InfirmierSerealisation>();
+        var infirManager = new XMLManager<InfirmierSerialisation>();
         
-        var TestInfirmier = new InfirmierSerealisation(005, "BARKOK", "Omar", "Omar.png");
+        var TestInfirmier = new InfirmierSerialisation(005, "BARKOK", "Omar", "Omar.png");
 
         string pathInfir = "../../../data/perso/infirmier.xml";
         

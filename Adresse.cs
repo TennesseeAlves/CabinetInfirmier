@@ -1,4 +1,4 @@
-namespace CabinetInfirmier.Csharp;
+namespace CabinetInfirmier;
 
 public class Adresse
 {

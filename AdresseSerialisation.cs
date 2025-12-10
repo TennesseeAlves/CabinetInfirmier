@@ -1,14 +1,15 @@
+namespace CabinetInfirmier;
+
 using System.Xml.Serialization;
 
-namespace CabinetInfirmier.Csharp;
 
 
 [XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
-public class AdresseSerealisation
+public class AdresseSerialisation
 {
-    /* Solution trouve sur internet qui, de ce que j'ai compris c'est un pattern... mais ca ne marche pas car l'element est rajoutee dans tout les cas
+    /* Solution trouvée sur internet qui est un pattern... mais ca ne marche pas
     [XmlElement("étage")]
     public int EtageValeur
     {
@@ -29,11 +30,19 @@ public class AdresseSerealisation
         }
     }*/
     [XmlElement("étage", IsNullable = true)]
-    public int? Etage {get; set;}
+    public int? _Etage
+    {
+        get { return _Etage; }
+        set
+        {
+            
+        }
+        
+    }
     
     
 
-    [XmlIgnore] public int? Numero {get; set;}
+    //[XmlIgnore] public int? Numero {get; set;}
     [XmlElement("numéro")]
     public int? _Numero  { get; set; }
     /*{
@@ -55,15 +64,15 @@ public class AdresseSerealisation
     [XmlElement("ville")]
     public string _Ville { get; set; }
     
-    public AdresseSerealisation() { }
+    public AdresseSerialisation() { }
 
-    public AdresseSerealisation(int? etage, int? numero, string rue, string codePostal, string ville)
+    public AdresseSerialisation(int? etage, int? numero, string rue, string codePostal, string ville)
     {
         _Numero = numero;
         _Rue = rue;
         _CodePostal = codePostal;
         _Ville = ville;
-        Etage = etage;
+        _Etage = etage;
     }
 
     
