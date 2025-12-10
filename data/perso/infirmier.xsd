@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf"
+
+        targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf"
+        elementFormDefault="qualified"
+>
+    <!-- ······ Element racine ······ -->
+    <element name="infirmier" type="cab:Infirmier"/>
+
+    <complexType name="Infirmier">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+            <element name="photo" type="cab:Photo"/>
+        </sequence>
+        <attribute name="id" type="unsignedInt" use="required"/>
+    </complexType>
+
+    <!-- Photo -->
+    <simpleType name="Photo">
+        <restriction base="string"/> <!-- a modifier éventuellement -->
+    </simpleType>
+
+
+</schema> 

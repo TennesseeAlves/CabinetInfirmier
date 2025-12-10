@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:cab="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+        xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+
+        targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+        elementFormDefault="qualified"
+>
+    <!-- ······ Element racine ······ -->
+    <element name="adresse" type="cab:Adresse"/>
+
+    <complexType name="Adresse">
+        <sequence>
+            <element name="étage" type="positiveInteger" minOccurs="0"/>
+            <element name="numéro" type="positiveInteger" minOccurs="0"/>
+            <element name="rue" type="string"/>
+            <element name="codePostal" type="cab:CodePostal"/>
+            <element name="ville" type="string"/>
+        </sequence>
+    </complexType>
+
+    <!-- CodePostal -->
+    <simpleType name="CodePostal">
+        <restriction base="string">
+            <pattern value="\d{5}"/>
+        </restriction>
+    </simpleType>
+    
+</schema>    
