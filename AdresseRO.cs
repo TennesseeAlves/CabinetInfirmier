@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 [XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
-public class AdresseSerialisation
+public class AdresseRO
 {
     [XmlIgnore]
     private String patternEntierPositif = @"^0*[1-9]+$";
@@ -16,7 +16,7 @@ public class AdresseSerialisation
     public int? Etage
     {
         get { return Etage; }
-        set
+        init
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
                 Numero = value;
@@ -29,7 +29,7 @@ public class AdresseSerialisation
     public int? Numero
     {
         get { return Numero; }
-        set
+        init
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
                 Numero = value;
@@ -39,7 +39,7 @@ public class AdresseSerialisation
     }
     /*{
         get => Numero;
-        set
+        init
         {
             if (value <= 0) Numero = 0;
             else Numero = value;
@@ -48,7 +48,7 @@ public class AdresseSerialisation
 
 
     [XmlElement("rue")]
-    public string Rue { get; set; }
+    public string Rue { get; init; }
     
     [XmlElement("codePostal")]
     public string CodePostal
@@ -57,7 +57,7 @@ public class AdresseSerialisation
         {
             return CodePostal;
         }   
-        set
+        init
         {
             if (Regex.IsMatch(value.ToString(), patternCodePostale))
                 CodePostal = value;
@@ -67,11 +67,11 @@ public class AdresseSerialisation
     }
     
     [XmlElement("ville")]
-    public string Ville { get; set; }
+    public string Ville { get; init; }
     
-    public AdresseSerialisation() { }
+    public AdresseRO() { }
 
-    public AdresseSerialisation(int? etage, int? numero, string rue, string codePostal, string ville)
+    public AdresseRO(int? etage, int? numero, string rue, string codePostal, string ville)
     {
         Numero = numero;
         Rue = rue;
