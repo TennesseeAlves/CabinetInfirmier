@@ -9,9 +9,8 @@
     <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes"
             schemaLocation="./actes.xsd"/>
     
-    <!-- ······ Element racine ······ -->
+    <!-- ······ Element racine du cabinet ······ -->
     <element name="cabinet" type="cab:Cabinet">
-        
         <!-- Clef unicité id infirmier -->
         <key name="clefIdInfirmier">
             <selector xpath="cab:infirmiers/cab:infirmier"/>
@@ -29,9 +28,11 @@
             <selector xpath="cab:patients/cab:patient/cab:visite"/>
             <field xpath="@intervenant"/>
         </keyref>
-        
     </element>
     
+    <!-- ······ Elements racines que j'utilise pour tester mes serializations ······ -->
+    <element name="adresse" type="cab:Adresse"/>
+    <!-- ························································ -->
     
     <!-- Type de la racine  -->
     <complexType name="Cabinet">
@@ -114,7 +115,7 @@
     
     <!-- Photo -->
     <simpleType name="Photo">
-        <restriction base="string"/> <!-- a modifier éventuellement -->
+        <restriction base="string"/> <!-- on se restreint simplement a un string -->
     </simpleType>
 
     <!-- Sexe -->
