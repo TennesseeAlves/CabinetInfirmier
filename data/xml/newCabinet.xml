@@ -116,6 +116,8 @@
             </adresse>
             <visite date="2026-01-03" intervenant="003">
                 <acte id="101" />
+                <acte id="102" />
+                <acte id="103" />
             </visite>
         </patient>
     </patients>
