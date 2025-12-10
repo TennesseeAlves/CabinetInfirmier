@@ -21,10 +21,10 @@ public class CabinetDOM
         
     }
 
-    public XmlNodeList getXpath(string nPrefix, string nsURI, string expression)
+    public XmlNodeList getXpath(string nPrefix, string nsURI, string expressionXpath)
     {
         nsmgr.AddNamespace(nPrefix, nsURI);
-        return root.SelectNodes(expression, nsmgr);
+        return root.SelectNodes(expressionXpath, nsmgr);
     }
 
     public int count(string elementName)
@@ -35,7 +35,7 @@ public class CabinetDOM
         return recherche.Count;
     }
 
-    public bool cabinetHasAdresse(string elementName)
+    public bool cabinetHasAdresse(string elementName) //TODO : faire une methode intermediare estAdresseComplete()
     {
         bool res = true;
         string expression = "//cab:cabinet/cab:" + elementName;
@@ -123,9 +123,10 @@ public class CabinetDOM
         XmlElement infirmierElt = doc.CreateElement(root.Prefix, "infirmier", root.NamespaceURI);
         int coundId = count("infirmier") + 1;
         
-        string id = "00" + coundId;
+        string id = "00" + coundId; //TODO : revoir le calcul de l'ID 0011 != 011
         Console.WriteLine(coundId);
         string photo = prenom.ToLower() + ".png"; 
+        
         infirmierElt.SetAttribute("id", id);
         
         XmlElement nomElt = doc.CreateElement(root.Prefix, "nom", root.NamespaceURI);
@@ -140,6 +141,7 @@ public class CabinetDOM
         XmlText photoTxt = doc.CreateTextNode(photo);
         photoElt.AppendChild(photoTxt);
         
+        // ordre a respecter
         infirmierElt.AppendChild(nomElt);
         infirmierElt.AppendChild(prenomElt);
         infirmierElt.AppendChild(photoElt);
@@ -151,10 +153,10 @@ public class CabinetDOM
     {
         XmlElement newInfirmierElt = MakeInfirmier(nom, prenom);
         XmlElement rootElt = (XmlElement) root;
-        var cabLocation = rootElt.GetElementsByTagName("infirmiers").Item(0);
-        cabLocation.AppendChild(newInfirmierElt);
+        var nodeInfirmiers = rootElt.GetElementsByTagName("infirmiers").Item(0); //recuperer le node Infirmiers
+        nodeInfirmiers.AppendChild(newInfirmierElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml";
+        string chemin = "../../../data/xml/newCabinet.xml"; //TODO : changer avec cabinet.xml
         doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
         // TODO: modif de l'indentation
 
@@ -240,10 +242,10 @@ public class CabinetDOM
     {
         XmlElement newPatientElt = MakePatient(nom, prenom, dateNaissance, nss, adresse);
         XmlElement rootElt = (XmlElement) root;
-        var cabLocation = rootElt.GetElementsByTagName("patients").Item(0);
-        cabLocation.AppendChild(newPatientElt);
+        var nodePatients = rootElt.GetElementsByTagName("patients").Item(0);
+        nodePatients.AppendChild(newPatientElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml";
+        string chemin = "../../../data/xml/newCabinet.xml"; //TODO : changer en cabinet.xml
         doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
 
         /*XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8); // TODO: modif de l'indentation
@@ -252,7 +254,7 @@ public class CabinetDOM
         doc.Save(writer);*/
     }
 
-    private XmlElement makeVisite(string date, int intervenant, int acteId)
+    private XmlElement makeVisite(string date, int intervenant, int acteId) //TODO : changer en liste d'actes
     {
         XmlElement visiteElt = doc.CreateElement("visite", root.NamespaceURI);
 
@@ -270,7 +272,8 @@ public class CabinetDOM
     {
         XmlElement newVisiteElt = makeVisite(date, intervenant, acteId);
 
-        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]"; 
+        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]"; //TODO : a tester avec //cab:patient[cab:nom/text() = " + nomPatient + "]"
+            
         XmlNodeList patientNode = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
 
         if (patientNode.Count != 0)

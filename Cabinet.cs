@@ -115,7 +115,7 @@ public class Cabinet
         return nomsCabinet;
     }
 
-    public static int countActes(string filepath)
+    public static int countActes(string filepath) //TODO : faire un hashset : compter le nombre d'actes different
     {
         XmlReader reader = XmlReader.Create(filepath);
         int actes = 0;

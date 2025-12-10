@@ -8,8 +8,18 @@ namespace CabinetInfirmier.Csharp;
 
 public class AdresseSerealisation
 {
+    /* Solution trouve sur internet qui, de ce que j'ai compris c'est un pattern... mais ca ne marche pas car l'element est rajoutee dans tout les cas
     [XmlElement("étage")]
-    public int _Etage  { get; set; }
+    public int EtageValeur
+    {
+        get { return Etage.Value; }
+        set { Etage = value; }
+    }
+
+    [XmlIgnore] public int? Etage {get; set;}
+    public bool EtageSpecified => Etage.HasValue;
+    */
+
     /*{
         get => _Etage;
         set
@@ -18,9 +28,14 @@ public class AdresseSerealisation
             else _Etage = value;
         }
     }*/
+    [XmlElement("étage", IsNullable = true)]
+    public int? Etage {get; set;}
+    
+    
 
+    [XmlIgnore] public int? Numero {get; set;}
     [XmlElement("numéro")]
-    public int _Numero  { get; set; }
+    public int? _Numero  { get; set; }
     /*{
         get => _Numero;
         set
@@ -42,12 +57,14 @@ public class AdresseSerealisation
     
     public AdresseSerealisation() { }
 
-    public AdresseSerealisation(int etage, int numero, string rue, string codePostal, string ville)
+    public AdresseSerealisation(int? etage, int? numero, string rue, string codePostal, string ville)
     {
         _Numero = numero;
         _Rue = rue;
         _CodePostal = codePostal;
         _Ville = ville;
-        _Etage = etage;
+        Etage = etage;
     }
+
+    
 }

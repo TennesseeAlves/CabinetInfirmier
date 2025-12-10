@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Xml.Serialization;
 using CabinetInfirmier;
 
 using CabinetInfirmier.Csharp;
@@ -14,8 +15,8 @@ class Program
 
 
         //Xslt transformation : 
-        Console.Write("Transformation Page Infirmere");
-        XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/pageInfirmiere.xsl", "../../../data/html/pageInfirmiere.html");
+        //Console.Write("Transformation Page Infirmere");
+        //XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/pageInfirmiere.xsl", "../../../data/html/pageInfirmiere.html");
 
         //Essaie XmlReader :
         //Cabinet.AnalyseGlobale("./data/xml/cabinet.xml");
@@ -75,11 +76,27 @@ class Program
 
         var adrManager = new XMLManager<AdresseSerealisation>();
         
-        var  TestAdresse = new AdresseSerealisation(10, 10, "rue de la paix", "69000", "Lyon");
+        var  TestAdresse = new AdresseSerealisation(null, 1, "rue de la paix", "69000", "Lyon");
 
-        string path = "../../../data/perso/adresse.xml";
-        adrManager.Save(path, TestAdresse);
+        string pathAdr = "../../../data/perso/adresse.xml";
+        adrManager.Save(pathAdr, TestAdresse);
         Console.WriteLine("Serealisation de Adresse effectué");
+        
+        
+       
+
+        var infirManager = new XMLManager<InfirmierSerealisation>();
+        
+        var TestInfirmier = new InfirmierSerealisation(005, "BARKOK", "Omar", "Omar.png");
+
+        string pathInfir = "../../../data/perso/infirmier.xml";
+        
+        //XmlSerializerNamespaces nsInfir =  new XmlSerializerNamespaces();
+        //nsInfir.Add("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf");
+        infirManager.Save(pathInfir, TestInfirmier);
+        Console.WriteLine("Serealisation de Infirmier effectué");
+        
+        
         
 
     }
