@@ -74,11 +74,11 @@ public class CabinetDOM
         XmlNodeList node = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
         return node;
     }
-    public bool nssValide(string nomPatient)
+    public bool nssValide(string nomPatient) //TODO : remplacer tout les getXpath par SelectSingleNode
     {
         Console.WriteLine("Verification du nss du patient {0}",  nomPatient);
         bool res = true;
-        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:numéro";
+        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:numéro"; //TODO ne pas utiliser contains
         XmlNodeList noeudlist = getXpathPerso(expression);
         if (noeudlist.Count != 0)
         {
@@ -193,7 +193,7 @@ public class CabinetDOM
 
     }
 
-    private XmlElement MakePatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)
+    private XmlElement MakePatient(string nom, string prenom, string dateNaissance, string nss, AdresseSerealisation adresse)
     {
         XmlElement patientElt = doc.CreateElement(root.Prefix, "patient", root.NamespaceURI);
         
@@ -227,34 +227,34 @@ public class CabinetDOM
         nssElt.AppendChild(nssTxt);
         
         XmlElement adresseElt = doc.CreateElement(root.Prefix, "adresse", root.NamespaceURI);
-        if (adresse.getEtage() != 0)
+        if (adresse.Etage != 0)
         {
             XmlElement etageElt = doc.CreateElement(root.Prefix, "étage", root.NamespaceURI);
-            XmlText etageTxt = doc.CreateTextNode(adresse.getEtage().ToString());
+            XmlText etageTxt = doc.CreateTextNode(adresse.Etage.ToString());
             etageElt.AppendChild(etageTxt);
             adresseElt.AppendChild(etageElt);
         }
 
-        if (adresse.getNumero() != 0)
+        if (adresse.Numero != 0)
         {
             XmlElement numeroElt = doc.CreateElement(root.Prefix, "numéro", root.NamespaceURI);
-            XmlText numeroTxt = doc.CreateTextNode(adresse.getNumero().ToString());
+            XmlText numeroTxt = doc.CreateTextNode(adresse.Numero.ToString());
             numeroElt.AppendChild(numeroTxt);
             adresseElt.AppendChild(numeroElt);
         }
         
         XmlElement rueElt =  doc.CreateElement(root.Prefix, "rue", root.NamespaceURI);
-        XmlText rueTxt = doc.CreateTextNode(adresse.getRue());
+        XmlText rueTxt = doc.CreateTextNode(adresse.Rue);
         rueElt.AppendChild(rueTxt);
         adresseElt.AppendChild(rueElt);
         
         XmlElement codePostElt = doc.CreateElement(root.Prefix, "codePostal", root.NamespaceURI);
-        XmlText codePostTxt = doc.CreateTextNode(adresse.getCodePostal().ToString());
+        XmlText codePostTxt = doc.CreateTextNode(adresse.CodePostal.ToString());
         codePostElt.AppendChild(codePostTxt);
         adresseElt.AppendChild(codePostElt);
         
         XmlElement villeElt = doc.CreateElement(root.Prefix, "ville", root.NamespaceURI);
-        XmlText villeTxt = doc.CreateTextNode(adresse.getVille());
+        XmlText villeTxt = doc.CreateTextNode(adresse.Ville);
         villeElt.AppendChild(villeTxt);
         adresseElt.AppendChild(villeElt);
         
@@ -269,7 +269,7 @@ public class CabinetDOM
     }
 
 
-    public void addPatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)
+    public void addPatient(string nom, string prenom, string dateNaissance, string nss, AdresseSerealisation adresse)
     {
         XmlElement newPatientElt = MakePatient(nom, prenom, dateNaissance, nss, adresse);
         XmlElement rootElt = (XmlElement) root;

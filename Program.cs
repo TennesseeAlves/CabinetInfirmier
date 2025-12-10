@@ -64,8 +64,8 @@ class Program
         //cab.addInfirmier("Némard", "Jean");
         //Console.WriteLine("Nouveau infirmier ajouté");
 
-
-        Adresse newAdresse = new Adresse("KIKS", 0, 0, "rue de la paix", 38100, "Chicagre");
+/*
+        AdresseSerealisation newAdresse = new AdresseSerealisation(5, 6, "rue de la paix", "38100", "Chicagre");
         cab.addPatient("KIKS", "Burhan", "2000-03-03", "102039999988876", newAdresse);
         Console.WriteLine("Nouveau patient ajouté");
 
@@ -79,33 +79,37 @@ class Program
         // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
 
         bool resultNSS = cab.nssValide("BARKOK");
-        Console.WriteLine("Test Omar: {0}", resultNSS); 
+        Console.WriteLine("Test Omar: {0}", resultNSS);
+        */
 
 
         // Partie serealisation 
 
-        /*Console.WriteLine("Debut serealisation de Adresse");
+        Console.WriteLine("Debut serealisation de Adresse");
 
         var adrManager = new XMLManager<AdresseSerealisation>();
-
-        var  TestAdresse = new AdresseSerealisation(null, 1, "rue de la paix", "69000", "Lyon");
-
+        var  TestAdresse = new AdresseSerealisation(12, 1, "rue de la paix", "69000", "Lyon");
         string pathAdr = "../../../data/perso/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);
         Console.WriteLine("Serealisation de Adresse effectué");
-
-
-
-
+        
         var infirManager = new XMLManager<InfirmierSerealisation>();
-
         var TestInfirmier = new InfirmierSerealisation(005, "BARKOK", "Omar", "Omar.png");
-
         string pathInfir = "../../../data/perso/infirmier.xml";
-
-
         infirManager.Save(pathInfir, TestInfirmier);
-        Console.WriteLine("Serealisation de Infirmier effectué");*/
+        Console.WriteLine("Serealisation de Infirmier effectué");
+        
+        var InfirmiersManager = new XMLManager<InfirmiersSerealisation>();
+        List<InfirmierSerealisation> listInfirmiers = new List<InfirmierSerealisation>();
+        listInfirmiers.Add(TestInfirmier);
+        var infirmiersSer = new InfirmiersSerealisation(listInfirmiers);
+        string pathInfirmiers = "../../../data/perso/infirmiers.xml";
+        InfirmiersManager.Save(pathInfirmiers, infirmiersSer);
+        Console.WriteLine("Serealisation de Infirmier effectué");
+        
+        
+        
+        
 
 
 

@@ -28,14 +28,15 @@ public class AdresseSerealisation
             else _Etage = value;
         }
     }*/
-    [XmlElement("étage", IsNullable = true)]
-    public int? Etage {get; set;}
+    [XmlElement("étage")]
+    public int Etage {get; set;}
     
     
 
-    [XmlIgnore] public int? Numero {get; set;}
+    //[XmlIgnore] public int? Numero {get; set;}
+    
     [XmlElement("numéro")]
-    public int? _Numero  { get; set; }
+    public int Numero  { get; set; }
     /*{
         get => _Numero;
         set
@@ -47,22 +48,22 @@ public class AdresseSerealisation
 
 
     [XmlElement("rue")]
-    public string _Rue { get; set; }
+    public string Rue { get; set; }
     
     [XmlElement("codePostal")]
-    public string _CodePostal { get; set; }
+    public string CodePostal { get; set; }
     
     [XmlElement("ville")]
-    public string _Ville { get; set; }
+    public string Ville { get; set; }
     
     public AdresseSerealisation() { }
 
-    public AdresseSerealisation(int? etage, int? numero, string rue, string codePostal, string ville)
+    public AdresseSerealisation(int etage, int numero, string rue, string codePostal, string ville)
     {
-        _Numero = numero;
-        _Rue = rue;
-        _CodePostal = codePostal;
-        _Ville = ville;
+        Numero = numero;
+        Rue = rue;
+        CodePostal = codePostal;
+        Ville = ville;
         Etage = etage;
     }
 

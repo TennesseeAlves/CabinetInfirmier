@@ -31,6 +31,10 @@
         </keyref>
         
     </element>
+
+    <element name="adresse" type="cab:Adresse"/>
+    <element name="infirmier" type="cab:Infirmier"/>
+    <element name="infirmiers" type="cab:Infirmiers"/>
     
     
     <!-- Type de la racine  -->
@@ -42,6 +46,7 @@
             <element name="patients" type="cab:Patients"/>
         </sequence>
     </complexType>
+
     
     <!-- Adresse -->
     <complexType name="Adresse">

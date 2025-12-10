@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 namespace CabinetInfirmier.Csharp;
 
 
-[XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf")]
+[XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
 public class InfirmierSerealisation
