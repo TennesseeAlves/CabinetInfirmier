@@ -6,6 +6,9 @@
         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
         elementFormDefault="qualified" 
 >
+    
+    <!-- Utilisé pour le type de l'attribut du complexType "Acte" du cabinet -->
+    <!-- C'est le "bricolage" que j'ai fait car je n'ai pas réussi à lier une clef d'existance du cabinet vers actes... -->
     <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes"
             schemaLocation="./actes.xsd"/>
     

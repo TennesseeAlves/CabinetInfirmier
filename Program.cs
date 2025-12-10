@@ -1,15 +1,11 @@
-﻿using CabinetInfirmier;
-
+﻿namespace CabinetInfirmier;
 
 using System.Xml;
 using System.Xml.Serialization;
-using CabinetInfirmier;
-
 
 class Program
 {
-
-    static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         //Validation du fichier XML Cabinet
         //Console.WriteLine("Validation fichiers Cabinet");
@@ -102,4 +98,4 @@ class Program
         
 
     }
-}    
+}
