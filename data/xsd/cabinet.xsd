@@ -114,7 +114,7 @@
     
     <!-- Photo -->
     <simpleType name="Photo">
-        <restriction base="string"/> <!-- a modifier éventuellement -->
+        <restriction base="string"/> <!-- on se restreint simplement a un string -->
     </simpleType>
 
     <!-- Sexe -->
