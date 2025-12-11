@@ -6,9 +6,9 @@ namespace CabinetInfirmier.Csharp;
 [XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
-public class InfirmierSerealisation
+public class Infirmier
 {
-    [XmlAttribute("id")] public uint Id { get; set; }
+    [XmlAttribute("id")] public string Id { get; set; }
     
     [XmlElement("nom")] public string Nom { get; set; }
     
@@ -18,9 +18,9 @@ public class InfirmierSerealisation
     
     
 
-    public InfirmierSerealisation(){}
+    public Infirmier(){}
 
-    public InfirmierSerealisation(uint id, string nom, string prenom, string photo)
+    public Infirmier(string id, string nom, string prenom, string photo)
     {
         this.Id = id;
         this.Nom = nom;

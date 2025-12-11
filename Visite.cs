@@ -7,7 +7,7 @@ namespace CabinetInfirmier;
 [Serializable]
 public class Visite
 {
-    [XmlAttribute("intervenant")] public uint Intervenant { get; set; }
+    [XmlAttribute("intervenant")] public string Intervenant { get; set; }
     
     [XmlAttribute("date")] public string Date { get; set; }
     
@@ -15,7 +15,7 @@ public class Visite
     
     public Visite(){}
 
-    public Visite(uint intervenant, string date, List<Acte> acte)
+    public Visite(string intervenant, string date, List<Acte> acte)
     {
         Intervenant = intervenant;
         Date = date;

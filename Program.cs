@@ -87,22 +87,22 @@ class Program
 
         Console.WriteLine("Debut serealisation de Adresse");
 
-        var adrManager = new XMLManager<AdresseSerealisation>();
-        var  TestAdresse = new AdresseSerealisation(12, 1, "rue de la paix", "69000", "Lyon");
+        var adrManager = new XMLManager<Adresse>();
+        Adresse TestAdresse = new Adresse(12, 1, "rue de la paix", "69001", "Lyon");
         string pathAdr = "../../../data/perso/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);
         Console.WriteLine("Serealisation de Adresse effectué");
         
-        var infirManager = new XMLManager<InfirmierSerealisation>();
-        var TestInfirmier = new InfirmierSerealisation(005, "BARKOK", "Omar", "Omar.png");
+        var infirManager = new XMLManager<Infirmier>();
+        var TestInfirmier = new Infirmier("005", "BARKOK", "Omar", "Omar.png");
         string pathInfir = "../../../data/perso/infirmier.xml";
         infirManager.Save(pathInfir, TestInfirmier);
         Console.WriteLine("Serealisation de Infirmier effectué");
         
-        var InfirmiersManager = new XMLManager<InfirmiersSerealisation>();
-        List<InfirmierSerealisation> listInfirmiers = new List<InfirmierSerealisation>();
+        var InfirmiersManager = new XMLManager<Infirmiers>();
+        List<Infirmier> listInfirmiers = new List<Infirmier>();
         listInfirmiers.Add(TestInfirmier);
-        var infirmiersSer = new InfirmiersSerealisation(listInfirmiers);
+        var infirmiersSer = new Infirmiers(listInfirmiers);
         string pathInfirmiers = "../../../data/perso/infirmiers.xml";
         InfirmiersManager.Save(pathInfirmiers, infirmiersSer);
         Console.WriteLine("Serealisation de Infirmier effectué");
@@ -110,9 +110,9 @@ class Program
         
         //Test de déseralisation
         //XMLManager<InfirmiersSerealisation> InfirmiersManager = new XMLManager<InfirmiersSerealisation>();
-        var deseralieurInfirmier = InfirmiersManager.Load("../../../data/perso/infirmiers.xml");
+        //var deseralieurInfirmier = InfirmiersManager.Load("../../../data/perso/infirmiers.xml");
         Console.WriteLine("Test");
-        Console.WriteLine(deseralieurInfirmier.toString());
+        //Console.WriteLine(deseralieurInfirmier.toString());
         
         //Acte
         XMLManager<Acte> acteManager = new XMLManager<Acte>();
@@ -123,7 +123,7 @@ class Program
         List<Acte> listActes = new List<Acte>();
         listActes.Add(acteSerealisation);
         XMLManager<Visite>  visiteManager = new XMLManager<Visite>();
-        Visite visiteSereal = new Visite(105, "2025-01-23", listActes);
+        Visite visiteSereal = new Visite("005", "2025-01-23", listActes);
         visiteManager.Save("../../../data/perso/visite.xml", visiteSereal);
         
         //Patient
@@ -137,7 +137,11 @@ class Program
         patientsList.Add(patientSereal);
         Patients patientsSeral = new Patients(patientsList);
         patientsManager.Save("../../../data/perso/patients.xml", patientsSeral);
-
+        
+        //Cabinet
+        XMLManager<Cabinet> cabinetManager = new XMLManager<Cabinet>();
+        Cabinet cabientSereal = new  Cabinet("Mon Cabinet", TestAdresse, infirmiersSer, patientsSeral);
+        cabinetManager.Save("../../../data/perso/cabinetSerealisation.xml",cabientSereal);
 
 
 

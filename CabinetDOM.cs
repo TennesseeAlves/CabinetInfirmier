@@ -193,7 +193,7 @@ public class CabinetDOM
 
     }
 
-    private XmlElement MakePatient(string nom, string prenom, string dateNaissance, string nss, AdresseSerealisation adresse)
+    private XmlElement MakePatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)
     {
         XmlElement patientElt = doc.CreateElement(root.Prefix, "patient", root.NamespaceURI);
         
@@ -269,7 +269,7 @@ public class CabinetDOM
     }
 
 
-    public void addPatient(string nom, string prenom, string dateNaissance, string nss, AdresseSerealisation adresse)
+    public void addPatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)
     {
         XmlElement newPatientElt = MakePatient(nom, prenom, dateNaissance, nss, adresse);
         XmlElement rootElt = (XmlElement) root;

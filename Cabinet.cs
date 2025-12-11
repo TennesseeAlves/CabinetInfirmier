@@ -1,9 +1,14 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using CabinetInfirmier.Csharp;
+
 
 using System.Xml;
 
 namespace CabinetInfirmier.Csharp;
 
+[XmlRoot("cabinet", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
+[Serializable]
 public class Cabinet
 {
     //Partie XmlReader
@@ -137,6 +142,25 @@ public class Cabinet
         }
         Console.WriteLine("Nombre d'actes différents effectués : {0}", actes.Count);
         return actes.Count;
+    }
+    
+    //Partie serealisation du Cabinet :
+    [XmlElement("nom")] public string Nom { get; set; } 
+    
+    [XmlElement("adresse")] public Adresse Adresse { get; set; }
+    
+    [XmlElement("infirmiers")] public Infirmiers Infirmiers { get; set; }
+    
+    [XmlElement("patients")] public Patients Patients { get; set; }
+    
+    public Cabinet(){}
+
+    public Cabinet(string nom, Adresse adresse, Infirmiers infirmiers, Patients patients)
+    {
+        this.Nom = nom;
+        this.Adresse = adresse;
+        this.Patients = patients;
+        this.Infirmiers = infirmiers;
     }
     
 }

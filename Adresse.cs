@@ -6,7 +6,7 @@ namespace CabinetInfirmier.Csharp;
 [XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
-public class AdresseSerealisation
+public class Adresse
 {
     /* Solution trouve sur internet qui, de ce que j'ai compris c'est un pattern... mais ca ne marche pas car l'element est rajoutee dans tout les cas
     [XmlElement("étage")]
@@ -56,9 +56,9 @@ public class AdresseSerealisation
     [XmlElement("ville")]
     public string Ville { get; set; }
     
-    public AdresseSerealisation() { }
+    public Adresse() { }
 
-    public AdresseSerealisation(int etage, int numero, string rue, string codePostal, string ville)
+    public Adresse(int etage, int numero, string rue, string codePostal, string ville)
     {
         Numero = numero;
         Rue = rue;

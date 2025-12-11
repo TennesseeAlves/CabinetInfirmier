@@ -13,12 +13,12 @@ public class Patient
     [XmlElement("naissance")] public string Naissance { get; set; }
     [XmlElement("numéro")] public string Numero { get; set; }
     
-    [XmlElement("adresse")] public AdresseSerealisation Adresse { get; set; }
+    [XmlElement("adresse")] public Adresse Adresse { get; set; }
     [XmlElement("visite")] public Visite Visite { get; set; }
     
     public Patient(){}
 
-    public Patient(string nom, string prenom, string sexe, string naissance, string numero, AdresseSerealisation adresse, Visite visite)
+    public Patient(string nom, string prenom, string sexe, string naissance, string numero, Adresse adresse, Visite visite)
     {
         Nom = nom;
         Prenom = prenom;
