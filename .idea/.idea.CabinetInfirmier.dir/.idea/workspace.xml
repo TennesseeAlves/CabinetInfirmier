@@ -10,6 +10,7 @@
     <list default="true" id="3a164746-a790-48f6-9cdc-5a8639071c28" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CabinetInfirmier.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CabinetInfirmier.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/html/pageInfirmier.html" beforeDir="false" afterPath="$PROJECT_DIR$/data/html/pageInfirmier.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +90,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="XSLT.patient_html">
+  <component name="RunManager" selected=".NET Project.CabinetInfirmier">
     <configuration name="CabinetInfirmier" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/bin/Debug/net9.0/CabinetInfirmier.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -185,7 +186,7 @@
       <workItem from="1765311160371" duration="1973000" />
       <workItem from="1765313168113" duration="13740000" />
       <workItem from="1765479162650" duration="1837000" />
-      <workItem from="1765482056889" duration="2878000" />
+      <workItem from="1765482056889" duration="5929000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout validation document xml en c#">
       <option name="closed" value="true" />
@@ -219,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765483941389</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="minor refactor Program.cs">
+      <option name="closed" value="true" />
+      <created>1765486531759</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765486531759</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +265,8 @@
     <MESSAGE value="correction Program.cs et minor refactor cabinet.xsd" />
     <MESSAGE value="commit fichiers internes rider" />
     <MESSAGE value="refactor: supprime repertoir «perso»" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: supprime repertoir «perso»" />
+    <MESSAGE value="minor refactor Program.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor refactor Program.cs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -6,13 +6,16 @@ class Program
 {
     public static async Task Main(string[] args)
     {
+        string nsCabinet = "http://www.univ-grenoble-alpes.fr/l3miage/medical";
         // Validation du fichier XML Cabinet
         Console.WriteLine("Validation fichiers Cabinet");
-        XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../../../data/xsd/cabinet.xsd", "../../../data/xml/cabinet.xml" );
+        XMLUtils.ValidateXmlFileAsync(nsCabinet, "../../../data/xsd/cabinet.xsd", "../../../data/xml/cabinet.xml" );
         
+        /*
         // Xslt transformation : 
-        Console.Write("Transformation Page Infirmere");
-        XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/pageInfirmiere.xsl", "../../../data/html/pageInfirmiere.html");
+        Console.Write("Transformation Page Infirmer");
+        XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/pageInfirmier.html");
+         */
 
         // Partie parseur XmlReader :
         Cabinet.AnalyseGlobale("./data/xml/cabinet.xml");
@@ -69,7 +72,7 @@ class Program
 
         // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
         bool resultNSS = cab.nssValide("BARKOK");
-        Console.WriteLine("Test Omar: {0}", resultNSS);
+        Console.WriteLine("Test methode nssValide(nomPatient) : {0}", resultNSS);
         
         // Partie serialisation 
         
