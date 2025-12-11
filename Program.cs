@@ -1,15 +1,11 @@
-﻿using CabinetInfirmier;
-
+﻿namespace CabinetInfirmier;
 
 using System.Xml;
 using System.Xml.Serialization;
-using CabinetInfirmier;
-
 
 class Program
 {
-
-    static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         //Validation du fichier XML Cabinet
         //Console.WriteLine("Validation fichiers Cabinet");
@@ -32,8 +28,9 @@ class Program
 
         //Parseur DOM :
 
-        /*string filename = "./data/xml/cabinet.xml";
-            
+        /*
+        string filename = "./data/xml/cabinet.xml";
+
         CabinetDOM cab = new CabinetDOM("./data/xml/cabinet.xml");
 
         String xpathExpression = "//cab:infirmier";
@@ -52,7 +49,7 @@ class Program
         bool res = cab.cabinetHasAdresse(adr);
         Console.WriteLine("-> 3 patients ?? : {0}", res);
 
-        
+
         //test Partie modification de l'arbre
 
         //cab.addInfirmier("Némard", "Jean");
@@ -65,41 +62,29 @@ class Program
 
         cab.addVisite("2026-01-03", 003, 101, "KIKS");
         Console.WriteLine("Ajout de visite de KIKS");
-        
+
         // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
 
         bool resultNSS = cab.nssValide("BARKOK");
-        Console.WriteLine("Test Omar: {0}", resultNSS);*/
+        Console.WriteLine("Test Omar: {0}", resultNSS);
+        */
         
-        
-        // Partie serealisation 
+        // Partie serialisation 
         
         Console.WriteLine("Debut serealisation de Adresse");
-
         var adrManager = new XMLManager<AdresseSerialisation>();
-        
         var  TestAdresse = new AdresseSerialisation(null, 1, "rue de la paix", "69000", "Lyon");
-
         string pathAdr = "../../../data/perso/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);
         Console.WriteLine("Serealisation de Adresse effectué");
         
-        
-       
-
+        Console.WriteLine("Debut serealisation de Infirmier");
         var infirManager = new XMLManager<InfirmierSerialisation>();
-        
         var TestInfirmier = new InfirmierSerialisation(005, "BARKOK", "Omar", "Omar.png");
-
         string pathInfir = "../../../data/perso/infirmier.xml";
-        
         //XmlSerializerNamespaces nsInfir =  new XmlSerializerNamespaces();
         //nsInfir.Add("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf");
         infirManager.Save(pathInfir, TestInfirmier);
         Console.WriteLine("Serealisation de Infirmier effectué");
-        
-        
-        
-
     }
-}    
+}

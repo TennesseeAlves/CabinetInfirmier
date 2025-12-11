@@ -6,8 +6,10 @@
         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
         elementFormDefault="qualified" 
 >
-    <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes"
-            schemaLocation="./actes.xsd"/>
+    
+    <!-- Utilisé pour le type de l'attribut du complexType "Acte" du cabinet -->
+    <!-- C'est le "bricolage" que j'ai fait car je n'ai pas réussi à lier une clef d'existance entre cabinet et actes... -->
+    <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes" schemaLocation="./actes.xsd"/>
     
     <!-- ······ Element racine du cabinet ······ -->
     <element name="cabinet" type="cab:Cabinet">
@@ -34,7 +36,7 @@
     <element name="adresse" type="cab:Adresse"/>
     <!-- ························································ -->
     
-    <!-- Type de la racine  -->
+    <!-- Type de la racine du cabinet -->
     <complexType name="Cabinet">
         <sequence>
             <element name="nom" type="string"/>

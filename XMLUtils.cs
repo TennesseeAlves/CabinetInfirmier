@@ -1,16 +1,14 @@
+namespace CabinetInfirmier;
+
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
-namespace CabinetInfirmier.Csharp;
-
 public static class XMLUtils
 {
-    
     public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath) 
     {
-        
         var settings = new XmlReaderSettings();
         settings.Schemas.Add(schemaNamespace, xsdFilePath);
         settings.ValidationType = ValidationType.Schema;
@@ -34,8 +32,8 @@ public static class XMLUtils
         }
     }
     
-    
-    /*public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    /*
+    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
     {
         XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
         XslCompiledTransform xslt = new XslCompiledTransform();
@@ -43,11 +41,11 @@ public static class XMLUtils
         XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
         xslt.Transform(xpathDoc, null, htmlWriter);
     }*/
+    
     public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
     {
         XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
         XslCompiledTransform xslt = new XslCompiledTransform();
-        
         XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
        
         // Configuration avec XmlResolver
@@ -58,7 +56,6 @@ public static class XMLUtils
         xslt.Transform(xpathDoc, null, htmlWriter);
         
     }
-    
     
     public static void XslTransform2(string xmlFilePath, string xsltFilePath, string htmlFilePath)
     {
