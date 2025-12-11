@@ -48,9 +48,6 @@
       <None Update="data\xml\fichePatient.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\xml\newCabinet.xml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="data\xsd\patient.xsd">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
