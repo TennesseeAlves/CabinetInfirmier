@@ -1,0 +1,499 @@
+Index: Program.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>namespace CabinetInfirmier;\r\n\r\nusing System.Xml;\r\n\r\npublic class Program {\r\n    public static void Main(string[] args)\r\n    {\r\n        XmlDocument doc = new XmlDocument();\r\n        doc.Load(\"data/xml/fichePatient.xml\");\r\n        XmlNode root = doc.DocumentElement;\r\n        // Add namespace\r\n        XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);\r\n        nsmgr.AddNamespace(\"\" ,\"http://www.univ-grenoble-alpes.fr/l3miage/patient\") ;\r\n\r\n        XmlNode nomNode = ((XmlElement)root).GetElementsByTagName(\"nom\").Item(1); // selectionne le noeud\r\n        String nomString = nomNode.InnerText;\r\n        Console.WriteLine(nomString);\r\n        Console.WriteLine(nomNode.Name);\r\n        Console.WriteLine(nomNode.NodeType);\r\n        \r\n        /* je teste la validation automatique des instances XML */\r\n        XMLUtils.ValidateXmlFileAsync(\"http://www.univ-grenoble-alpes.fr/l3miage/medical\", \"./data/xml/cabinet.xml\", \"./data/xsd/cabinet.xsd\");\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Program.cs b/Program.cs
+--- a/Program.cs	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ b/Program.cs	(date 1765317949267)
+@@ -1,17 +1,18 @@
+-namespace CabinetInfirmier;
+-
+ using System.Xml;
+ 
++namespace CabinetInfirmier;
++
+ public class Program {
+-    public static void Main(string[] args)
++    public static async Task Main(string[] args)
+     {
++        /* TODO : a supprimer */
++         
+         XmlDocument doc = new XmlDocument();
+         doc.Load("data/xml/fichePatient.xml");
+         XmlNode root = doc.DocumentElement;
+         // Add namespace
+         XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+         nsmgr.AddNamespace("" ,"http://www.univ-grenoble-alpes.fr/l3miage/patient") ;
+-
+         XmlNode nomNode = ((XmlElement)root).GetElementsByTagName("nom").Item(1); // selectionne le noeud
+         String nomString = nomNode.InnerText;
+         Console.WriteLine(nomString);
+@@ -19,7 +20,11 @@
+         Console.WriteLine(nomNode.NodeType);
+         
+         /* je teste la validation automatique des instances XML */
+-        XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "./data/xml/cabinet.xml", "./data/xsd/cabinet.xsd");
++        
++        await XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../../../data/xsd/cabinet.xsd","../../../data/xml/cabinet.xml" );
++        
++        
++        XMLUtils.XslTransform("../../../data/xsd/cabinet.xml", "../../../data/xml/cabinet.xsl", "../../../data/html/pageInfirmier.html");
+ 
+     }
+ }
+\ No newline at end of file
+Index: XMLUtils.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>namespace CabinetInfirmier;\r\n\r\nusing System.Xml;\r\nusing System.Xml.Schema;\r\n\r\npublic static class XMLUtils\r\n{\r\n    public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath)\r\n    {\r\n        var settings = new XmlReaderSettings();\r\n        settings.Schemas.Add(schemaNamespace, xsdFilePath);\r\n        settings.ValidationType = ValidationType.Schema;\r\n        Console.WriteLine(\"Nombre de schemas utilisés dans la validation : \"+ settings.Schemas.Count);\r\n\r\n        settings.ValidationEventHandler += ValidationCallBack;\r\n        var readItems = XmlReader.Create(xmlFilePath, settings);\r\n        while (readItems.Read()) { }\r\n    }\r\n\r\n    private static void ValidationCallBack(object? sender, ValidationEventArgs e) {\r\n        if (e.Severity.Equals(XmlSeverityType.Warning)) {\r\n            Console.Write(\"WARNING: \");\r\n        } else if (e.Severity.Equals(XmlSeverityType.Error)) {\r\n            Console.Write(\"ERROR: \");\r\n        }\r\n        Console.WriteLine(e.Message);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/XMLUtils.cs b/XMLUtils.cs
+--- a/XMLUtils.cs	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ b/XMLUtils.cs	(date 1765318843466)
+@@ -2,7 +2,110 @@
+ 
+ using System.Xml;
+ using System.Xml.Schema;
++using System.Xml.XPath;
++using System.Xml.Xsl;
+ 
++
++// Attention : cette version de la classe XMLUtils est fournie par une LLM (donc le code que j'ai copié je ne le maîtrise pas totalement)
++public static class XMLUtils
++{
++    public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath)
++    {
++        var settings = new XmlReaderSettings();
++        settings.ValidationType = ValidationType.Schema;
++        settings.ValidationEventHandler += ValidationCallBack;
++
++        // Add main schema (cabinet.xsd)
++        settings.Schemas.Add(schemaNamespace, xsdFilePath);
++
++        // Add imported schema (actes.xsd) - assumes it's in the same directory as cabinet.xsd
++        string actesNamespace = "http://www.univ-grenoble-alpes.fr/l3miage/actes";
++        string actesXsdPath = Path.Combine(Path.GetDirectoryName(xsdFilePath) ?? string.Empty, "actes.xsd");
++        if (File.Exists(actesXsdPath))
++        {
++            settings.Schemas.Add(actesNamespace, actesXsdPath);
++        }
++        else
++        {
++            Console.WriteLine($"Warning: actes.xsd not found at {actesXsdPath}. Validation may fail.");
++        }
++
++        Console.WriteLine("Nombre de schemas utilisés dans la validation : " + settings.Schemas.Count); // Should print 2 if actes.xsd exists
++
++        try
++        {
++            using var readItems = XmlReader.Create(xmlFilePath, settings);
++            while (await readItems.ReadAsync()) { } // Async read for better performance
++            Console.WriteLine("Validation completed successfully.");
++        }
++        catch (XmlSchemaValidationException ex)
++        {
++            Console.WriteLine($"Validation error: {ex.Message}");
++            // You can rethrow or handle as needed
++        }
++        catch (Exception ex)
++        {
++            Console.WriteLine($"Unexpected error during validation: {ex.Message}");
++        }
++    }
++
++    private static void ValidationCallBack(object? sender, ValidationEventArgs e)
++    {
++        if (e.Severity.Equals(XmlSeverityType.Warning))
++        {
++            Console.Write("WARNING: ");
++        }
++        else if (e.Severity.Equals(XmlSeverityType.Error))
++        {
++            Console.Write("ERROR: ");
++        }
++        Console.WriteLine(e.Message);
++    }
++
++    public static async Task XslTransformAsync(string xmlFilePath, string xsltFilePath, string htmlFilePath)
++    {
++        try
++        {
++            // Ensure output directory exists
++            string htmlDir = Path.GetDirectoryName(htmlFilePath);
++            if (!string.IsNullOrEmpty(htmlDir) && !Directory.Exists(htmlDir))
++            {
++                Directory.CreateDirectory(htmlDir);
++            }
++
++            await Task.Run(() =>
++            {
++                using var xpathDoc = new XPathDocument(xmlFilePath);
++                var xslt = new XslCompiledTransform();
++                xslt.Load(xsltFilePath);
++
++                using var htmlWriter = new XmlTextWriter(htmlFilePath, null);
++                xslt.Transform(xpathDoc, null, htmlWriter);
++            });
++
++            Console.WriteLine($"Transformation completed. Output saved to: {htmlFilePath}");
++        }
++        catch (Exception ex)
++        {
++            Console.WriteLine($"Transformation failed: {ex.Message}");
++        }
++    }
++} // end of class
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++/*
+ public static class XMLUtils
+ {
+     public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath)
+@@ -11,12 +114,11 @@
+         settings.Schemas.Add(schemaNamespace, xsdFilePath);
+         settings.ValidationType = ValidationType.Schema;
+         Console.WriteLine("Nombre de schemas utilisés dans la validation : "+ settings.Schemas.Count);
+-
+         settings.ValidationEventHandler += ValidationCallBack;
+         var readItems = XmlReader.Create(xmlFilePath, settings);
+         while (readItems.Read()) { }
+     }
+-
++    
+     private static void ValidationCallBack(object? sender, ValidationEventArgs e) {
+         if (e.Severity.Equals(XmlSeverityType.Warning)) {
+             Console.Write("WARNING: ");
+@@ -25,4 +127,13 @@
+         }
+         Console.WriteLine(e.Message);
+     }
+-}
+\ No newline at end of file
++    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath) {
++        XPathDocument xpathDoc = new XPathDocument(xmlFilePath) ;
++        XslCompiledTransform xslt = new XslCompiledTransform();
++        xslt.Load(xsltFilePath);
++        XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath,null);
++        xslt.Transform(xpathDoc,null,htmlWriter);
++    }
++    
++} // end of calss
++ */
+Index: data/xml/cabinet.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<cabinet xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xmlns=\"http://www.univ-grenoble-alpes.fr/l3miage/medical\"\r\n         xsi:schemaLocation=\"http://www.univ-grenoble-alpes.fr/l3miage/medical ../xsd/cabinet.xsd\"\r\n>\r\n    <nom>Cabinet Fantastique</nom>\r\n\r\n    <adresse>\r\n        <numéro>999</numéro>\r\n        <rue>Rue du cabinet fantastique</rue>\r\n        <codePostal>38400</codePostal>\r\n        <ville>Saint Martin d'Hères</ville>\r\n    </adresse>\r\n\r\n    <infirmiers>\r\n\r\n        <infirmier id=\"001\">\r\n            <nom>TENNESSEE</nom>\r\n            <prénom>Alves</prénom>\r\n            <photo>alves.png</photo>\r\n        </infirmier>\r\n\r\n        <infirmier id=\"002\">\r\n            <nom>GATOR</nom>\r\n            <prénom>Ali</prénom>\r\n            <photo>aligator.png</photo>\r\n        </infirmier>\r\n\r\n        <infirmier id=\"003\">\r\n            <nom>Ochon</nom>\r\n            <prénom>Paul</prénom>\r\n            <photo>paul.png</photo>\r\n        </infirmier>\r\n\r\n    </infirmiers>\r\n\r\n    <patients>\r\n\r\n        <patient>\r\n            <nom>BARKOK</nom>\r\n            <prénom>Omar</prénom>\r\n            <sexe>M</sexe>\r\n            <naissance>2002-03-23</naissance>\r\n            <numéro>102039999988877</numéro> <!-- not the real number -->\r\n            <adresse>\r\n                <étage>1</étage>\r\n                <numéro>125</numéro>\r\n                <rue>allée Condillac</rue>\r\n                <codePostal>38400</codePostal>\r\n                <ville>Saint Martin d'Hères</ville>\r\n            </adresse>\r\n            <visite date=\"2025-03-23\" intervenant=\"002\">\r\n                <acte id=\"101\"/>\r\n            </visite>\r\n            <visite date=\"2025-01-23\" intervenant=\"001\">\r\n                <acte id=\"104\"/>\r\n                <acte id=\"103\"/>\r\n            </visite>\r\n            <visite date=\"2025-02-23\" intervenant=\"001\">\r\n                <acte id=\"113\"/>\r\n                <acte id=\"401\"/>\r\n            </visite>\r\n            \r\n        </patient>\r\n\r\n        <!-- Ajout des patients de l'énoncé -->\r\n\r\n        <patient>\r\n            <nom>Orouge</nom>\r\n            <prénom>Elvire</prénom>\r\n            <sexe>F</sexe>\r\n            <naissance>1982-03-08</naissance>\r\n            <numéro>282036912305243</numéro>\r\n            <adresse>\r\n                <rue>Rond-Point de la Croix de vie</rue>\r\n                <codePostal>38700</codePostal>\r\n                <ville>La Tronche</ville>\r\n            </adresse>\r\n            <visite date=\"2015-12-08\">\r\n                <acte id=\"300\"/> <!-- Pensement de brulûre étendue -->\r\n            </visite>\r\n        </patient>\r\n\r\n        <patient>\r\n            <nom>Pien</nom>\r\n            <prénom>Oscare</prénom>\r\n            <sexe>M</sexe>\r\n            <naissance>1975-03-25</naissance>\r\n            <numéro>175037306569252</numéro>\r\n            <adresse>\r\n                <rue>rue Casimir Bernier</rue>\r\n                <codePostal>38000</codePostal>\r\n                <ville>Grenoble</ville>\r\n            </adresse>\r\n            <visite date=\"2015-12-08\" intervenant=\"001\">\r\n                <!-- ponction veineuse directe -->\r\n                <acte id=\"101\"/>\r\n                <!-- injection intraveineuse directe isolée d’anthalgiques -->\r\n                <acte id=\"104\"/>\r\n            </visite>\r\n        </patient>\r\n\r\n        <patient>\r\n            <nom>Kapoëtla</nom>\r\n            <prénom>Xavier</prénom>\r\n            <sexe>M</sexe>\r\n            <naissance>2011-08-02</naissance>\r\n            <numéro>111083306303521</numéro>\r\n            <adresse>\r\n                <numéro>25</numéro>\r\n                <rue>rue des Martyrs</rue>\r\n                <codePostal>38042</codePostal>\r\n                <ville>Grenoble</ville>\r\n            </adresse>\r\n            <visite date=\"2015-12-08\" intervenant=\"001\">\r\n                <!-- injection de plusieurs allergènes afin d’être désensibilisé -->\r\n                <acte id=\"111\"/>\r\n            </visite>\r\n        </patient>\r\n    </patients>\r\n\r\n</cabinet>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/xml/cabinet.xml b/data/xml/cabinet.xml
+--- a/data/xml/cabinet.xml	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ b/data/xml/cabinet.xml	(date 1765315402234)
+@@ -6,7 +6,7 @@
+     <nom>Cabinet Fantastique</nom>
+ 
+     <adresse>
+-        <numéro>999</numéro>
++        <numéro>toto</numéro>
+         <rue>Rue du cabinet fantastique</rue>
+         <codePostal>38400</codePostal>
+         <ville>Saint Martin d'Hères</ville>
+Index: data/xsd/cabinet.xsd
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<schema xmlns=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:cab=\"http://www.univ-grenoble-alpes.fr/l3miage/medical\"\r\n        xmlns:act=\"http://www.univ-grenoble-alpes.fr/l3miage/actes\"\r\n        \r\n        targetNamespace=\"http://www.univ-grenoble-alpes.fr/l3miage/medical\"\r\n        elementFormDefault=\"qualified\" \r\n>\r\n    <import namespace=\"http://www.univ-grenoble-alpes.fr/l3miage/actes\"\r\n            schemaLocation=\"./actes.xsd\"/>\r\n    \r\n    <!-- ······ Element racine ······ -->\r\n    <element name=\"cabinet\" type=\"cab:Cabinet\">\r\n        \r\n        <!-- Clef unicité id infirmier -->\r\n        <key name=\"clefIdInfirmier\">\r\n            <selector xpath=\"cab:infirmiers/cab:infirmier\"/>\r\n            <field xpath=\"@id\"/>\r\n        </key>\r\n        \r\n        <!-- Clef unicité numéroSecuritéSociale d'un patient -->\r\n        <key name=\"clefNuméroSecuritéSociale\">\r\n            <selector xpath=\"cab:patients/cab:patient/cab:numéro\"/>\r\n            <field xpath=\".\"/>\r\n        </key>\r\n        \r\n        <!-- L'intervenant dans une visite doit être un id d'infirmier existant -->\r\n        <keyref name=\"foreignKeyIdInfirmier\" refer=\"cab:clefIdInfirmier\">\r\n            <selector xpath=\"cab:patients/cab:patient/cab:visite\"/>\r\n            <field xpath=\"@intervenant\"/>\r\n        </keyref>\r\n        \r\n    </element>\r\n    \r\n    \r\n    <!-- Type de la racine  -->\r\n    <complexType name=\"Cabinet\">\r\n        <sequence>\r\n            <element name=\"nom\" type=\"string\"/>\r\n            <element name=\"adresse\" type=\"cab:Adresse\"/>\r\n            <element name=\"infirmiers\" type=\"cab:Infirmiers\"/>\r\n            <element name=\"patients\" type=\"cab:Patients\"/>\r\n        </sequence>\r\n    </complexType>\r\n    \r\n    <!-- Adresse -->\r\n    <complexType name=\"Adresse\">\r\n        <sequence>\r\n            <element name=\"étage\" type=\"positiveInteger\" minOccurs=\"0\"/>\r\n            <element name=\"numéro\" type=\"positiveInteger\" minOccurs=\"0\"/> \r\n            <element name=\"rue\" type=\"string\"/>\r\n            <element name=\"codePostal\" type=\"cab:CodePostal\"/>\r\n            <element name=\"ville\" type=\"string\"/>\r\n        </sequence>\r\n    </complexType>\r\n\r\n    <!-- Infirmiers -->\r\n    <complexType name=\"Infirmiers\">\r\n        <sequence>\r\n            <element name=\"infirmier\" type=\"cab:Infirmier\" maxOccurs=\"unbounded\"/>\r\n        </sequence>\r\n    </complexType>\r\n    <complexType name=\"Infirmier\">\r\n        <sequence>\r\n            <element name=\"nom\" type=\"string\"/>\r\n            <element name=\"prénom\" type=\"string\"/>\r\n            <element name=\"photo\" type=\"cab:Photo\"/>\r\n        </sequence>\r\n        <attribute name=\"id\" type=\"unsignedInt\" use=\"required\"/>\r\n    </complexType>\r\n\r\n    <!-- Patients -->\r\n    <complexType name=\"Patients\">\r\n        <sequence>\r\n            <element name=\"patient\" type=\"cab:Patient\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\r\n        </sequence>\r\n    </complexType>\r\n    \r\n    <complexType name=\"Patient\">\r\n        <sequence>\r\n            <element name=\"nom\" type=\"string\"/>\r\n            <element name=\"prénom\" type=\"string\"/>\r\n            <element name=\"sexe\" type=\"cab:Sexe\"/>\r\n            <element name=\"naissance\" type=\"date\"/>\r\n            <element name=\"numéro\" type=\"cab:NuméroSecuritéSociale\"/>\r\n            <element name=\"adresse\" type=\"cab:Adresse\"/>\r\n            <element name=\"visite\" type=\"cab:Visite\" maxOccurs=\"unbounded\"/> \r\n        </sequence>\r\n    </complexType>\r\n\r\n    <!-- Visite -->\r\n    <complexType name=\"Visite\">\r\n        <sequence>\r\n            <!-- une visite peut avoir plusieurs actes -->\r\n            <element name=\"acte\" type=\"cab:Acte\" maxOccurs=\"unbounded\"/>\r\n        </sequence>\r\n        <attribute name=\"intervenant\" type=\"unsignedInt\"/>\r\n        <attribute name=\"date\" type=\"date\" use=\"required\"/>\r\n    </complexType>\r\n\r\n    <!-- Acte -->\r\n    <complexType name=\"Acte\">\r\n        <attribute name=\"id\" type=\"act:IdActes\"/>\r\n    </complexType>\r\n    \r\n    <!-- SIMPLE TYPES -->\r\n\r\n    <!-- CodePostal -->\r\n    <simpleType name=\"CodePostal\">\r\n        <restriction base=\"string\">\r\n            <pattern value=\"\\d{5}\"/>\r\n        </restriction>\r\n    </simpleType>\r\n    \r\n    <!-- Photo -->\r\n    <simpleType name=\"Photo\">\r\n        <restriction base=\"string\"/> <!-- a modifier éventuellement -->\r\n    </simpleType>\r\n\r\n    <!-- Sexe -->\r\n    <simpleType name=\"Sexe\">\r\n        <restriction base=\"string\">\r\n            <enumeration value=\"M\"/>\r\n            <enumeration value=\"F\"/>\r\n        </restriction>\r\n    </simpleType>\r\n\r\n    <!-- NuméroSecuritéSociale -->\r\n    <simpleType name=\"NuméroSecuritéSociale\">\r\n        <restriction base=\"string\">\r\n            <pattern value=\"[12]\\d{2}([1][0-2]|[0][1-9])\\d{5}\\d{3}\\d[1-7]\"/>\r\n        </restriction>\r\n    </simpleType>\r\n    \r\n    \r\n</schema>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/xsd/cabinet.xsd b/data/xsd/cabinet.xsd
+--- a/data/xsd/cabinet.xsd	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ b/data/xsd/cabinet.xsd	(date 1765317652117)
+@@ -6,6 +6,9 @@
+         targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+         elementFormDefault="qualified" 
+ >
++    
++    <!-- Utilisé pour le type de l'attribut du complexType "Acte" du cabinet -->
++    <!-- C'est le "bricolage" que j'ai fait car je n'ai pas réussi à lier une clef d'existance du cabinet vers actes... -->
+     <import namespace="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+             schemaLocation="./actes.xsd"/>
+     
+Index: data/html/pageInfirmier.html
+===================================================================
+diff --git a/data/html/pageInfirmier.html b/data/html/pageInfirmier.html
+deleted file mode 100644
+--- a/data/html/pageInfirmier.html	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ /dev/null	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
+@@ -1,228 +0,0 @@
+-<html>
+-    <head>
+-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+-        <title>page infirmiere</title>
+-        <link rel="stylesheet" href="../css/pageInfirmier.css">
+-        <script type="text/javascript" src="../js/facture.js"></script>
+-    </head>
+-    <body>
+-        <div class="classPatient">
+-            <h1>Bonjour</h1>
+-            <h3>Alves</h3>
+-            <h1>, aujourd'hui, vous avez</h1>
+-            <h3>3</h3>
+-            <h1>patients.</h1>
+-            <h1>Voici la liste des patients &agrave; visiter</h1>
+-        </div>
+-        <div>
+-            <div class="classPatient">
+-                <table>
+-                    <tr>
+-                        <th>Nom</th><td>BARKOK</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Pr&eacute;nom</th><td>Omar</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Sexe</th><td>M</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Date de naissace</th><td>2002-03-23</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Num&eacute;ro de s&eacute;curit&eacute; sociale</th><td>102039999988877</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Adresse</th><td><span>1&egrave; &eacute;tage, 125 all&eacute;e Condillac, 38400 Saint Martin d'H&egrave;res</span></td>
+-                    </tr>
+-                </table>
+-                <h2>Liste des soins &agrave; effectuer pour ce patient</h2>
+-                <table>
+-                    <tr>
+-                        <th>Date</th><th>Actes</th>
+-                    </tr>
+-                    <tr>
+-                        <td>2025-01-23</td><td>
+-                            <li>
+-            Inection intraveineuse directe isol&eacute;e.
+-        </li>
+-                            <li>
+-            Pr&eacute;l&egrave;vement aseptique cutan&eacute; ou de s&eacute;cr&eacute;tions muqueuses, pr&eacute;l&egrave;vement
+-            de selles ou d'urine pour examens sytologiques, bact&eacute;riologiques, mycologiques.
+-        </li>
+-                        </td>
+-                    </tr>
+-                    <tr>
+-                        <td>2025-02-23</td><td>
+-                            <li>
+-            Injection en goutte &agrave; goutte par voie rectale.
+-        </li>
+-                            <li>
+-            Elaboration de la d&eacute;mache de soins infirmiers &agrave; domicile, planification
+-            des soins et r&eacute;daction du r&eacute;sum&eacute; de la d&eacute;marche de soins infirimiers.
+-        </li>
+-                        </td>
+-                    </tr>
+-                    <tr>
+-                        <td>2025-03-23</td><td>
+-                            <li>
+-            Pr&eacute;l&egrave;vement par ponction veineuse directe
+-        </li>
+-                        </td>
+-                    </tr>
+-                </table>
+-                <h4>
+-                    <u>Facture</u> :
+-                </h4>
+-                <script type="text/javascript">
+-                function openFacture(prenom, nom, actes) {
+-                    var width = 500;
+-                    var height = 300;
+-                    if (window.innerWidth) {
+-                        var left = (window.innerWidth-width)/2;
+-                        var top = (window.innerHeight-height)/2;
+-                    } else {
+-                        var left = (document.body.clientWidth-width)/2;
+-                        var top = (document.body.clientHeight-height)/2;
+-                    }
+-                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+-                    factureText = "Facture pour : " + prenom + " " + nom;
+-                    factureWindow.document.write(factureText)
+-                }
+-            </script><button onclick="
+-                    openFacture('Omar',
+-                    'BARKOK',
+-                    '')
+-                ">
+-                Facture
+-            </button><button onclick="testFacture()">Tester le script</button>
+-            </div>
+-            <div class="classPatient">
+-                <table>
+-                    <tr>
+-                        <th>Nom</th><td>Pien</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Pr&eacute;nom</th><td>Oscare</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Sexe</th><td>M</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Date de naissace</th><td>1975-03-25</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Num&eacute;ro de s&eacute;curit&eacute; sociale</th><td>175037306569252</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Adresse</th><td><span>rue Casimir Bernier, 38000 Grenoble</span></td>
+-                    </tr>
+-                </table>
+-                <h2>Liste des soins &agrave; effectuer pour ce patient</h2>
+-                <table>
+-                    <tr>
+-                        <th>Date</th><th>Actes</th>
+-                    </tr>
+-                    <tr>
+-                        <td>2015-12-08</td><td>
+-                            <li>
+-            Pr&eacute;l&egrave;vement par ponction veineuse directe
+-        </li>
+-                            <li>
+-            Inection intraveineuse directe isol&eacute;e.
+-        </li>
+-                        </td>
+-                    </tr>
+-                </table>
+-                <h4>
+-                    <u>Facture</u> :
+-                </h4>
+-                <script type="text/javascript">
+-                function openFacture(prenom, nom, actes) {
+-                    var width = 500;
+-                    var height = 300;
+-                    if (window.innerWidth) {
+-                        var left = (window.innerWidth-width)/2;
+-                        var top = (window.innerHeight-height)/2;
+-                    } else {
+-                        var left = (document.body.clientWidth-width)/2;
+-                        var top = (document.body.clientHeight-height)/2;
+-                    }
+-                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+-                    factureText = "Facture pour : " + prenom + " " + nom;
+-                    factureWindow.document.write(factureText)
+-                }
+-            </script><button onclick="
+-                    openFacture('Oscare',
+-                    'Pien',
+-                    '')
+-                ">
+-                Facture
+-            </button><button onclick="testFacture()">Tester le script</button>
+-            </div>
+-            <div class="classPatient">
+-                <table>
+-                    <tr>
+-                        <th>Nom</th><td>Kapo&euml;tla</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Pr&eacute;nom</th><td>Xavier</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Sexe</th><td>M</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Date de naissace</th><td>2011-08-02</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Num&eacute;ro de s&eacute;curit&eacute; sociale</th><td>111083306303521</td>
+-                    </tr>
+-                    <tr>
+-                        <th>Adresse</th><td><span>25 rue des Martyrs, 38042 Grenoble</span></td>
+-                    </tr>
+-                </table>
+-                <h2>Liste des soins &agrave; effectuer pour ce patient</h2>
+-                <table>
+-                    <tr>
+-                        <th>Date</th><th>Actes</th>
+-                    </tr>
+-                    <tr>
+-                        <td>2015-12-08</td><td>
+-                            <li>
+-            Injection d'un ou plusieurs allerg&egrave;nes, poursuivant un traitement
+-            d'hyposensibilisation sp&eacute;cifique, selon le protocole &eacute;crit, y compris la
+-            surveillance, la tenue du dossier de soins, la transmission des informations
+-            au m&eacute;decin prescripteur.
+-        </li>
+-                        </td>
+-                    </tr>
+-                </table>
+-                <h4>
+-                    <u>Facture</u> :
+-                </h4>
+-                <script type="text/javascript">
+-                function openFacture(prenom, nom, actes) {
+-                    var width = 500;
+-                    var height = 300;
+-                    if (window.innerWidth) {
+-                        var left = (window.innerWidth-width)/2;
+-                        var top = (window.innerHeight-height)/2;
+-                    } else {
+-                        var left = (document.body.clientWidth-width)/2;
+-                        var top = (document.body.clientHeight-height)/2;
+-                    }
+-                    var factureWindow = window.open('','facture','menubar=yes, scrollbars = yes, top='+top+', left='+left+', width='+width+', height='+height +'');
+-                    factureText = "Facture pour : " + prenom + " " + nom;
+-                    factureWindow.document.write(factureText)
+-                }
+-            </script><button onclick="
+-                    openFacture('Xavier',
+-                    'Kapo&euml;tla',
+-                    '')
+-                ">
+-                Facture
+-            </button><button onclick="testFacture()">Tester le script</button>
+-            </div>
+-        </div>
+-    </body>
+-</html>
+Index: CabinetInfirmier.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><Project Sdk=\"Microsoft.NET.Sdk\">\r\n\r\n    <PropertyGroup>\r\n        <OutputType>Exe</OutputType>\r\n        <TargetFramework>net9.0</TargetFramework>\r\n        <ImplicitUsings>enable</ImplicitUsings>\r\n        <Nullable>enable</Nullable>\r\n    </PropertyGroup>\r\n\r\n    <ItemGroup>\r\n      <Folder Include=\"data\\html\\\" />\r\n      <Folder Include=\"data\\UML\\\" />\r\n    </ItemGroup>\r\n\r\n    <ItemGroup>\r\n      <None Update=\"data\\xsd\\cabinet.xsd\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xsd\\actes.xsd\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\css\\pageInfirmier.css\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\css\\pagePatient.css\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\js\\facture.js\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\uml\\actes.puml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\uml\\cabinet.puml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\uml\\patient.puml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xml\\actes.xml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xml\\cabinet.xml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xsd\\patient.xsd\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xslt\\patient_xml.xsl\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xslt\\cabinet.xsl\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xslt\\patient_html.xsl\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n      <None Update=\"data\\xml\\fichePatient.xml\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </None>\r\n    </ItemGroup>\r\n\r\n    <ItemGroup>\r\n      <Compile Update=\"Program.cs\">\r\n        <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n      </Compile>\r\n    </ItemGroup>\r\n\r\n</Project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CabinetInfirmier.csproj b/CabinetInfirmier.csproj
+--- a/CabinetInfirmier.csproj	(revision cca7bb6945253025fbd788eacf064491278b0cbf)
++++ b/CabinetInfirmier.csproj	(date 1765315850401)
+@@ -58,10 +58,16 @@
+       <None Update="data\xml\fichePatient.xml">
+         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       </None>
++      <None Update="data\html\pagePatient.html">
++        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
++      </None>
+     </ItemGroup>
+ 
+     <ItemGroup>
+       <Compile Update="Program.cs">
++        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
++      </Compile>
++      <Compile Update="XMLUtils.cs">
+         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       </Compile>
+     </ItemGroup>
