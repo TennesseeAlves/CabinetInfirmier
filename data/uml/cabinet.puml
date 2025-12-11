@@ -33,7 +33,7 @@ package URICabinet {
     }
     
     class Infirmier {
-        {unique}{attribute} id : int {>0} 
+        {unique}{attribute} id : int {>=0} 
         nom : string
         prénom : string
         photo : Photo
@@ -142,7 +142,7 @@ package URIActes {
         «racine» ngap
     end note
     class Acte {
-        {unique} {attribute} id : int {>0}
+        {unique} {attribute} id : int {>=0}
         {attribute} type : int {>0}
         {attribute} clé : CléActe
         {attribute} coef : double {>0}
@@ -156,7 +156,7 @@ package URIActes {
     }
     
     class Type {
-        {unique} {attribute} id : int {>0}
+        {unique} {attribute} id : int {>=0}
     }
     class Types {
         types : Type[]

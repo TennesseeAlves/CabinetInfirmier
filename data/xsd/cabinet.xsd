@@ -47,8 +47,8 @@
     <!-- Adresse -->
     <complexType name="Adresse">
         <sequence>
-            <element name="étage" type="positiveInteger" minOccurs="0"/>
-            <element name="numéro" type="positiveInteger" minOccurs="0"/> 
+            <element name="étage" type="unsignedInt" minOccurs="0"/>
+            <element name="numéro" type="unsignedInt" minOccurs="0"/> 
             <element name="rue" type="string"/>
             <element name="codePostal" type="cab:CodePostal"/>
             <element name="ville" type="string"/>

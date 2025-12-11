@@ -19,7 +19,6 @@ public class CabinetDOM
         root = doc.DocumentElement; //recuperer la racine
         nsmgr = new XmlNamespaceManager(doc.NameTable); //namespace
         nsmgr.AddNamespace(root.Prefix, root.NamespaceURI);
-        
     }
 
     public XmlNodeList getXpath(string nPrefix, string nsURI, string expressionXpath)
