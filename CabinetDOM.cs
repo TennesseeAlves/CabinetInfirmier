@@ -65,7 +65,7 @@ public class CabinetDOM
 
     private string getExpressionDansNss(string nomPatient, string elementName)
     {
-        string expr = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:" + elementName;
+        string expr = "//cab:patient[cab:nom/text()='" + nomPatient + "']/cab:" + elementName; 
         return expr;
     }
 
@@ -74,18 +74,17 @@ public class CabinetDOM
         XmlNodeList node = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
         return node;
     }
-    public bool nssValide(string nomPatient) //TODO : remplacer tout les getXpath par SelectSingleNode
+    public bool nssValide(string nomPatient) 
     {
-        Console.WriteLine("Verification du nss du patient {0}",  nomPatient);
         bool res = true;
-        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:numéro"; //TODO ne pas utiliser contains
+        string expression = "//cab:patient[cab:nom/text()='" + nomPatient + "']/cab:numéro"; 
         XmlNodeList noeudlist = getXpathPerso(expression);
         if (noeudlist.Count != 0)
         {
             XmlNode nssNode = noeudlist[0];
             string nss =  nssNode.InnerText;
             int tailleNss = nss.Length;
-            char sexe = '4';
+            char sexe = 'N';
             if (nss[0] == '1')
             {
                 sexe = 'M';
@@ -96,21 +95,11 @@ public class CabinetDOM
             }
             string anneeNaiss = "" + nss[1] + nss[2];
             string moisNaiss = "" + nss[3] + nss[4];
-            //Test des valeurs TODO: peut etre enlever
-            Console.WriteLine("NSS du patient : {0} de taille {1}", nss, tailleNss);
-            Console.WriteLine("Infos d'apres le NSS :  \n-> Son sexe : {0} \n-> son annee : {1} \n-> son mois : {2}", sexe, anneeNaiss, moisNaiss);
-            
             
             var sexeNss  = getXpathPerso(getExpressionDansNss(nomPatient, "sexe"))[0].InnerText[0];
             var naissance  =  getXpathPerso(getExpressionDansNss(nomPatient, "naissance"))[0].InnerText;
             string anneeNaissNss = "" + naissance[2] + naissance[3];
             string moisNaissNss = "" + naissance[5] + naissance[6];
-            
-            //TODO: test peut etre enlever
-            Console.WriteLine("Date de naissance : {0}", naissance);
-            Console.WriteLine("Infos de annee naissance : {0}", anneeNaissNss);
-            Console.WriteLine("Infos de mois naissance : {0}",  moisNaissNss);
-            Console.WriteLine("Infos de sexe: {0}", sexeNss);
             
             if (tailleNss != 15 || (sexe != sexeNss) || !anneeNaiss.Equals(anneeNaissNss) ||
                 !moisNaiss.Equals(moisNaissNss))
@@ -150,7 +139,6 @@ public class CabinetDOM
             id = "" + coundId;
         }
         
-        Console.WriteLine(coundId);
         string photo = prenom.ToLower() + ".png"; 
         
         infirmierElt.SetAttribute("id", id);
@@ -304,7 +292,6 @@ public class CabinetDOM
 
         if (patientNode.Count != 0)
         {
-            Console.WriteLine("Entre condition");
             patientNode[0].AppendChild(newVisiteElt);
             string chemin = "../../../data/xml/newCabinet.xml"; 
             //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
