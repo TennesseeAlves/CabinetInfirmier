@@ -32,7 +32,6 @@ public static class XMLUtils
         }
     }
     
-    /*
     public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
     {
         XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
@@ -40,21 +39,6 @@ public static class XMLUtils
         xslt.Load(xsltFilePath);
         XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
         xslt.Transform(xpathDoc, null, htmlWriter);
-    }*/
-    
-    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
-    {
-        XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
-        XslCompiledTransform xslt = new XslCompiledTransform();
-        XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
-       
-        // Configuration avec XmlResolver
-        XsltSettings settings = new XsltSettings(true, true); // EnableScript, EnableDocumentFunction
-        XmlUrlResolver resolver = new XmlUrlResolver();
-        
-        xslt.Load(xsltFilePath, settings, resolver);
-        xslt.Transform(xpathDoc, null, htmlWriter);
-        
     }
     
     public static void XslTransform2(string xmlFilePath, string xsltFilePath, string htmlFilePath)

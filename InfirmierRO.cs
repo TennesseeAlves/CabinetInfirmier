@@ -8,16 +8,16 @@ using System.Xml.Serialization;
 
 public class InfirmierRO
 {
-    [XmlAttribute("id")] public string Id {
-        get
-        {
-            return Id;
-        }
+    [XmlAttribute("id")] private string id;
+    public string Id {
+        get { return id; }
         init
         {
             String pattern = @"^[1-9]*$";
-            if (Regex.IsMatch(value, pattern)) Id = value;
-            else throw new Exception("Un id infimier doit être un entier positif.");
+            if (Regex.IsMatch(value, pattern))
+                id = value;
+            else
+                throw new Exception("Un id infimier doit être un entier positif.");
         } 
     }
     [XmlElement("nom")] public string Nom { get; init; }

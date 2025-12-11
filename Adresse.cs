@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 public class Adresse
 {
     [XmlIgnore]
-    private String patternEntierPositif = @"^0*[1-9]+$";
+    private String patternEntierPositif = @"^[0-9]+$";
     private String patternCodePostale =  @"^\d{5}$";
 
     private int _etage;

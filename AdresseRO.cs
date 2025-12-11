@@ -9,51 +9,51 @@ using System.Xml.Serialization;
 public class AdresseRO
 {
     [XmlIgnore]
-    private String patternEntierPositif = @"^0*[1-9]+$";
+    private String patternEntierPositif = @"^[0-9]+$";
     private String patternCodePostale =  @"^\d{5}$";
-    
-    [XmlElement("étage", IsNullable = true)]
+
+    private int etage;
+    [XmlElement("étage")]
     public int Etage
     {
-        get { return Etage; }
+        get { return etage; }
         init
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
-                Numero = value;
+                etage = value;
             else
-                throw new Exception("Un etage d'adresse doit etre un entier positif.");
+                throw new Exception("L'étage d'une adresse doit etre un entier positif.");
         }
     }
-    
+
+    private int numero;
     [XmlElement("numéro")]
     public int Numero
     {
-        get { return Numero; }
+        get { return numero; }
         init
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
-                Numero = value;
+                numero = value;
             else
-                throw new Exception("Un numero d'adresse doit etre un entier positif.");
+                throw new Exception("Le numero d'une adresse doit etre un entier positif.");
         }
     }
 
     [XmlElement("rue")]
     public string Rue { get; init; }
-    
+
+    private string codePostal;
     [XmlElement("codePostal")]
     public string CodePostal
     {
-        get
-        {
-            return CodePostal;
-        }   
+        get { return codePostal; }   
         init
         {
-            if (Regex.IsMatch(value.ToString(), patternCodePostale))
-                CodePostal = value;
+            if (Regex.IsMatch(value, patternCodePostale))
+                codePostal = value;
             else
-                throw new Exception("Un code postale d'adresse doit etre un entier à 5 chiffres.");
+                throw new Exception("Le code postale d'une adresse doit etre un entier à 5 chiffres.");
         }
     }
     

@@ -72,17 +72,9 @@ public class Cabinet
 
                     }
                     break;
-                /*case XmlNodeType.EndElement:
-                    if (reader.Name == "infirmier")
-                    {
-                        Console.WriteLine("C'est fini");
-                    }
-                    break;*/
-            }
-        }
-        //Console.WriteLine(nomsInfirmiers.Count);
+            } // end switch
+        } // end while
         return nomsInfirmiers;
-        
     }
     
     public static List<string> AnalyseNoms(string filepath, string recherche)
@@ -105,14 +97,8 @@ public class Cabinet
 
                     }
                     break;
-                /*case XmlNodeType.EndElement:
-                    if (reader.Name == "nom")
-                    {
-                        Console.WriteLine("C'est fini");
-                    }
-                    break;*/
-            }
-        }
+            } // end switch
+        } // end while
         Console.WriteLine(nomsCabinet.Count);
         return nomsCabinet;
     }
@@ -121,7 +107,6 @@ public class Cabinet
     {
         XmlReader reader = XmlReader.Create(filepath);
         HashSet<int> actes = new HashSet<int>();
-        //int nbactes = 0;
         while (reader.Read())
         {
             switch (reader.NodeType)
@@ -129,7 +114,6 @@ public class Cabinet
                 case XmlNodeType.Element:
                     if (reader.Name == "acte" && reader.HasAttributes)
                     {
-                        //Console.WriteLine("-> Element 'acte' {0}", reader.Name);
                         reader.MoveToFirstAttribute();
                         Console.WriteLine("Acte -> {0}", reader.Value);
                         int x = 0;
@@ -152,7 +136,7 @@ public class Cabinet
     
     [XmlElement("patients")] public Patients Patients { get; set; }
     
-    public Cabinet(){}
+    public Cabinet() {}
 
     public Cabinet(string nom, Adresse adresse, Infirmiers infirmiers, Patients patients)
     {
