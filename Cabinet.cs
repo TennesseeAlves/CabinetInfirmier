@@ -162,5 +162,11 @@ public class Cabinet
         this.Patients = patients;
         this.Infirmiers = infirmiers;
     }
+
+    public string toString()
+    {
+        string res = "Nom : " + Nom + "\n" + Adresse.toString() +  "\n"  + Infirmiers.toString() +  "\n" + Patients.toString();
+        return res;
+    }
     
 }

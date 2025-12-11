@@ -67,5 +67,10 @@ public class Adresse
         Etage = etage;
     }
 
+    public string toString()
+    {
+        string res = "Adresse : Etage : " + Etage + "\nNumero : " + Numero + "\nrue : " + Rue + "\ncodePostal : "  + CodePostal + "\nville : " + Ville; 
+        return res;
+    }
     
 }

@@ -16,6 +16,11 @@ public class Infirmiers
     {
         this.Infirmier = infirmier;   
     }
+
+    public void addInfirmier(Infirmier infirmier)
+    {
+        Infirmier.Add(infirmier);
+    }
     
     
     public string toString()

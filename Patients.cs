@@ -17,6 +17,11 @@ public class Patients
         _Patients = patients;
     }
     
+    public void addPatient(Patient patient)
+    {
+        _Patients.Add(patient);
+    }
+    
     public string toString()
     {
         string res = "Liste des patients du cabinet : \n";

@@ -31,7 +31,7 @@ public class Patient
     
     public string toString()
     {
-        String res = "=> Patient : \nNom: " + Nom + "\nPrenom : " + Prenom + "\nSexe : " + Sexe + "\nDate de naissance : " + Naissance + "\nNuméro de sécurité social : " + Numero + "\nAdresse " + Adresse + "\nVisite " + Visite.ToString();
+        String res = "=> Patient : \nNom: " + Nom + "\nPrenom : " + Prenom + "\nSexe : " + Sexe + "\nDate de naissance : " + Naissance + "\nNuméro de sécurité social : " + Numero + "\nAdresse " + Adresse.toString() + "\nVisite " + Visite.toString();
         return res;
         
     }

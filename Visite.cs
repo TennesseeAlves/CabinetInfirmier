@@ -25,8 +25,12 @@ public class Visite
 
     public string toString()
     {
-        string res = "Visite : \nIntervenant : " + Intervenant + "\nDate : " + Date + "\nActe : \n" + Acte;
-        return res;;
+        string res = "Visite : \nIntervenant : " + Intervenant + "\nDate : " + Date + "\nActe : \n";
+        foreach (Acte acte in Acte)
+        {
+            res += acte.toString() + "\n";
+        }
+        return res;
         
 
     }

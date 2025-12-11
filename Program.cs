@@ -84,7 +84,7 @@ class Program
 
 
         // Partie serealisation 
-
+        /*
         Console.WriteLine("Debut serealisation de Adresse");
 
         var adrManager = new XMLManager<Adresse>();
@@ -107,12 +107,6 @@ class Program
         InfirmiersManager.Save(pathInfirmiers, infirmiersSer);
         Console.WriteLine("Serealisation de Infirmier effectué");
         
-        
-        //Test de déseralisation
-        //XMLManager<InfirmiersSerealisation> InfirmiersManager = new XMLManager<InfirmiersSerealisation>();
-        //var deseralieurInfirmier = InfirmiersManager.Load("../../../data/perso/infirmiers.xml");
-        Console.WriteLine("Test");
-        //Console.WriteLine(deseralieurInfirmier.toString());
         
         //Acte
         XMLManager<Acte> acteManager = new XMLManager<Acte>();
@@ -138,13 +132,36 @@ class Program
         Patients patientsSeral = new Patients(patientsList);
         patientsManager.Save("../../../data/perso/patients.xml", patientsSeral);
         
+        
         //Cabinet
         XMLManager<Cabinet> cabinetManager = new XMLManager<Cabinet>();
         Cabinet cabientSereal = new  Cabinet("Mon Cabinet", TestAdresse, infirmiersSer, patientsSeral);
-        cabinetManager.Save("../../../data/perso/cabinetSerealisation.xml",cabientSereal);
-
-
-
+        cabinetManager.Save("../../../data/perso/cabinet_modif.xml",cabientSereal);
+        
+        */
+        
+        //Cabinet deserealisation :
+        //Partie 7.4.4 ajout d'un patient au cabinet
+        XMLManager<Cabinet> cabinetDeserealManager = new XMLManager<Cabinet>();
+        Cabinet cabinetDesereal = cabinetDeserealManager.Load("../../../data/xml/cabinet.xml");
+        Console.WriteLine(cabinetDesereal.toString());
+        
+        
+        Acte newActe = new Acte("105");
+        List<Acte> newListActe = new List<Acte>();
+        newListActe.Add(newActe);
+        
+        Visite newVisite = new Visite("001", "2026-01-01", newListActe);
+        Adresse newAdresse = new Adresse(3, 66, "route du 66", "75000", "Paris");
+        Patient newPatient = new Patient("KULLS", "Kass", "M", "2005-01-08", "105011356797864", newAdresse, newVisite);
+        
+        cabinetDesereal.Patients.addPatient(newPatient);
+        
+        cabinetDeserealManager.Save("../../../data/xml/cabinet_modif.xml", cabinetDesereal);
+        
+        
+        
+        
 
 
 
