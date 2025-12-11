@@ -8,22 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a164746-a790-48f6-9cdc-5a8639071c28" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/html/pageInfirmier.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CabinetInfirmier.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CabinetInfirmier.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CabinetInfirmier.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CabinetInfirmier.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/css/pagePatient.css" beforeDir="false" afterPath="$PROJECT_DIR$/data/css/pagePatient.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/Infirmiers.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/acte.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/adresse.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/fichePatient.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/fichePatient.xsl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/infirmier.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/pageInfirmiere.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/pageInfirmiere.xsl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/patient.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/patients.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/perso/visite.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/xml/newCabinet.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +185,7 @@
       <workItem from="1765311160371" duration="1973000" />
       <workItem from="1765313168113" duration="13740000" />
       <workItem from="1765479162650" duration="1837000" />
-      <workItem from="1765482056889" duration="1737000" />
+      <workItem from="1765482056889" duration="2878000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout validation document xml en c#">
       <option name="closed" value="true" />
@@ -225,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765482401435</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="refactor: supprime repertoir «perso»">
+      <option name="closed" value="true" />
+      <created>1765483941389</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765483941389</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +255,8 @@
     <MESSAGE value="Ajout validation document xml en c#" />
     <MESSAGE value="correction Program.cs et minor refactor cabinet.xsd" />
     <MESSAGE value="commit fichiers internes rider" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit fichiers internes rider" />
+    <MESSAGE value="refactor: supprime repertoir «perso»" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: supprime repertoir «perso»" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
