@@ -11,44 +11,47 @@ public class Adresse
     [XmlIgnore]
     private String patternEntierPositif = @"^0*[1-9]+$";
     private String patternCodePostale =  @"^\d{5}$";
-    
-    [XmlElement("étage", IsNullable = true)]
+
+    private int _etage;
+    [XmlElement("étage")]
     public int Etage
     {
-        get => Etage;
+        get => _etage;
         set
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
-                Numero = value;
+                _etage = value;
             else
                 throw new Exception("Un etage d'adresse doit etre un entier positif.");
         }
     }
     
-    [XmlElement("numéro")]
+    private int _numero;
+    [XmlElement("numéro")] 
     public int Numero
     {
-        get => Numero;
+        get => _numero;
         set
         {
             if (Regex.IsMatch(value.ToString(), patternEntierPositif))
-                Numero = value;
+                _numero = value;
             else
                 throw new Exception("Un numero d'adresse doit etre un entier positif.");
         }
     }
 
+    private string _codePostal;
     [XmlElement("rue")]
     public string Rue { get; set; }
     
     [XmlElement("codePostal")]
     public string CodePostal
     {
-        get => CodePostal;
+        get => _codePostal;
         set
         {
             if (Regex.IsMatch(value, patternCodePostale))
-                CodePostal = value;
+                _codePostal = value;
             else
                 throw new Exception("Un code postale d'adresse doit etre un entier à 5 chiffres.");
         }
