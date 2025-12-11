@@ -2,8 +2,6 @@ namespace CabinetInfirmier;
 
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using CabinetInfirmier.Csharp;
-
 
 using System.Xml;
 

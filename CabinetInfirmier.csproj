@@ -2,13 +2,12 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="data\html\" />
       <Folder Include="data\UML\" />
     </ItemGroup>
 
@@ -19,105 +18,91 @@
       <None Update="data\xsd\actes.xsd">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\css\pageInfirmier.css">
+      <None Update="data\xslt\pageInfirmiere.xsl">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\css\pagePatient.css">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\js\facture.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\uml\actes.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\uml\cabinet.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\uml\patient.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xml\actes.xml">
+      <None Update="data\html\pageInfirmiere.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="data\xml\cabinet.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\xsd\patient.xsd">
+      <None Update="data\xml\actes.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\xslt\patient_xml.xsl">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xslt\cabinet.xsl">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xslt\patient_html.xsl">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xml\fichePatient.xml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\html\pagePatient.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Program.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="XMLUtils.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Compile>
       <None Update="data\xml\cabinet_modif.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-        <TargetFramework>net8.0</TargetFramework>
-      <Folder Include="data\html\" />
       <None Update="data\css\pageInfirmier.css">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="data\css\pagePatient.css">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="data\html\pagePatient.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
       <None Update="data\js\facture.js">
-      </None>
-      <None Update="data\uml\actes.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\uml\cabinet.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\uml\patient.puml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xml\actes.xml">
-      </None>
-      <None Update="data\xsd\patient.xsd">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xslt\patient_xml.xsl">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xslt\cabinet.xsl">
-      </None>
-      <None Update="data\xml\cabinet_modif.xml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="data\xslt\patient_html.xsl">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="data\xml\fichePatient.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\html\pagePatient.html">
+      <None Update="data\xml\newCabinet.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data\xsd\patient.xsd">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data\xslt\cabinet.xsl">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data\xslt\patient_html.xsl">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data\xslt\patient_xml.xsl">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="Acte.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Adresse.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="AdresseRO.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Cabinet.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="CabinetDOM.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Infirmier.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="InfirmierRO.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Infirmiers.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Patient.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Patients.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
       <Compile Update="Program.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Visite.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="XMLManager.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
       <Compile Update="XMLUtils.cs">

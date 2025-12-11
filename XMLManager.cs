@@ -2,7 +2,6 @@ namespace CabinetInfirmier;
 
 using System.Xml.Serialization;
 
-
 public class XMLManager<T>
 {
     public T Load(string path) {

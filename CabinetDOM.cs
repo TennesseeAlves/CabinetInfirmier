@@ -189,8 +189,6 @@ public class CabinetDOM
         writer.Formatting = Formatting.Indented;
         writer.Indentation = 4;
         doc.Save(writer);
-     
-
     }
 
     private XmlElement MakePatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)

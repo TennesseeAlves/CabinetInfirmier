@@ -83,10 +83,6 @@ class Program
         
         // Partie serialisation 
         
-        Console.WriteLine("Test Omar: {0}", resultNSS);
-        */
-
-
         // Partie serealisation 
         /*
         Console.WriteLine("Debut serealisation de Adresse");

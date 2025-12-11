@@ -1,7 +1,6 @@
-using System.Xml.Serialization;
-using CabinetInfirmier.Csharp;
-
 namespace CabinetInfirmier;
+
+using System.Xml.Serialization;
 
 [XmlRoot("patient", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
@@ -35,5 +34,4 @@ public class Patient
         return res;
         
     }
-    
 }

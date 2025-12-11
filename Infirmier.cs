@@ -9,14 +9,14 @@ using System.Xml.Serialization;
 public class Infirmier
 {
     String patternEntierPositif = @"^[1-9]*$";
-    [XmlAttribute("id")] public uint Id {
+    [XmlAttribute("id")] public string Id {
         get
         {
             return Id;
         }
         set
         {
-            if (Regex.IsMatch(value.ToString(), patternEntierPositif)) Id = value;
+            if (Regex.IsMatch(value, patternEntierPositif)) Id = value;
             else throw new Exception("Un id infimier doit être un entier positif.");
         } 
     }

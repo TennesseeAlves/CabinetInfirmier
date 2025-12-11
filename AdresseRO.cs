@@ -13,7 +13,7 @@ public class AdresseRO
     private String patternCodePostale =  @"^\d{5}$";
     
     [XmlElement("étage", IsNullable = true)]
-    public int? Etage
+    public int Etage
     {
         get { return Etage; }
         init
@@ -26,7 +26,7 @@ public class AdresseRO
     }
     
     [XmlElement("numéro")]
-    public int? Numero
+    public int Numero
     {
         get { return Numero; }
         init
@@ -37,15 +37,6 @@ public class AdresseRO
                 throw new Exception("Un numero d'adresse doit etre un entier positif.");
         }
     }
-    /*{
-        get => Numero;
-        init
-        {
-            if (value <= 0) Numero = 0;
-            else Numero = value;
-        }
-    }*/
-
 
     [XmlElement("rue")]
     public string Rue { get; init; }
@@ -71,7 +62,7 @@ public class AdresseRO
     
     public AdresseRO() { }
 
-    public AdresseRO(int? etage, int? numero, string rue, string codePostal, string ville)
+    public AdresseRO(int etage, int numero, string rue, string codePostal, string ville)
     {
         Numero = numero;
         Rue = rue;
@@ -79,6 +70,4 @@ public class AdresseRO
         Ville = ville;
         Etage = etage;
     }
-
-    
 }

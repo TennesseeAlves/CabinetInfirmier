@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 public class InfirmierRO
 {
-    [XmlAttribute("id")] public uint Id {
+    [XmlAttribute("id")] public string Id {
         get
         {
             return Id;
@@ -16,11 +16,10 @@ public class InfirmierRO
         init
         {
             String pattern = @"^[1-9]*$";
-            if (Regex.IsMatch(value.ToString(), pattern)) Id = value;
+            if (Regex.IsMatch(value, pattern)) Id = value;
             else throw new Exception("Un id infimier doit être un entier positif.");
         } 
     }
-    
     [XmlElement("nom")] public string Nom { get; init; }
     
     [XmlElement("prénom")] public string Prenom { get; init; }
@@ -29,7 +28,7 @@ public class InfirmierRO
     
     public InfirmierRO() {}
 
-    public InfirmierRO(uint id, string nom, string prenom, string photo)
+    public InfirmierRO(string id, string nom, string prenom, string photo)
     {
         this.Id = id;
         this.Nom = nom;

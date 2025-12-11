@@ -1,7 +1,6 @@
-using System.Xml.Serialization;
-
 namespace CabinetInfirmier;
 
+using System.Xml.Serialization;
 
 [XmlRoot("patients", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]

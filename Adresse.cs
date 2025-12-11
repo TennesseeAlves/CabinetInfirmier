@@ -1,56 +1,58 @@
 namespace CabinetInfirmier;
-using System.Xml.Serialization;
 
-public class Adresse
+using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 [XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
+public class Adresse
 {
-    /* Solution trouve sur internet qui, de ce que j'ai compris c'est un pattern... mais ca ne marche pas car l'element est rajoutee dans tout les cas
-    [XmlElement("étage")]
-    public int EtageValeur
+    [XmlIgnore]
+    private String patternEntierPositif = @"^0*[1-9]+$";
+    private String patternCodePostale =  @"^\d{5}$";
+    
+    [XmlElement("étage", IsNullable = true)]
+    public int Etage
     {
-        get { return Etage.Value; }
-        set { Etage = value; }
-    }
-
-    [XmlIgnore] public int? Etage {get; set;}
-    public bool EtageSpecified => Etage.HasValue;
-    */
-
-    /*{
-        get => _Etage;
+        get => Etage;
         set
         {
-            if (value <= 0) _Etage = 0;
-            else _Etage = value;
+            if (Regex.IsMatch(value.ToString(), patternEntierPositif))
+                Numero = value;
+            else
+                throw new Exception("Un etage d'adresse doit etre un entier positif.");
         }
-    }*/
-    [XmlElement("étage")]
-    public int Etage {get; set;}
-    
-    
-
-    //[XmlIgnore] public int? Numero {get; set;}
+    }
     
     [XmlElement("numéro")]
-    public int Numero  { get; set; }
-    /*{
-        get => _Numero;
+    public int Numero
+    {
+        get => Numero;
         set
         {
-            if (value <= 0) _Numero = 0;
-            else _Numero = value;
+            if (Regex.IsMatch(value.ToString(), patternEntierPositif))
+                Numero = value;
+            else
+                throw new Exception("Un numero d'adresse doit etre un entier positif.");
         }
-    }*/
-
+    }
 
     [XmlElement("rue")]
     public string Rue { get; set; }
     
     [XmlElement("codePostal")]
-    public string CodePostal { get; set; }
+    public string CodePostal
+    {
+        get => CodePostal;
+        set
+        {
+            if (Regex.IsMatch(value, patternCodePostale))
+                CodePostal = value;
+            else
+                throw new Exception("Un code postale d'adresse doit etre un entier à 5 chiffres.");
+        }
+    }
     
     [XmlElement("ville")]
     public string Ville { get; set; }
@@ -65,10 +67,10 @@ public class Adresse
         Ville = ville;
         Etage = etage;
     }
-
     public string toString()
     {
         string res = "Adresse : Etage : " + Etage + "\nNumero : " + Numero + "\nrue : " + Rue + "\ncodePostal : "  + CodePostal + "\nville : " + Ville; 
         return res;
     }
 }
+
