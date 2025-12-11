@@ -31,6 +31,14 @@
             <field xpath="@intervenant"/>
         </keyref>
     </element>
+
+    <element name="adresse" type="cab:Adresse"/>
+    <element name="infirmier" type="cab:Infirmier"/>
+    <element name="infirmiers" type="cab:Infirmiers"/>
+    <element name="patient" type="cab:Patient"/>
+    <element name="patients" type="cab:Patients"/>
+    <element name="visite" type="cab:Visite"/>
+    <element name="acte" type="cab:Acte"/>
     
     <!-- ······ Elements racines que j'utilise pour tester mes serializations ······ -->
     <element name="adresse" type="cab:Adresse"/>
@@ -45,6 +53,7 @@
             <element name="patients" type="cab:Patients"/>
         </sequence>
     </complexType>
+
     
     <!-- Adresse -->
     <complexType name="Adresse">

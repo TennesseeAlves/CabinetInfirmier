@@ -3,10 +3,10 @@ namespace CabinetInfirmier;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-[XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf")]
+[XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
 
-public class InfirmierSerialisation
+public class Infirmier
 {
     String patternEntierPositif = @"^[1-9]*$";
     [XmlAttribute("id")] public uint Id {
@@ -27,13 +27,19 @@ public class InfirmierSerialisation
     
     [XmlElement("photo")] public string Photo { get; set; }
     
-    public InfirmierSerialisation(){}
+    public Infirmier(){}
 
-    public InfirmierSerialisation(uint id, string nom, string prenom, string photo)
+    public Infirmier(string id, string nom, string prenom, string photo)
     {
         this.Id = id;
         this.Nom = nom;
         this.Prenom = prenom;
         this.Photo = photo;
+    }
+
+    public string toString()
+    {
+        String res = "=> Infirmier : \nNom: " + Nom + "\nPrenom : " + Prenom + "\nPhoto : " + Photo + "\nId : " + Id;
+        return res;
     }
 }

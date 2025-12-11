@@ -110,12 +110,16 @@
             <naissance>2000-03-03</naissance>
             <numéro>102039999988876</numéro>
             <adresse>
+                <étage>5</étage>
+                <numéro>6</numéro>
                 <rue>rue de la paix</rue>
                 <codePostal>38100</codePostal>
                 <ville>Chicagre</ville>
             </adresse>
             <visite date="2026-01-03" intervenant="003">
                 <acte id="101" />
+                <acte id="102" />
+                <acte id="103" />
             </visite>
         </patient>
     </patients>

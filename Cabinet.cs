@@ -1,17 +1,22 @@
 namespace CabinetInfirmier;
 
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using CabinetInfirmier.Csharp;
+
 
 using System.Xml;
 
 
+[XmlRoot("cabinet", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
+[Serializable]
 public class Cabinet
 {
     //Partie XmlReader
     public static void AnalyseGlobale(string filepath)
     {
+        Console.WriteLine("Début de l'Analyse Globale du fichier :");
         XmlReader reader = XmlReader.Create(filepath);
-    
         Console.WriteLine("On entre dans le document");
         while (reader.Read())
         {
@@ -75,17 +80,15 @@ public class Cabinet
                         Console.WriteLine("C'est fini");
                     }
                     break;*/
-                
             }
         }
-        Console.WriteLine(nomsInfirmiers.Count);
+        //Console.WriteLine(nomsInfirmiers.Count);
         return nomsInfirmiers;
         
     }
     
     public static List<string> AnalyseNoms(string filepath, string recherche)
     {
-        
         XmlReader reader = XmlReader.Create(filepath);
         List<string> nomsCabinet = new List<string>();
         while (reader.Read())
@@ -116,10 +119,11 @@ public class Cabinet
         return nomsCabinet;
     }
 
-    public static int countActes(string filepath) //TODO : faire un hashset : compter le nombre d'actes different
+    public static int countActes(string filepath)
     {
         XmlReader reader = XmlReader.Create(filepath);
-        int actes = 0;
+        HashSet<int> actes = new HashSet<int>();
+        //int nbactes = 0;
         while (reader.Read())
         {
             switch (reader.NodeType)
@@ -128,19 +132,42 @@ public class Cabinet
                     if (reader.Name == "acte" && reader.HasAttributes)
                     {
                         //Console.WriteLine("-> Element 'acte' {0}", reader.Name);
-                        
                         reader.MoveToFirstAttribute();
                         Console.WriteLine("Acte -> {0}", reader.Value);
-                        actes++;
+                        int x = 0;
+                        Int32.TryParse(reader.Value, out x); //Renvoie un boolean en sortie
+                        actes.Add(x);
                     }
                     break;
             }
-            {
-                
-            }
         }
-        Console.WriteLine(actes);
-        return actes;
+        Console.WriteLine("Nombre d'actes différents effectués : {0}", actes.Count);
+        return actes.Count;
+    }
+    
+    //Partie serealisation du Cabinet :
+    [XmlElement("nom")] public string Nom { get; set; } 
+    
+    [XmlElement("adresse")] public Adresse Adresse { get; set; }
+    
+    [XmlElement("infirmiers")] public Infirmiers Infirmiers { get; set; }
+    
+    [XmlElement("patients")] public Patients Patients { get; set; }
+    
+    public Cabinet(){}
+
+    public Cabinet(string nom, Adresse adresse, Infirmiers infirmiers, Patients patients)
+    {
+        this.Nom = nom;
+        this.Adresse = adresse;
+        this.Patients = patients;
+        this.Infirmiers = infirmiers;
+    }
+
+    public string toString()
+    {
+        string res = "Nom : " + Nom + "\n" + Adresse.toString() +  "\n"  + Infirmiers.toString() +  "\n" + Patients.toString();
+        return res;
     }
     
 }

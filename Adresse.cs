@@ -1,60 +1,74 @@
 namespace CabinetInfirmier;
+using System.Xml.Serialization;
 
 public class Adresse
+
+[XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
+[Serializable]
+
 {
-    private string nom;
-    private int etage;
-    private int numero;
-    private string rue;
-    private int codePostal;
-    private string ville;
-    
-
-    public Adresse(string nom, int etage, int numero, string rue, int codePostal, string ville)
+    /* Solution trouve sur internet qui, de ce que j'ai compris c'est un pattern... mais ca ne marche pas car l'element est rajoutee dans tout les cas
+    [XmlElement("étage")]
+    public int EtageValeur
     {
-        this.nom = nom;
-        if (etage != 0)
+        get { return Etage.Value; }
+        set { Etage = value; }
+    }
+
+    [XmlIgnore] public int? Etage {get; set;}
+    public bool EtageSpecified => Etage.HasValue;
+    */
+
+    /*{
+        get => _Etage;
+        set
         {
-            this.etage = etage;
+            if (value <= 0) _Etage = 0;
+            else _Etage = value;
         }
-        if (numero != 0)
+    }*/
+    [XmlElement("étage")]
+    public int Etage {get; set;}
+    
+    
+
+    //[XmlIgnore] public int? Numero {get; set;}
+    
+    [XmlElement("numéro")]
+    public int Numero  { get; set; }
+    /*{
+        get => _Numero;
+        set
         {
-            this.numero = numero;
+            if (value <= 0) _Numero = 0;
+            else _Numero = value;
         }
-        this.rue = rue;
-        this.codePostal = codePostal;
-        this.ville = ville;
-    }
+    }*/
 
-    public string getNom()
-    {
-        return this.nom;
-    }
 
-    public int getEtage()
-    {
-        return this.etage;
-    }
-
-    public int getNumero()
-    {
-        return this.numero;
-    }
-
-    public string getRue()
-    {
-        return this.rue;
-    }
-
-    public int getCodePostal()
-    {
-        return this.codePostal;
-    }
-
-    public string getVille()
-    {
-        return this.ville;
-    }
+    [XmlElement("rue")]
+    public string Rue { get; set; }
     
+    [XmlElement("codePostal")]
+    public string CodePostal { get; set; }
     
+    [XmlElement("ville")]
+    public string Ville { get; set; }
+    
+    public Adresse() { }
+
+    public Adresse(int etage, int numero, string rue, string codePostal, string ville)
+    {
+        Numero = numero;
+        Rue = rue;
+        CodePostal = codePostal;
+        Ville = ville;
+        Etage = etage;
+    }
+
+    public string toString()
+    {
+        string res = "Adresse : Etage : " + Etage + "\nNumero : " + Numero + "\nrue : " + Rue + "\ncodePostal : "  + CodePostal + "\nville : " + Ville; 
+        return res;
+    }
 }

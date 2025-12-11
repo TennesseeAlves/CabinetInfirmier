@@ -9,12 +9,11 @@ public class CabinetDOM
     private XmlDocument doc;
     private XmlNode root;
     private XmlNamespaceManager nsmgr;
-
-
+    
     public CabinetDOM(string filepath)
     {
         doc = new XmlDocument();
-        doc.PreserveWhitespace = false; // TODO: mofication de l'indentation
+        doc.PreserveWhitespace = false; // methode pour l'indentation
         doc.Load(filepath);
         root = doc.DocumentElement; //recuperer la racine
         nsmgr = new XmlNamespaceManager(doc.NameTable); //namespace
@@ -34,18 +33,33 @@ public class CabinetDOM
         XmlNodeList recherche = rootElt.GetElementsByTagName(elementName);
         return recherche.Count;
     }
-
-    public bool cabinetHasAdresse(string elementName) //TODO : faire une methode intermediare estAdresseComplete()
+    
+    // Ici on suppose qu'une adresse est considéré comme complète si elle contient exactement 5 éléments (étage, numéro, rue, codePostal et ville).
+    private bool adresseEstCompltete(XmlNode adresssNode)
     {
         bool res = true;
-        string expression = "//cab:cabinet/cab:" + elementName;
+        var elemFils = adresssNode.ChildNodes;
+        int countElem = elemFils.Count;
+        return (countElem == 5);
+    }
+    
+    public bool adresseCabinetEstComplete() 
+    {
+        string expression = "//cab:cabinet/cab:adresse";
         XmlNodeList node = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
+        bool res = adresseEstCompltete(node[0]);
+        return res;
+    }
 
-        if (node == null)
-        {
-            res = false;
+    public bool adressePatientEstComplete(string nomPatient)
+    {
+        string expression = "//cab:patient[cab:nom/text()='" + nomPatient + "']/cab:adresse";
+        XmlNodeList nodes = getXpathPerso(expression);
+        bool res = false;
+        if (nodes.Count >= 1)
+        { 
+            res = adresseEstCompltete(nodes[0]);
         }
-
         return res;
     }
 
@@ -55,16 +69,16 @@ public class CabinetDOM
         return expr;
     }
 
-    private XmlNodeList getXpathPerso(string expression)
+    private XmlNodeList getXpathPerso(string expression) //Fonction spécifique de getXPath() pour utilisation plus pratique 
     {
         XmlNodeList node = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
         return node;
     }
-    public bool nssValide(string nomPatient)
+    public bool nssValide(string nomPatient) //TODO : remplacer tout les getXpath par SelectSingleNode
     {
         Console.WriteLine("Verification du nss du patient {0}",  nomPatient);
         bool res = true;
-        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:numéro";
+        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]/cab:numéro"; //TODO ne pas utiliser contains
         XmlNodeList noeudlist = getXpathPerso(expression);
         if (noeudlist.Count != 0)
         {
@@ -82,7 +96,7 @@ public class CabinetDOM
             }
             string anneeNaiss = "" + nss[1] + nss[2];
             string moisNaiss = "" + nss[3] + nss[4];
-            //Test des valeurs TODO: peut etre à enlever
+            //Test des valeurs TODO: peut etre enlever
             Console.WriteLine("NSS du patient : {0} de taille {1}", nss, tailleNss);
             Console.WriteLine("Infos d'apres le NSS :  \n-> Son sexe : {0} \n-> son annee : {1} \n-> son mois : {2}", sexe, anneeNaiss, moisNaiss);
             
@@ -92,7 +106,7 @@ public class CabinetDOM
             string anneeNaissNss = "" + naissance[2] + naissance[3];
             string moisNaissNss = "" + naissance[5] + naissance[6];
             
-            //TODO: test peut etre à enlever
+            //TODO: test peut etre enlever
             Console.WriteLine("Date de naissance : {0}", naissance);
             Console.WriteLine("Infos de annee naissance : {0}", anneeNaissNss);
             Console.WriteLine("Infos de mois naissance : {0}",  moisNaissNss);
@@ -114,16 +128,28 @@ public class CabinetDOM
         return res;
     }
     
+    
     //Partie Modification de l'arbre DOM et de l'instance XML
     
-    
-
     private XmlElement MakeInfirmier(string nom, string prenom)
     {
         XmlElement infirmierElt = doc.CreateElement(root.Prefix, "infirmier", root.NamespaceURI);
         int coundId = count("infirmier") + 1;
+
+        string id = "";
+        if (coundId <= 9)
+        {
+            id = "00" + coundId; 
+        }
+        else if (coundId <= 99)
+        {
+            id = "0" + coundId;
+        }
+        else
+        {
+            id = "" + coundId;
+        }
         
-        string id = "00" + coundId; //TODO : revoir le calcul de l'ID 0011 != 011
         Console.WriteLine(coundId);
         string photo = prenom.ToLower() + ".png"; 
         
@@ -156,9 +182,14 @@ public class CabinetDOM
         var nodeInfirmiers = rootElt.GetElementsByTagName("infirmiers").Item(0); //recuperer le node Infirmiers
         nodeInfirmiers.AppendChild(newInfirmierElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml"; //TODO : changer avec cabinet.xml
-        doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
-        // TODO: modif de l'indentation
+        string chemin = "../../../data/xml/newCabinet.xml";
+        //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+        
+        XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8);
+        writer.Formatting = Formatting.Indented;
+        writer.Indentation = 4;
+        doc.Save(writer);
+     
 
     }
 
@@ -196,34 +227,34 @@ public class CabinetDOM
         nssElt.AppendChild(nssTxt);
         
         XmlElement adresseElt = doc.CreateElement(root.Prefix, "adresse", root.NamespaceURI);
-        if (adresse.getEtage() != 0)
+        if (adresse.Etage != 0)
         {
             XmlElement etageElt = doc.CreateElement(root.Prefix, "étage", root.NamespaceURI);
-            XmlText etageTxt = doc.CreateTextNode(adresse.getEtage().ToString());
+            XmlText etageTxt = doc.CreateTextNode(adresse.Etage.ToString());
             etageElt.AppendChild(etageTxt);
             adresseElt.AppendChild(etageElt);
         }
 
-        if (adresse.getNumero() != 0)
+        if (adresse.Numero != 0)
         {
             XmlElement numeroElt = doc.CreateElement(root.Prefix, "numéro", root.NamespaceURI);
-            XmlText numeroTxt = doc.CreateTextNode(adresse.getNumero().ToString());
+            XmlText numeroTxt = doc.CreateTextNode(adresse.Numero.ToString());
             numeroElt.AppendChild(numeroTxt);
             adresseElt.AppendChild(numeroElt);
         }
         
         XmlElement rueElt =  doc.CreateElement(root.Prefix, "rue", root.NamespaceURI);
-        XmlText rueTxt = doc.CreateTextNode(adresse.getRue());
+        XmlText rueTxt = doc.CreateTextNode(adresse.Rue);
         rueElt.AppendChild(rueTxt);
         adresseElt.AppendChild(rueElt);
         
         XmlElement codePostElt = doc.CreateElement(root.Prefix, "codePostal", root.NamespaceURI);
-        XmlText codePostTxt = doc.CreateTextNode(adresse.getCodePostal().ToString());
+        XmlText codePostTxt = doc.CreateTextNode(adresse.CodePostal.ToString());
         codePostElt.AppendChild(codePostTxt);
         adresseElt.AppendChild(codePostElt);
         
         XmlElement villeElt = doc.CreateElement(root.Prefix, "ville", root.NamespaceURI);
-        XmlText villeTxt = doc.CreateTextNode(adresse.getVille());
+        XmlText villeTxt = doc.CreateTextNode(adresse.Ville);
         villeElt.AppendChild(villeTxt);
         adresseElt.AppendChild(villeElt);
         
@@ -245,34 +276,31 @@ public class CabinetDOM
         var nodePatients = rootElt.GetElementsByTagName("patients").Item(0);
         nodePatients.AppendChild(newPatientElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml"; //TODO : changer en cabinet.xml
+        string chemin = "../../../data/xml/newCabinet.xml";
         doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
-
-        /*XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8); // TODO: modif de l'indentation
-        writer.Formatting = Formatting.Indented;
-        writer.Indentation = 4;
-        doc.Save(writer);*/
     }
 
-    private XmlElement makeVisite(string date, int intervenant, int acteId) //TODO : changer en liste d'actes
+    private XmlElement makeVisite(string date, int intervenant, List<int> listActeId) //TODO : changer en liste d'actes
     {
         XmlElement visiteElt = doc.CreateElement("visite", root.NamespaceURI);
 
         visiteElt.SetAttribute("date", date);
         visiteElt.SetAttribute("intervenant", "00" + intervenant);
         
-        XmlElement acteElt = doc.CreateElement("acte", root.NamespaceURI);
-        acteElt.SetAttribute("id", acteId.ToString());
-        visiteElt.AppendChild(acteElt);
-        
+        foreach (int acteId in listActeId)
+        {
+            XmlElement acteElt = doc.CreateElement("acte", root.NamespaceURI);
+            acteElt.SetAttribute("id", acteId.ToString());
+            visiteElt.AppendChild(acteElt);
+        }
         return visiteElt;
     }
 
-    public void addVisite(string date, int intervenant, int acteId, string nomPatient)
+    public void addVisite(string date, int intervenant, List<int> listActeId, string nomPatient)
     {
-        XmlElement newVisiteElt = makeVisite(date, intervenant, acteId);
+        XmlElement newVisiteElt = makeVisite(date, intervenant, listActeId);
 
-        string expression = "//cab:patient[contains(./cab:nom/text(),'" + nomPatient + "')]"; //TODO : a tester avec //cab:patient[cab:nom/text() = " + nomPatient + "]"
+        string expression = "//cab:patient[cab:nom/text() = '" + nomPatient + "']"; 
             
         XmlNodeList patientNode = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
 
@@ -283,7 +311,7 @@ public class CabinetDOM
             string chemin = "../../../data/xml/newCabinet.xml"; 
             //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
             
-            XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8); // TODO: modif de l'indentation
+            XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8);
             writer.Formatting = Formatting.Indented;
             writer.Indentation = 4;
             doc.Save(writer);
