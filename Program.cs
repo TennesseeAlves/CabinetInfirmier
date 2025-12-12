@@ -16,26 +16,24 @@ class Program
         
         XMLUtils.XslTransform("../../../data/xml/fichepatient.xml", "../../../data/xslt/patient_html.xsl", "../../../data/html/PagePatient.html"); 
         
+        
         //-------------- pageInfirmiere avec parametre (id="002") --------------
         XMLUtils.XslTransformParam("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmier_param.html", "destinedId", "002");
         
         
         
         //-------------- Partie parseur XmlReader -------------- 
-        
         Cabinet.AnalyseGlobale("./data/xml/cabinet.xml"); 
 
         Cabinet.AnalyseNomsInfirmiers("./data/xml/cabinet.xml");
+        
         Cabinet.AnalyseNoms("./data/xml/cabinet.xml", "nom");
 
         //Compte le nombre d'actes differents necessaires, tout patient confondus.
         int actes = Cabinet.countActes("./data/xml/cabinet.xml");
-
-        
         
 
         //-------------- Partie parseur DOM --------------
-        
         string filename = "./data/xml/cabinet.xml";
         CabinetDOM cab = new CabinetDOM(filename);
         
@@ -59,7 +57,6 @@ class Program
         
         
         // -------------- Modification de l'arbre avec DOM --------------
-        
         //On ne peut pas ajouter un nouvel infirmier et un patient à la fois (soit l'un soit l'autre), une exception est levée sinon... 
 
         //-------- Ajout de l'infirmier Jean Némard (resultat dans newCabinetDOM.xml)  ---------
@@ -73,10 +70,10 @@ class Program
         cab.addPatient("KIKS", "Burhan", "2000-03-04", "102039999988876", newAdresse);
         Console.WriteLine("Nouveau patient ajouté dans newCabinetDOM.xml");
 
-        List<int> listActeId = new List<int>();
-        listActeId.Add(101);
-        listActeId.Add(102);
-        listActeId.Add(103);
+        List<Acte> listActeId = new List<Acte>();
+        listActeId.Add(new Acte(101));
+        listActeId.Add(new Acte(102));
+        listActeId.Add(new Acte(103));
         cab.addVisite("2026-01-04", 003, listActeId, "KIKS");
         Console.WriteLine("Ajout de visite de KIKS dans newCabinetDOM.xml");
         */
@@ -84,8 +81,6 @@ class Program
         // -------- methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations --------
         //renvoie un boolean
         bool resultNSS = cab.nssValide("BARKOK");
-        
-        
         
         
         //-------------- Partie serealisation -------------- 
@@ -98,6 +93,7 @@ class Program
         //mais n'est pas necessaire pour serealiser le cabinet complet (ils ne seront pas presentes lors des serealisation qui suivent
         /*string pathAdr = "../../../data/xml/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);*/ 
+        
         
         //-------- seralisation d'un infirmier --------
         var infirManager = new XMLManager<Infirmier>();
@@ -136,13 +132,10 @@ class Program
         Patients patientsSeral = new Patients(patientsList);
         
         
-        
         //-------- seralisation du cabinet (avec les infos dessus) --------
         XMLManager<Cabinet> cabinetManager = new XMLManager<Cabinet>();
         Cabinet cabientSereal = new  Cabinet("Mon Cabinet", TestAdresse, infirmiersSer, patientsSeral);
         cabinetManager.Save("../../../data/xml/cabinet_modif.xml",cabientSereal);
-        
-        
         
         
         //-------------- Partie deserealisation -------------- 

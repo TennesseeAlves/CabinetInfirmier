@@ -15,7 +15,7 @@
     
     
     <xsl:template match="/">
-        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom/text()"/> <!-- TODO : supprimer /text() -->
+        <xsl:variable name="prenomInf" select="./cab:cabinet/cab:infirmiers/cab:infirmier[@id=$destinedId]/cab:prénom"/>
         <xsl:variable name="patients" select="//cab:patient[cab:visite[@intervenant=$destinedId]]"/>
         <html>
             <head>

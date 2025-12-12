@@ -2,9 +2,7 @@ namespace CabinetInfirmier;
 
 using System.Collections.Generic;
 using System.Xml.Serialization;
-
 using System.Xml;
-
 
 [XmlRoot("cabinet", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
@@ -91,7 +89,6 @@ public class Cabinet
                             //Console.WriteLine("-> Nom detecté : '{0}'", reader.Value);
                                 nomsCabinet.Add(reader.Value);
                         }
-
                     }
                     break;
             } // end switch
@@ -147,5 +144,4 @@ public class Cabinet
         string res = "Nom : " + Nom + "\n" + Adresse.toString() +  "\n"  + Infirmiers.toString() +  "\n" + Patients.toString();
         return res;
     }
-    
 }

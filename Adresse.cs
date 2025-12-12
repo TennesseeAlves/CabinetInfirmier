@@ -5,12 +5,11 @@ using System.Xml.Serialization;
 
 [XmlRoot("adresse", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
-
 public class Adresse
 {
     [XmlIgnore]
-    private String patternEntierPositif = @"^[0-9]+$";
-    private String patternCodePostale =  @"^\d{5}$";
+    private string patternEntierPositif = @"^[0-9]+$";
+    private string patternCodePostale =  @"^\d{5}$";
 
     private int _etage;
     [XmlElement("étage")]
@@ -76,4 +75,3 @@ public class Adresse
         return res;
     }
 }
-

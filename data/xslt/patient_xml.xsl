@@ -63,5 +63,5 @@
         <xsl:variable name="idActe" select="@id"/>
         <acte><xsl:value-of select="$actes/*/act:acte[@id=$idActe]/text()"/></acte>
     </xsl:template>
-        
+    
 </xsl:stylesheet>

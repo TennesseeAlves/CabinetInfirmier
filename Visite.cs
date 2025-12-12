@@ -34,7 +34,6 @@ public class Visite
         Intervenant = intervenant;
         Date = date;
         Acte = acte;
-        
     }
 
     public string toString()

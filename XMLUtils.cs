@@ -32,7 +32,6 @@ public static class XMLUtils
         Console.WriteLine("Validation terminée.");
     }
     
-    
     private static void ValidationCallback(object? sender, ValidationEventArgs e) 
     {
         if (e.Severity.Equals(XmlSeverityType.Warning)) 
@@ -46,8 +45,6 @@ public static class XMLUtils
             Console.WriteLine(e.Message);
         }
     }
-    
-    
     
     // Transformation XSLT avec paramètre
     public static void XslTransformParam3(
@@ -85,7 +82,6 @@ public static class XMLUtils
             Console.WriteLine("erreur lors de la transformation XSLT avec parametre : " + ex.Message);
         }
     }
-    
     
     //methode trouvé sur internet qui appel une feuille de transmformation xslt en C# :
     public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
