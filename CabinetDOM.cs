@@ -170,8 +170,8 @@ public class CabinetDOM
         var nodeInfirmiers = rootElt.GetElementsByTagName("infirmiers").Item(0); //recuperer le node Infirmiers
         nodeInfirmiers.AppendChild(newInfirmierElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml";
-        //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+        string chemin = "../../../data/xml/newCabinetDOM.xml";
+        //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinetDOM.xml)
         
         XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8);
         writer.Formatting = Formatting.Indented;
@@ -262,8 +262,8 @@ public class CabinetDOM
         var nodePatients = rootElt.GetElementsByTagName("patients").Item(0);
         nodePatients.AppendChild(newPatientElt);
         
-        string chemin = "../../../data/xml/newCabinet.xml";
-        doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+        string chemin = "../../../data/xml/newCabinetDOM.xml";
+        doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinetDOM.xml)
     }
 
     private XmlElement makeVisite(string date, int intervenant, List<int> listActeId) //TODO : changer en liste d'actes
@@ -293,8 +293,8 @@ public class CabinetDOM
         if (patientNode.Count != 0)
         {
             patientNode[0].AppendChild(newVisiteElt);
-            string chemin = "../../../data/xml/newCabinet.xml"; 
-            //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinet.xml)
+            string chemin = "../../../data/xml/newCabinetDOM.xml"; 
+            //doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinetDOM.xml)
             
             XmlTextWriter writer = new XmlTextWriter(chemin, Encoding.UTF8);
             writer.Formatting = Formatting.Indented;

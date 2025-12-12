@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <infirmier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="005" xmlns="http://www.univ-grenoble-alpes.fr/l3miage/medical">
-  <nom>BARKOK</nom>
+  <nom>BARKOK0</nom>
   <prénom>Omar</prénom>
-  <photo>Omar.png</photo>
+  <photo>omar.png</photo>
 </infirmier>
