@@ -52,16 +52,16 @@ public class Cabinet
                 case XmlNodeType.Element:
                     if (reader.Name == "infirmier")
                     {
-                        Console.WriteLine("-> Element 'infirmier' {0}", reader.Name);
+                        //Console.WriteLine("-> Element 'infirmier' {0}", reader.Name); 
                         reader.Read();
                         reader.MoveToContent();
-                        Console.WriteLine("-> Element suivant '{0}'", reader.Name);
+                        //Console.WriteLine("-> Element suivant '{0}'", reader.Name);
                         if (reader.Name == "nom") 
                         {
                              reader.Read();
                              if (reader.NodeType == XmlNodeType.Text)
                              {
-                                  Console.WriteLine("-> Nom de l'infirmier : '{0}'", reader.Value);
+                                  //Console.WriteLine("-> Nom de l'infirmier : '{0}'", reader.Value);
                                   nomsInfirmiers.Add(reader.Value);
                              }
                         }
@@ -70,6 +70,7 @@ public class Cabinet
                     break;
             } // end switch
         } // end while
+        Console.WriteLine("Nombre total de noms d'infirmiers dans le cabinet : {0}", nomsInfirmiers.Count);
         return nomsInfirmiers;
     }
     
@@ -87,7 +88,7 @@ public class Cabinet
                         //Console.WriteLine("-> Element '{0}' trouvé ", reader.Name);
                         reader.Read();
                         if (reader.NodeType == XmlNodeType.Text){
-                            Console.WriteLine("-> Nom detecté : '{0}'", reader.Value);
+                            //Console.WriteLine("-> Nom detecté : '{0}'", reader.Value);
                                 nomsCabinet.Add(reader.Value);
                         }
 
@@ -95,7 +96,7 @@ public class Cabinet
                     break;
             } // end switch
         } // end while
-        Console.WriteLine(nomsCabinet.Count);
+        Console.WriteLine("Nombre total de noms dans le cabinet : {0}", nomsCabinet.Count);
         return nomsCabinet;
     }
 
@@ -111,7 +112,6 @@ public class Cabinet
                     if (reader.Name == "acte" && reader.HasAttributes)
                     {
                         reader.MoveToFirstAttribute();
-                        Console.WriteLine("Acte -> {0}", reader.Value);
                         int x = 0;
                         Int32.TryParse(reader.Value, out x); //Renvoie un boolean en sortie
                         actes.Add(x);
@@ -119,7 +119,7 @@ public class Cabinet
                     break;
             }
         }
-        Console.WriteLine("Nombre d'actes différents effectués : {0}", actes.Count);
+        Console.WriteLine("Nombre d'actes différents effectués (tout patient confondues) : {0}", actes.Count);
         return actes.Count;
     }
     

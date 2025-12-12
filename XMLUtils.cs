@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace CabinetInfirmier;
 
 using System.Xml;
@@ -7,17 +9,30 @@ using System.Xml.Xsl;
 
 public static class XMLUtils
 {
-    public static async Task ValidateXmlFileAsync(string schemaNamespace, string xsdFilePath, string xmlFilePath) 
+    //methode trouvé sur internet qui attend un xmlFilePath et un ou plusieurs couples de (namespaceName et un xsdpath associé)
+    public static void ValidateXmlFileAsync(string xmlFilePath, params (string namespaceName, string xsdPath)[] schemas)
     {
         var settings = new XmlReaderSettings();
-        settings.Schemas.Add(schemaNamespace, xsdFilePath);
+    
+        // Charger tous les schémas
+        foreach (var (namespaceName, xsdPath) in schemas)
+        {
+            settings.Schemas.Add(namespaceName, xsdPath);
+        }
+    
         settings.ValidationType = ValidationType.Schema;
         Console.WriteLine("Nombre de schemas utilisés dans la validation : " + settings.Schemas.Count);
         settings.ValidationEventHandler += ValidationCallback;
-        var readItems = XmlReader.Create(xmlFilePath, settings);
-        while (readItems.Read()) { }
+    
+        using (var readItems = XmlReader.Create(xmlFilePath, settings))
+        {
+            while (readItems.Read()) { }
+        }
+    
+        Console.WriteLine("Validation terminée.");
     }
-
+    
+    
     private static void ValidationCallback(object? sender, ValidationEventArgs e) 
     {
         if (e.Severity.Equals(XmlSeverityType.Warning)) 
@@ -32,31 +47,145 @@ public static class XMLUtils
         }
     }
     
-    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    
+    
+    // Transformation XSLT avec paramètre
+    public static void XslTransformParam3(
+        string xmlFilePath,
+        string xsltFilePath,
+        string htmlFilePath,
+        string paramName,
+        string paramValue)
     {
-        XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
-        XslCompiledTransform xslt = new XslCompiledTransform();
-        xslt.Load(xsltFilePath);
-        XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, null);
-        xslt.Transform(xpathDoc, null, htmlWriter);
-    }
-    
-    public static void XslTransform2(string xmlFilePath, string xsltFilePath, string htmlFilePath)
-    {
-        XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
-        XslCompiledTransform xslt = new XslCompiledTransform();
-    
-        // Résolveur essentiel pour document()
-        XmlUrlResolver resolver = new XmlUrlResolver();
-        XsltSettings settings = new XsltSettings(true, true);
-    
-        xslt.Load(xsltFilePath, settings, resolver);
-    
-        using (XmlWriter htmlWriter = XmlWriter.Create(htmlFilePath))
+        try
         {
-            xslt.Transform(xpathDoc, null, htmlWriter);
+            //  Charge le XML en mémoire pour éviter le verrouillage du fichier.
+            // Utilité : Permet de relire le même fichier sans erreurs d'accès lors des transformations XSLT successives.
+            //XPathDocument xpathDoc = LoadXmlInMemory(xmlFilePath);
+            
+            XslCompiledTransform xslt = new XslCompiledTransform();
+
+            XsltSettings settings = new XsltSettings();
+            settings.EnableDocumentFunction = true;
+            XmlUrlResolver resolver = new XmlUrlResolver();
+
+            xslt.Load(xsltFilePath, settings, resolver);
+
+            XsltArgumentList args = new XsltArgumentList();
+            args.AddParam(paramName, "", paramValue);
+
+            using (XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, Encoding.UTF8))
+            {
+                htmlWriter.Formatting = Formatting.Indented;
+                //xslt.Transform(xpathDoc, args, htmlWriter, resolver);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("erreur lors de la transformation XSLT avec parametre : " + ex.Message);
         }
     }
-
     
+    
+    //methode trouvé sur internet qui appel une feuille de transmformation xslt en C# :
+    public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
+    {
+        try
+        {
+            // Validation des chemins
+            if (!File.Exists(xmlFilePath))
+                throw new FileNotFoundException($"Le fichier XML n'existe pas : {xmlFilePath}");
+    
+            if (!File.Exists(xsltFilePath))
+                throw new FileNotFoundException($"Le fichier XSLT n'existe pas : {xsltFilePath}");
+
+            // Chargement du document XML
+            XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
+    
+            // Configuration XSLT
+            XslCompiledTransform xslt = new XslCompiledTransform();
+            XsltSettings settings = new XsltSettings(enableDocumentFunction: true, enableScript: false);
+            XmlUrlResolver resolver = new XmlUrlResolver();
+            xslt.Load(xsltFilePath, settings, resolver);
+
+            // Configuration du writer pour HTML
+            XmlWriterSettings writerSettings = new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                Indent = true,
+                IndentChars = "  ",
+                OmitXmlDeclaration = true, // Pas de <?xml?> pour HTML
+            };
+
+            // Transformation
+            using (XmlWriter htmlWriter = XmlWriter.Create(htmlFilePath, writerSettings))
+            {
+                xslt.Transform(xpathDoc, null, htmlWriter, resolver);
+            }
+
+            Console.WriteLine($"Transformation réussie : {htmlFilePath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la transformation : {ex.Message}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Erreur interne : {ex.InnerException.Message}");
+            }
+            throw;
+        }
+    }
+    
+    
+    //methode trouvé sur internet qui appel une feuille de transmformation xslt en C# et un parametre qui sera l'Id d'un infirmier :
+    public static void XslTransformParam(string xmlFilePath, string xsltFilePath, string htmlFilePath, string nomParam, string valeurParam)
+    {
+        try
+        {
+            // Validation des chemins
+            if (!File.Exists(xmlFilePath))
+                throw new FileNotFoundException($"Le fichier XML n'existe pas : {xmlFilePath}");
+    
+            if (!File.Exists(xsltFilePath))
+                throw new FileNotFoundException($"Le fichier XSLT n'existe pas : {xsltFilePath}");
+
+            // Chargement du document XML
+            XPathDocument xpathDoc = new XPathDocument(xmlFilePath);
+    
+            // Configuration XSLT
+            XslCompiledTransform xslt = new XslCompiledTransform();
+            XsltSettings settings = new XsltSettings(enableDocumentFunction: true, enableScript: false);
+            XmlUrlResolver resolver = new XmlUrlResolver();
+            xslt.Load(xsltFilePath, settings, resolver);
+            
+            XsltArgumentList parametre = new XsltArgumentList();
+            parametre.AddParam(nomParam, "", valeurParam);
+
+            // Configuration du writer pour HTML
+            XmlWriterSettings writerSettings = new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                Indent = true,
+                IndentChars = "  ",
+                OmitXmlDeclaration = true, // Pas de <?xml?> pour HTML
+            };
+
+            // Transformation
+            using (XmlWriter htmlWriter = XmlWriter.Create(htmlFilePath, writerSettings))
+            {
+                xslt.Transform(xpathDoc, parametre, htmlWriter, resolver);
+            }
+
+            Console.WriteLine($"Transformation réussie : {htmlFilePath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la transformation : {ex.Message}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Erreur interne : {ex.InnerException.Message}");
+            }
+            throw;
+        }
+    }
 }
