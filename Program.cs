@@ -6,13 +6,14 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-        //Validation du fichier XML Cabinet
+        
+        //Validation des fichiers du Cabinet
         //Console.WriteLine("Validation fichiers Cabinet");
-        //XMLUtils.ValidateXmlFileAsync("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../../../data/xsd/cabinet.xsd", "../../../data/xml/cabinet.xml" );
+        //XMLUtils.ValidateXmlFileAsync("../../../data/xml/cabinet.xml",("http://www.univ-grenoble-alpes.fr/l3miage/medical", "../../../data/xsd/cabinet.xsd"), ("http://www.univ-grenoble-alpes.fr/l3miage/actes", "../../../data/xsd/actes.xsd"));
         
         //Xslt transformation : 
-        //Console.Write("Transformation Page Infirmere");
-        //XMLUtils.XslTransform2("../../../data/xml/cabinet.xml", "../../../data/xslt/pageInfirmiere.xsl", "../../../data/html/pageInfirmiere.html");
+        Console.WriteLine("Transformation Page Infirmere");
+        XMLUtils.XslTransform("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/testTransform.html");
 
         
         //Partie parseur XmlReader :
@@ -58,11 +59,11 @@ class Program
         //test Partie modification de l'arbre
         
         //On ne peut pas ajouter un nouvel infirmier et un patient à la fois (soit l'un soit l'autre), une exception est levée sinon... 
-        
+/*
         cab.addInfirmier("Némard", "Jean");
         Console.WriteLine("Nouveau infirmier ajouté");
 
-/*
+
         Adresse newAdresse = new Adresse(5, 6, "rue de la paix", "38100", "Chicagre");
         cab.addPatient("KIKS", "Burhan", "2000-03-04", "102039999988876", newAdresse);
         Console.WriteLine("Nouveau patient ajouté");
@@ -73,12 +74,13 @@ class Program
         listActeId.Add(103);
         cab.addVisite("2026-01-04", 003, listActeId, "KIKS");
         Console.WriteLine("Ajout de visite de KIKS");
-*/
+
 
         // TEST methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations
 
         bool resultNSS = cab.nssValide("BARKOK");
         Console.WriteLine("Test Omar: {0}", resultNSS);
+*/        
         
         
         // Partie serialisation 
