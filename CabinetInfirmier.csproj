@@ -21,9 +21,6 @@
       <None Update="data\xslt\pageInfirmiere.xsl">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\html\pageInfirmiere.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="data\xml\cabinet.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>

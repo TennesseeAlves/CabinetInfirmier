@@ -7,7 +7,7 @@
 >
     <xsl:output method="html" indent="yes"/>
     
-    <!-- param globale avec l'id de l'infirmierer -->
+    <!-- param globale avec l'id de l'infirmier -->
     <xsl:param name="destinedId">001</xsl:param>
     
     <!-- variable globale contenant les noeuds ngap du document actes.xml -->
@@ -21,7 +21,7 @@
             <head>
                 <title>page infirmiere</title>
                 <link rel="stylesheet" href="../css/pageInfirmier.css"/>
-                <script type="text/javascript" src="../js/facture.js"></script>
+                <!--<script type="text/javascript" src="../js/facture.js"></script> -->
             </head>
             
             <body>
@@ -49,7 +49,7 @@
                 <tr><th>Nom</th><td><xsl:value-of select="cab:nom"/></td></tr>
                 <tr><th>Prénom</th><td><xsl:value-of select="cab:prénom"/></td></tr>
                 <tr><th>Sexe</th><td><xsl:value-of select="cab:sexe"/></td></tr>
-                <tr><th>Date de naissace</th><td><xsl:value-of select="cab:naissance"/></td></tr>
+                <tr><th>Date de naissance</th><td><xsl:value-of select="cab:naissance"/></td></tr>
                 <tr><th>Numéro de sécurité sociale</th><td><xsl:value-of select="cab:numéro"/></td></tr>
                 <tr><th>Adresse</th><td><xsl:apply-templates select="cab:adresse"/></td></tr>
             </table>
@@ -89,9 +89,6 @@
                 </xsl:attribute>
                 Facture
             </xsl:element>
-            <!-- test si facture.js est bien chargé -->
-            <button onclick="testFacture()">Tester le script</button>
-            <!-- TODO: [à ne faire qu'à la fin du projet] compléter facture.js -->
         </div>
     </xsl:template>
     
