@@ -38,15 +38,11 @@ public class Cabinet
                     Console.WriteLine("-> Attribut '{0}' de valeur '{1}' trouvé", reader.Name, reader.Value);
                     break;
             }
-            
-            
         }
-        
     }
 
     public static List<string> AnalyseNomsInfirmiers(string filepath)
     {
-        
         XmlReader reader = XmlReader.Create(filepath);
         List<string> nomsInfirmiers = new List<string>();
         while (reader.Read())

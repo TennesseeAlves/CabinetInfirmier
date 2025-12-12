@@ -12,7 +12,8 @@ package XMLSchema #DDDDDD {
 package URICabinet {
     note as noteHeritagePersonne
         note : on pourrait rajouter une classe «Personne».
-        Donc, Patient et Infirmier hériteront de cette classe.
+        Donc, Patient et Infirmier hériteraient de cette classe.
+        Mais ce n'ai pas dans le cahier des charges.
     end note
     
     class Cabinet {
