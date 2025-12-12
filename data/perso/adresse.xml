@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<adresse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.univ-grenoble-alpes.fr/l3miage/medical">
-  <étage>12</étage>
-  <numéro>1</numéro>
-  <rue>rue de la paix</rue>
-  <codePostal>69000</codePostal>
-  <ville>Lyon</ville>
-</adresse>

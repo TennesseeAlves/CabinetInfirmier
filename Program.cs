@@ -12,12 +12,12 @@ class Program
         
         
         //-------------- Xslt transformation --------------
-        XMLUtils.XslTransform("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmiere.html"); 
+        XMLUtils.XslTransform("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmier.html"); 
         
         XMLUtils.XslTransform("../../../data/xml/fichepatient.xml", "../../../data/xslt/patient_html.xsl", "../../../data/html/PagePatient.html"); 
         
         //-------------- pageInfirmiere avec parametre (id="002") --------------
-        XMLUtils.XslTransformParam("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmiere_param.html", "destinedId", "003");
+        XMLUtils.XslTransformParam("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmier_param.html", "destinedId", "002");
         
         
         
@@ -96,7 +96,7 @@ class Program
         Adresse TestAdresse = new Adresse(12, 1, "rue de la paix", "69000", "Lyon");
         //Les 2 lignes suivantes permet de sauvegarder dans une instance xml (adresse.xml), ceci nous permet de le tester
         //mais n'est pas necessaire pour serealiser le cabinet complet (ils ne seront pas presentes lors des serealisation qui suivent
-        /*string pathAdr = "../../../data/perso/adresse.xml";
+        /*string pathAdr = "../../../data/xml/adresse.xml";
         adrManager.Save(pathAdr, TestAdresse);*/ 
         
         //-------- seralisation d'un infirmier --------
