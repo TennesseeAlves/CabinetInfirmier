@@ -60,23 +60,23 @@ class Program
         //On ne peut pas ajouter un nouvel infirmier et un patient à la fois (soit l'un soit l'autre), une exception est levée sinon... 
 
         //-------- Ajout de l'infirmier Jean Némard (resultat dans newCabinetDOM.xml)  ---------
-        cab.addInfirmier("Némard", "Jean");
+        //cab.addInfirmier("Némard", "Jean");
         Console.WriteLine("Nouveau infirmier ajouté dans newCabinetDOM.xml");
 
         //-------- Ajout du patient Burhan KIKS (resultat dans newCabinetDOM.xml)  ---------
         //Mis en commentaire car on ne peut ajouter un nouveau infirmier et un nouveau patient
         
-        /*Adresse newAdresse = new Adresse(5, 6, "rue de la paix", "38100", "Chicagre");
-        cab.addPatient("KIKS", "Burhan", "2000-03-04", "102039999988876", newAdresse);
+        Adresse adresseDom = new Adresse(5, 6, "rue de la paix", "38100", "Chicagre");
+        cab.addPatient("KIKS", "Burhan", "2000-03-04", "102039999988876", adresseDom);
         Console.WriteLine("Nouveau patient ajouté dans newCabinetDOM.xml");
 
         List<Acte> listActeId = new List<Acte>();
-        listActeId.Add(new Acte(101));
-        listActeId.Add(new Acte(102));
-        listActeId.Add(new Acte(103));
+        listActeId.Add(new Acte("101"));
+        listActeId.Add(new Acte("102"));
+        listActeId.Add(new Acte("103"));
         cab.addVisite("2026-01-04", 003, listActeId, "KIKS");
         Console.WriteLine("Ajout de visite de KIKS dans newCabinetDOM.xml");
-        */
+        
         
         // -------- methode nssValide(nomPatient) qui verifie que le numero de securite social de nomPatient est valide par rapport aux informations --------
         //renvoie un boolean
