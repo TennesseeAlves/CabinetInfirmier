@@ -14,7 +14,7 @@ class Program
         //-------------- Xslt transformation --------------
         XMLUtils.XslTransform("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmiere.html"); 
         
-        XMLUtils.XslTransform("../../../data/xml/fichepatient.xml", "../../../data/xslt/patient_html.xsl", "../../../data/html/PagePatient.html"); 
+        XMLUtils.XslTransform("../../../data/xml/fichepatient.xml", "../../../data/xslt/patient_html.xsl", "../../../data/html/patient.html"); 
         
         //-------------- pageInfirmiere avec parametre (id="002") --------------
         XMLUtils.XslTransformParam("../../../data/xml/cabinet.xml", "../../../data/xslt/cabinet.xsl", "../../../data/html/PageInfirmiere_param.html", "destinedId", "003");

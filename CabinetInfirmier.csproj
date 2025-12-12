@@ -45,7 +45,7 @@
       <None Update="data\js\facture.js">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="data\xml\fichePatient.xml">
+      <None Update="data\xml\patient.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="data\xml\newCabinetDOM.xml">
