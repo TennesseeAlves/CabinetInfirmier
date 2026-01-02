@@ -5,7 +5,6 @@ using System.Xml.Serialization;
 
 [XmlRoot("infirmier", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical/Inf")]
 [Serializable]
-
 public class InfirmierRO
 {
     [XmlAttribute("id")] private string id;
@@ -20,6 +19,7 @@ public class InfirmierRO
                 throw new Exception("Un id infimier doit être un entier positif.");
         } 
     }
+    
     [XmlElement("nom")] public string Nom { get; init; }
     
     [XmlElement("prénom")] public string Prenom { get; init; }

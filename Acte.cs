@@ -5,10 +5,9 @@ using System.Text.RegularExpressions;
 
 [XmlRoot("acte", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
-
 public class Acte
 {
-    private String patternEntierPositif = @"^[0-9]+$";
+    private string patternEntierPositif = @"^[0-9]+$";
 
     private string id;
     [XmlAttribute("id")]

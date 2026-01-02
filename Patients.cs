@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 
 [XmlRoot("patients", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
 [Serializable]
-
 public class Patients
 {
     [XmlElement("patient")] public List<Patient> _Patients { get; set; }
@@ -28,8 +27,6 @@ public class Patients
         {
             res += _Patients[i].toString() + "\n";
         }
-
         return res;
     }
-    
 }

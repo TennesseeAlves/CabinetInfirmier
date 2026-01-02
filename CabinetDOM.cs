@@ -74,6 +74,7 @@ public class CabinetDOM
         XmlNodeList node = getXpath("cab", "http://www.univ-grenoble-alpes.fr/l3miage/medical", expression);
         return node;
     }
+    
     public bool nssValide(string nomPatient) 
     {
         bool res = true;
@@ -113,10 +114,8 @@ public class CabinetDOM
             res = false;
         }
         
-
         return res;
     }
-    
     
     //Partie Modification de l'arbre DOM et de l'instance XML
     
@@ -253,8 +252,7 @@ public class CabinetDOM
         
         return patientElt;
     }
-
-
+    
     public void addPatient(string nom, string prenom, string dateNaissance, string nss, Adresse adresse)
     {
         XmlElement newPatientElt = MakePatient(nom, prenom, dateNaissance, nss, adresse);
@@ -266,23 +264,23 @@ public class CabinetDOM
         doc.Save(chemin); //Modification de l'instance XML (nouveau doc : newCabinetDOM.xml)
     }
 
-    private XmlElement makeVisite(string date, int intervenant, List<int> listActeId) //TODO : changer en liste d'actes
+    private XmlElement makeVisite(string date, int intervenant, List<Acte> listActeId)
     {
         XmlElement visiteElt = doc.CreateElement("visite", root.NamespaceURI);
 
         visiteElt.SetAttribute("date", date);
         visiteElt.SetAttribute("intervenant", "00" + intervenant);
         
-        foreach (int acteId in listActeId)
+        foreach (Acte acteId in listActeId)
         {
             XmlElement acteElt = doc.CreateElement("acte", root.NamespaceURI);
-            acteElt.SetAttribute("id", acteId.ToString());
+            acteElt.SetAttribute("id", acteId.Id);
             visiteElt.AppendChild(acteElt);
         }
         return visiteElt;
     }
 
-    public void addVisite(string date, int intervenant, List<int> listActeId, string nomPatient)
+    public void addVisite(string date, int intervenant, List<Acte> listActeId, string nomPatient)
     {
         XmlElement newVisiteElt = makeVisite(date, intervenant, listActeId);
 
@@ -301,9 +299,5 @@ public class CabinetDOM
             writer.Indentation = 4;
             doc.Save(writer);
         }
-        
-        
     }
-    
-
 }

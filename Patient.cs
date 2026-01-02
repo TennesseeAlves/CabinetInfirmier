@@ -1,7 +1,6 @@
 namespace CabinetInfirmier;
 
 using System.Text.RegularExpressions;
-
 using System.Xml.Serialization;
 
 [XmlRoot("patient", Namespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical")]
@@ -58,6 +57,5 @@ public class Patient
     {
         String res = "=> Patient : \nNom: " + Nom + "\nPrenom : " + Prenom + "\nSexe : " + Sexe + "\nDate de naissance : " + Naissance + "\nNuméro de sécurité social : " + Numero + "\nAdresse " + Adresse.toString() + "\nVisite " + Visite.toString();
         return res;
-        
     }
 }

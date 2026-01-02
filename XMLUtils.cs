@@ -32,7 +32,6 @@ public static class XMLUtils
         Console.WriteLine("Validation terminée.");
     }
     
-    
     private static void ValidationCallback(object? sender, ValidationEventArgs e) 
     {
         if (e.Severity.Equals(XmlSeverityType.Warning)) 
@@ -46,46 +45,6 @@ public static class XMLUtils
             Console.WriteLine(e.Message);
         }
     }
-    
-    
-    
-    // Transformation XSLT avec paramètre
-    public static void XslTransformParam3(
-        string xmlFilePath,
-        string xsltFilePath,
-        string htmlFilePath,
-        string paramName,
-        string paramValue)
-    {
-        try
-        {
-            //  Charge le XML en mémoire pour éviter le verrouillage du fichier.
-            // Utilité : Permet de relire le même fichier sans erreurs d'accès lors des transformations XSLT successives.
-            //XPathDocument xpathDoc = LoadXmlInMemory(xmlFilePath);
-            
-            XslCompiledTransform xslt = new XslCompiledTransform();
-
-            XsltSettings settings = new XsltSettings();
-            settings.EnableDocumentFunction = true;
-            XmlUrlResolver resolver = new XmlUrlResolver();
-
-            xslt.Load(xsltFilePath, settings, resolver);
-
-            XsltArgumentList args = new XsltArgumentList();
-            args.AddParam(paramName, "", paramValue);
-
-            using (XmlTextWriter htmlWriter = new XmlTextWriter(htmlFilePath, Encoding.UTF8))
-            {
-                htmlWriter.Formatting = Formatting.Indented;
-                //xslt.Transform(xpathDoc, args, htmlWriter, resolver);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("erreur lors de la transformation XSLT avec parametre : " + ex.Message);
-        }
-    }
-    
     
     //methode trouvé sur internet qui appel une feuille de transmformation xslt en C# :
     public static void XslTransform(string xmlFilePath, string xsltFilePath, string htmlFilePath)
